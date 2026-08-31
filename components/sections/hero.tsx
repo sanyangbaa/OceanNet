@@ -3,7 +3,7 @@ import { AnimatedBubbles } from "@/components/shared/animated-bubbles";
 
 export function Hero() {
   return (
-    <section className="relative bg-[#03045E] text-white pt-20 md:pt-34 pb-4 md:pb-6 overflow-hidden">
+    <section className="relative bg-[#03045E] text-white pt-20 md:pt-30 pb-4 md:pb-6 overflow-hidden">
       {/* Background ambient lighting effects extending seamlessly to top of viewport */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none -z-0" />
       <div className="absolute bottom-10 left-10 w-96 h-96 bg-accent/10 rounded-full blur-3xl pointer-events-none -z-0" />

@@ -12,7 +12,7 @@ const footerLinks = [
       { name: "Our Projects", href: "/projects" },
       { name: "Services", href: "/services" },
       { name: "Careers", href: "/careers" },
-      { name: "Contact Us", href: "/contact" }
+      { name: "Contact Us", href: "/contact" },
     ],
   },
   {
@@ -32,17 +32,18 @@ export function Footer() {
           {/* Brand Column */}
           <div className="flex flex-col gap-6">
             <Link href="/" className="flex items-center group">
-              <div className="relative w-48 h-24 inline-block">
+              <div className="relative flex items-center justify-center w-44 h-20 rounded-xl border-[3px] border-accent/80 bg-white px-4 py-3 shadow-[0_6px_18px_rgba(0,119,200,0.12)] ring-2 ring-primary/25">
+                <div className="absolute inset-1 rounded-lg bg-white" />
                 <Image
                   src="/logo/official_logo.png"
                   alt="OceanNet Technologies"
                   fill
-                  sizes="(max-width: 768px) 192px, 192px"
-                  className="object-contain object-left brightness-0 invert group-hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 768px) 176px, 176px"
+                  className="relative object-contain object-left group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
             </Link>
-            <p className="text-lg text-white/85 leading-6 max-w-xs">
+            <p className="text-sm text-white/85 leading-6 max-w-xs">
               {companyInfo.description}
             </p>
             <div className="flex items-center gap-4">
