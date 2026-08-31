@@ -19,7 +19,7 @@ export function AboutPreviewClient() {
       {/* Left Part: Image Side with slideIn left */}
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className="relative h-[400px] md:h-[450px] lg:h-[500px]"
+        className="relative h-100 md:h-112.5 lg:h-125"
       >
         <div className="relative h-full rounded-2xl overflow-hidden shadow-xl border border-gray-100">
           <Image
@@ -32,10 +32,10 @@ export function AboutPreviewClient() {
         </div>
 
         {/* Floating Experience Card with Tilt */}
-        <div className="absolute -bottom-6 -right-6 hidden md:block z-20">
+        <div className="absolute -bottom-10 -right-10 hidden md:block z-20">
           <Tilt
             options={{ max: 45, scale: 1.05, speed: 450 }}
-            className="bg-primary p-8 rounded-2xl shadow-2xl border-2 border-white/20"
+            className="bg-primary p-8 rounded-2xl shadow-lg border-2 border-white/20"
           >
             <span className="text-5xl font-black text-white leading-none block">
               6+

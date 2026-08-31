@@ -13,7 +13,7 @@ export async function ServicesOverview() {
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
           subtitle="Our Expertise"
-          title="why choose us"
+          title="What We Do"
           description="Delivering end-to-end technology solutions that modernize operations, improve efficiency, and accelerate digital transformation."
         />
         <ServicesOverviewClient services={services} />

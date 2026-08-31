@@ -5,13 +5,13 @@ export const companyInfo = {
   description:
     "OceanNet Technologies delivers innovative technology solutions that help organizations improve efficiency, enhance transparency, strengthen resilience, and achieve measurable results.",
   longDescription:
-    "With a strong commitment to innovation, reliability, and service excellence, OceanNet Technologies has rapidly grown into a trusted technology partner in The Gambia. The company has successfully delivered digital solutions and ICT services across government, healthcare, telecommunications, financial institutions, development organizations, and the private sector.",
+    "Driven by innovation, reliability, and service excellence, OceanNet Technologies has grown into a trusted technology partner in The Gambia. We deliver impactful digital solutions and ICT services that support organizations across both the public and private sectors.",
   history:
-    "OceanNet Technologies was established in 2020 as a Gambian-owned technology company with a vision to drive digital transformation through innovative and sustainable technology solutions. By combining local expertise with international best practices, the company delivers enterprise software, systems integration, cloud computing, cybersecurity, ICT infrastructure, artificial intelligence, data analytics, and managed technology services across The Gambia and West Africa.",
+    "Founded in 2020, OceanNet Technologies is a Gambian-owned technology company committed to driving digital transformation through innovative, sustainable, and future-ready solutions. By combining local expertise with global best practices, we help businesses and organizations leverage technology to grow, connect, and achieve lasting impact across The Gambia and West Africa.",
   vision:
-    "To become a leading technology company driving digital transformation through innovative, sustainable, and reliable solutions that empower organizations across The Gambia and West Africa.",
+    "To be a trusted technology leader in The Gambia and West Africa, delivering innovative and sustainable solutions that create lasting digital impact.",
   mission:
-    "To design, implement, and support innovative technology solutions that improve organizational performance, strengthen decision-making, enhance service delivery, and achieve sustainable growth.",
+    "To deliver reliable and innovative technology solutions that empower organizations, improve performance, and support sustainable growth.",
   contacts: {
     address: "Kanifing, Kanifing Muncipality, The Gambia",
     productionCenter: "Kanifing, The Gambia",
