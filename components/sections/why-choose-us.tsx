@@ -40,9 +40,9 @@ const features = [
   },
   {
     icon: Zap,
-    title: "Telecommunications & Technology Partners",
+    title: "Cybersecurity & Cloud",
     description:
-      "Local implementation, systems integration, field support and specialist delivery partnerships.",
+      "Security-focused cloud, identity, endpoint, network and data-protection solutions for modern organisations",
   },
 ];
 

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Handshake,
-  Layers3,
-  MapPinned,
-  ShieldCheck,
-} from "lucide-react";
+import { Handshake, Layers3, MapPinned, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 import { SectionHeader } from "@/components/shared/section-header";
 import { fadeIn } from "@/lib/motion";
@@ -39,17 +34,17 @@ const reasons = [
 
 export function WhyOceanNet() {
   return (
-    <section className="border-y border-border bg-background py-16 md:py-20">
+    <section className="bg-background py-16 md:py-20">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
           subtitle="Why OceanNet"
           title="Technology Delivery With Context"
           description="We bring practical local knowledge, broad engineering capability and accountable delivery to every engagement."
-          align="left"
+          //   align="left"
           withBubbles={false}
         />
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 pt-6">
           {reasons.map((reason, index) => (
             <motion.article
               key={reason.title}
@@ -59,7 +54,10 @@ export function WhyOceanNet() {
               viewport={{ once: true, amount: 0.2 }}
               className="flex h-full flex-col border-l-2 border-primary/25 pl-5"
             >
-              <reason.icon aria-hidden="true" className="mb-5 h-7 w-7 text-primary" />
+              <reason.icon
+                aria-hidden="true"
+                className="mb-5 h-7 w-7 text-primary"
+              />
               <h3 className="text-lg font-bold leading-snug text-secondary">
                 {reason.title}
               </h3>

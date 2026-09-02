@@ -19,8 +19,8 @@ export default function HomePage() {
         <ServicesOverview />
       </div>
       <WhyChooseUs />
-      <WhyOceanNet />
       <Partners />
+      <WhyOceanNet />
       <FeaturedProjects />
       <Testimonials />
       <CallToAction />
