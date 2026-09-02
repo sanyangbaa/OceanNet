@@ -74,7 +74,7 @@ export function AboutPreviewClient() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 pt-2 md:pt-4">
           {[
             "Enterprise Ready",
-            "Secure & Compliant",
+            "Security-Focused",
             "Cloud Enabled",
             "Always Supported",
           ].map((feature) => (

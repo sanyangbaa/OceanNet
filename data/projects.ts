@@ -51,7 +51,7 @@ export const projects: Project[] = [
     image:
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800",
     description:
-      "A secure mobile application enabling remote patient monitoring, appointment scheduling, and teleconsultations. End-to-end encrypted messaging and HIPAA-conscious data handling were implemented.",
+      "A secure mobile application enabling remote patient monitoring, appointment scheduling, and teleconsultations. Protected messaging and privacy-aware data handling were implemented.",
     status: "Completed",
     year: 2023,
     location: "Global",

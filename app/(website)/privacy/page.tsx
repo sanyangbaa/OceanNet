@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { companyInfo } from "@/data/company";
-import { SectionHeader } from "@/components/shared/section-header";
 
 export const metadata = {
   title: `Privacy Policy | ${companyInfo.name}`,
@@ -12,15 +11,14 @@ const updated = "2 September 2026";
 export default function PrivacyPage() {
   return (
     <article className="bg-background">
-      <SectionHeader
-        subtitle="Legal"
-        title="Privacy Policy"
-        description="How OceanNet Technologies collects, uses, stores, and protects personal information."
-        backgroundImage="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072"
-        withBackground
-      />
       <div className="container mx-auto max-w-4xl px-4 py-16 md:px-6 md:py-24">
         <header className="mb-12 border-b border-border pb-8">
+          <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-primary">
+            Legal
+          </p>
+          <h1 className="text-4xl font-black uppercase tracking-tight text-secondary md:text-5xl">
+            Privacy Policy
+          </h1>
           <p className="mt-4 text-muted-foreground">Last updated: {updated}</p>
         </header>
 

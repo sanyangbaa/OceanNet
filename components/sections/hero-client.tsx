@@ -68,9 +68,9 @@ const stats = [
     subtext: "Across industries",
   },
   {
-    value: "99.9%",
-    label: "Uptime & Reliability",
-    subtext: "Enterprise standard",
+    value: "Reliable",
+    label: "Technology Delivery",
+    subtext: "Built for real-world use",
   },
   {
     value: "50+",

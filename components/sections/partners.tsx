@@ -44,7 +44,7 @@ export function Partners() {
           {/* Label */}
           <div className="shrink-0">
             <h4 className="text-sm font-bold uppercase tracking-widest text-secondary whitespace-nowrap">
-              Trusted <br className="hidden md:block" /> By:
+              Technology <br className="hidden md:block" /> Partners:
             </h4>
           </div>
 

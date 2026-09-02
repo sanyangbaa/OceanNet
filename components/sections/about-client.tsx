@@ -78,7 +78,7 @@ export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-0.5" />
                   <span className="text-muted-foreground text-base">
-                    Enterprise-grade security and industry compliance standards.
+                    Security-focused delivery aligned with project requirements.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -90,7 +90,7 @@ export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
                 <li className="flex items-start gap-3">
                   <CheckCircle2 className="h-6 w-6 text-primary shrink-0 mt-0.5" />
                   <span className="text-muted-foreground text-base">
-                    24/7 dedicated support and strategic partnership approach.
+                    Responsive support and a long-term partnership approach.
                   </span>
                 </li>
               </ul>
