@@ -708,6 +708,31 @@ export async function initDb() {
       "updatedAt" ${TIMESTAMP} NOT NULL DEFAULT ${NOW}
     )`);
 
+    await p
+      .execute(`UPDATE "TeamMember" SET "role" = ? WHERE "id" = ?`, [
+        "Chief Technology Officer",
+        "chief-engineer",
+      ])
+      .catch(() => {});
+    await p
+      .execute(`UPDATE "TeamMember" SET "role" = ? WHERE "id" = ?`, [
+        "Head of Digital Solutions",
+        "head-arch",
+      ])
+      .catch(() => {});
+    await p
+      .execute(`UPDATE "TeamMember" SET "role" = ? WHERE "id" = ?`, [
+        "Infrastructure Operations Lead",
+        "foreman",
+      ])
+      .catch(() => {});
+    await p
+      .execute(
+        `DELETE FROM "Testimonial" WHERE LOWER("content") LIKE ? OR LOWER("content") LIKE ?`,
+        ["%construction%", "%residential complex%"],
+      )
+      .catch(() => {});
+
     // CompanyInfo Table
     await p.execute(`CREATE TABLE IF NOT EXISTS "CompanyInfo" (
       "id" VARCHAR(255) PRIMARY KEY,
@@ -770,14 +795,14 @@ export async function initDb() {
     const [serviceRows] = await p.execute(
       `SELECT id FROM ${isPostgres ? '"Service"' : "Service"} LIMIT 1`,
     );
-    const [hasConstruction] = await p.execute(
+    const [hasLegacyService] = await p.execute(
       `SELECT id FROM ${isPostgres ? '"Service"' : "Service"} WHERE id = ? LIMIT 1`,
       ["arch-design"],
     );
     if (
       Array.isArray(serviceRows) &&
       (serviceRows.length === 0 ||
-        (Array.isArray(hasConstruction) && hasConstruction.length > 0))
+        (Array.isArray(hasLegacyService) && hasLegacyService.length > 0))
     ) {
       console.log("Seeding IT/Tech services...");
       await p.execute(`DELETE FROM ${isPostgres ? '"Service"' : "Service"}`);

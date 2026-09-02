@@ -101,7 +101,7 @@ export default async function AdminDashboard() {
   ];
 
   const quickLinks = [
-    { label: "Add Project", href: "/admin/projects/new", icon: Briefcase, desc: "Upload new construction work" },
+    { label: "Add Project", href: "/admin/projects/new", icon: Briefcase, desc: "Add a technology project" },
     { label: "Add Team Member", href: "/admin/about", icon: Users, desc: "Update the team roster" },
     { label: "View Messages", href: "/admin/contact", icon: MessageSquare, desc: "Read client enquiries" },
     { label: "Testimonials", href: "/admin/testimonials", icon: Star, desc: "Manage client reviews" },

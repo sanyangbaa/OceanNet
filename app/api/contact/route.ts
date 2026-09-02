@@ -35,7 +35,7 @@ export async function POST(req: Request) {
     if (process.env.RESEND_API_KEY) {
       try {
         await resend.emails.send({
-          from: `ONT Construction <${FROM_EMAIL}>`,
+          from: `OceanNet Technologies <${FROM_EMAIL}>`,
           to: TO_EMAILS,
           replyTo: email,
           subject: `📩 New Enquiry: ${subject || "Contact Form"}`,

@@ -6,41 +6,41 @@ loadEnvConfig(process.cwd());
 const testimonials = [
   {
     name: "Amadou Jallow",
-    role: "Property Developer, Banjul",
+    role: "Operations Director, Banjul",
     content:
-      "OceanNet built our residential complex from the ground up with exceptional quality. Their team was professional, punctual, and the finish exceeded all our expectations. I would recommend them to anyone looking for a reliable construction company in The Gambia.",
+      "OceanNet helped us replace fragmented manual processes with a secure digital platform that our teams can use every day. Their delivery was practical, responsive, and focused on measurable results.",
     rating: 5,
     order: 1,
   },
   {
     name: "Fatoumata Ceesay",
-    role: "School Director, Kanifing",
+    role: "Programme Director, Kanifing",
     content:
-      "We engaged OceanNet for the construction of our new school block and we couldn't be more pleased with the result. The structure is solid, the design is modern, and they delivered on time and within budget. Outstanding work!",
+      "OceanNet brought strong technical expertise and clear communication to our digital transformation programme. They delivered a dependable solution and supported our team throughout implementation.",
     rating: 5,
     order: 2,
   },
   {
     name: "Lamin Sanyang",
-    role: "Business Owner, Serekunda",
+    role: "Managing Director, Serekunda",
     content:
-      "I hired OceanNet for the renovation of my commercial building. Their workers were skilled, respectful, and the quality of the aluminum and carpentry work was first class. The project was completed faster than expected. Highly satisfied!",
+      "The OceanNet team understood our operational needs quickly and delivered a reliable technology solution that improved collaboration across the business. Their support has been excellent.",
     rating: 5,
     order: 3,
   },
   {
     name: "Isatou Darboe",
-    role: "Homeowner, Kanifing",
+    role: "Health Systems Lead, Kanifing",
     content:
-      "OceanNet designed and built our family home exactly as we envisioned. The architectural consultancy was brilliant — they helped us maximize our space beautifully. We are proud of every corner of this house. A truly trusted company.",
+      "OceanNet combined local context with strong systems knowledge to help us strengthen our digital health workflows. The result is easier to manage, more transparent, and built for sustainable use.",
     rating: 5,
     order: 4,
   },
   {
     name: "Ousman Bojang",
-    role: "Mosque Committee Chairman, Brikama",
+    role: "Technology Partner, Brikama",
     content:
-      "We contracted OceanNet for the construction of our community mosque and the result was magnificent. They showed great respect for the project's importance, maintained excellent communication throughout, and delivered a structure we are all proud of.",
+      "Working with OceanNet has been straightforward and dependable. They bring disciplined project delivery, thoughtful technical advice, and a genuine commitment to helping organisations build lasting digital capability.",
     rating: 5,
     order: 5,
   },
