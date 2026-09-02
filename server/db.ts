@@ -43,6 +43,9 @@ export interface Project {
   bannerImage?: string | null;
   industry?: string | null;
   projectType?: string | null;
+  role?: string | null;
+  servicesDelivered?: string | null;
+  outcome?: string | null;
   clientLogo?: string | null;
   clientWebsite?: string | null;
   publishStatus?: string | null;
@@ -544,6 +547,9 @@ export async function initDb() {
       "bannerImage" ${TEXT_TYPE},
       "industry" TEXT,
       "projectType" TEXT,
+      "role" TEXT,
+      "servicesDelivered" ${TEXT_TYPE},
+      "outcome" ${TEXT_TYPE},
       "clientLogo" ${TEXT_TYPE},
       "clientWebsite" VARCHAR(255),
       "publishStatus" VARCHAR(50) DEFAULT 'Draft',
@@ -567,6 +573,9 @@ export async function initDb() {
     await addColumn("Project", "bannerImage", TEXT_TYPE).catch(() => {});
     await addColumn("Project", "industry", "VARCHAR(255)").catch(() => {});
     await addColumn("Project", "projectType", "VARCHAR(255)").catch(() => {});
+    await addColumn("Project", "role", TEXT_TYPE).catch(() => {});
+    await addColumn("Project", "servicesDelivered", TEXT_TYPE).catch(() => {});
+    await addColumn("Project", "outcome", TEXT_TYPE).catch(() => {});
     await addColumn("Project", "clientLogo", TEXT_TYPE).catch(() => {});
     await addColumn("Project", "clientWebsite", "VARCHAR(255)").catch(() => {});
     await addColumn(

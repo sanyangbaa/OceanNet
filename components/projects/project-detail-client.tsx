@@ -97,6 +97,41 @@ export function ProjectDetailClient({
                 </p>
               </div>
 
+              {(project.role || project.servicesDelivered || project.outcome) && (
+                <div className="grid gap-6 border-y border-border py-8 md:grid-cols-3">
+                  {project.role && (
+                    <div>
+                      <h2 className="text-sm font-black uppercase tracking-widest text-primary">
+                        OceanNet&apos;s Role
+                      </h2>
+                      <p className="mt-2 leading-relaxed text-muted-foreground">
+                        {project.role}
+                      </p>
+                    </div>
+                  )}
+                  {project.servicesDelivered && (
+                    <div>
+                      <h2 className="text-sm font-black uppercase tracking-widest text-primary">
+                        Services Delivered
+                      </h2>
+                      <p className="mt-2 leading-relaxed text-muted-foreground">
+                        {project.servicesDelivered}
+                      </p>
+                    </div>
+                  )}
+                  {project.outcome && (
+                    <div>
+                      <h2 className="text-sm font-black uppercase tracking-widest text-primary">
+                        Outcome
+                      </h2>
+                      <p className="mt-2 leading-relaxed text-muted-foreground">
+                        {project.outcome}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Media Gallery */}
               <ProjectMediaGallery
                 mainImage={project.image}

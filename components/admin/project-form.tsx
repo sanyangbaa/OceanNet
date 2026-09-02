@@ -22,6 +22,9 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
     industry: (initialData?.industry as string) || "",
     customIndustry: (initialData?.customIndustry as string) || "",
     projectType: (initialData?.projectType as string) || "",
+    role: (initialData?.role as string) || "",
+    servicesDelivered: (initialData?.servicesDelivered as string) || "",
+    outcome: (initialData?.outcome as string) || "",
     status: (initialData?.status as string) || "Draft",
     publishStatus: (initialData?.publishStatus as string) || "Draft",
     client: (initialData?.client as string) || "",
@@ -591,6 +594,50 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                 placeholder="Write a compelling project description..."
               />
             )}
+          </div>
+
+          <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
+            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
+              Delivery Evidence
+            </h3>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
+                OceanNet&apos;s Role
+              </label>
+              <textarea
+                rows={3}
+                value={formData.role}
+                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
+                placeholder="Describe OceanNet&apos;s responsibility on this assignment"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
+                Services Delivered
+              </label>
+              <textarea
+                rows={3}
+                value={formData.servicesDelivered}
+                onChange={(e) =>
+                  setFormData({ ...formData, servicesDelivered: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
+                placeholder="List the verified services delivered"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
+                Outcome
+              </label>
+              <textarea
+                rows={3}
+                value={formData.outcome}
+                onChange={(e) => setFormData({ ...formData, outcome: e.target.value })}
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
+                placeholder="Describe the verified result or operational improvement"
+              />
+            </div>
           </div>
 
           <div className="bg-white/5 border border-white/10 p-6 rounded-sm">
