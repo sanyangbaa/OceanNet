@@ -3,9 +3,7 @@ import { Navbar } from "@/components/shared/navbar";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { ScrollToTop } from "@/components/shared/scroll-to-top";
 
-const navItems = [
-  { name: "Careers", href: "/careers" },
-];
+const navItems = [{ name: "Careers", href: "/careers" }];
 
 export default function WebsiteLayout({
   children,
@@ -17,7 +15,7 @@ export default function WebsiteLayout({
       <Navbar />
       <main className="flex-grow">{children}</main>
       <Footer />
-      <WhatsAppButton />
+      {/* <WhatsAppButton /> */}
       <ScrollToTop />
     </>
   );

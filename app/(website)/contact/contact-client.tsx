@@ -9,6 +9,7 @@ import { MapPin, Phone, Mail, Clock, Send, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { slideIn, textVariant, staggerContainer } from "@/lib/motion";
 import { Tilt } from "@/components/shared/tilt";
+import { companyInfo } from "@/data/company";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -30,7 +31,7 @@ export interface ContactClientProps {
   };
 }
 
-export function ContactClient({ companyInfo }: ContactClientProps) {
+export function ContactClient() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -105,12 +106,12 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
                 variants={textVariant(0.1)}
                 className="text-3xl font-black uppercase mb-4 tracking-tight text-secondary"
               >
-                Let&apos;s Build Together
+                Let’s Build Together
               </motion.h3>
               <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
-                Whether you&apos;re planning a digital transformation project or
-                need reliable technology solutions, our team is ready to help.
-                Contact us using the details below or send us a message today.
+                Whether you are planning a new digital platform, modernising
+                infrastructure, integrating systems or looking for ongoing ICT
+                support, tell us what you need and our team will respond.
               </p>
             </div>
 
@@ -139,7 +140,7 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {companyInfo.contacts.phone} <br />
                   <span className="text-xs text-muted-foreground">
-                    (Whatsapp Available)
+                    WhatsApp
                   </span>
                 </p>
               </Tilt>

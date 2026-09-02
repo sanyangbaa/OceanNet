@@ -869,6 +869,93 @@ export async function initDb() {
           ]),
           order: 3,
         },
+        {
+          id: "custom-software-development",
+          slug: "custom-software-development",
+          title: "Custom Software Development",
+          category: "IT Services",
+          icon: "Code2",
+          description:
+            "MIS platforms, workflow systems, mobile applications, and API integrations built on open-source technologies.",
+          detailText:
+            "Our engineering team designs, builds, and maintains custom enterprise platforms tailored to your specific organizational workflows. We specialize in building secure, high-performance web applications, mobile applications (iOS & Android), Management Information Systems (MIS), and robust API integrations that seamlessly connect your existing systems.",
+          features: JSON.stringify([
+            "Custom web-based Management Information Systems (MIS)",
+            "Enterprise Resource Planning (ERP) integrations",
+            "Mobile data collection tools (Android & iOS)",
+            "API design and second-party system integrations",
+            "Secure cloud infrastructure setup & management",
+            "Real-time data synchronization pipelines",
+            "User-centric UI/UX design for complex data systems",
+          ]),
+          tools: JSON.stringify([
+            "React.js / Next.js",
+            "Node.js (Express)",
+            "Mobile (React Native)",
+            "PostgreSQL / MySQL",
+            "AWS / Azure",
+            "Docker / Kubernetes",
+          ]),
+          order: 4,
+        },
+        {
+          id: "custom-software-development",
+          slug: "custom-software-development",
+          title: "Custom Software Development",
+          category: "IT Services",
+          icon: "Code2",
+          description:
+            "MIS platforms, workflow systems, mobile applications, and API integrations built on open-source technologies.",
+          detailText:
+            "Our engineering team designs, builds, and maintains custom enterprise platforms tailored to your specific organizational workflows. We specialize in building secure, high-performance web applications, mobile applications (iOS & Android), Management Information Systems (MIS), and robust API integrations that seamlessly connect your existing systems.",
+          features: JSON.stringify([
+            "Custom web-based Management Information Systems (MIS)",
+            "Enterprise Resource Planning (ERP) integrations",
+            "Mobile data collection tools (Android & iOS)",
+            "API design and second-party system integrations",
+            "Secure cloud infrastructure setup & management",
+            "Real-time data synchronization pipelines",
+            "User-centric UI/UX design for complex data systems",
+          ]),
+          tools: JSON.stringify([
+            "React.js / Next.js",
+            "Node.js (Express)",
+            "Mobile (React Native)",
+            "PostgreSQL / MySQL",
+            "AWS / Azure",
+            "Docker / Kubernetes",
+          ]),
+          order: 5,
+        },
+        {
+          id: "custom-software-development",
+          slug: "custom-software-development",
+          title: "Custom Software Development",
+          category: "IT Services",
+          icon: "Code2",
+          description:
+            "MIS platforms, workflow systems, mobile applications, and API integrations built on open-source technologies.",
+          detailText:
+            "Our engineering team designs, builds, and maintains custom enterprise platforms tailored to your specific organizational workflows. We specialize in building secure, high-performance web applications, mobile applications (iOS & Android), Management Information Systems (MIS), and robust API integrations that seamlessly connect your existing systems.",
+          features: JSON.stringify([
+            "Custom web-based Management Information Systems (MIS)",
+            "Enterprise Resource Planning (ERP) integrations",
+            "Mobile data collection tools (Android & iOS)",
+            "API design and second-party system integrations",
+            "Secure cloud infrastructure setup & management",
+            "Real-time data synchronization pipelines",
+            "User-centric UI/UX design for complex data systems",
+          ]),
+          tools: JSON.stringify([
+            "React.js / Next.js",
+            "Node.js (Express)",
+            "Mobile (React Native)",
+            "PostgreSQL / MySQL",
+            "AWS / Azure",
+            "Docker / Kubernetes",
+          ]),
+          order: 6,
+        },
       ];
       for (const service of itServices) {
         await p.execute(

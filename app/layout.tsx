@@ -8,9 +8,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "OceanNet Technologies (ONT) | Innovative IT Solutions in The Gambia",
+  title:
+    "OceanNet Technologies | Digital Solutions & IT Services in The Gambia",
   description:
-    "OceanNet Technologies (ONT) is a leading IT company in The Gambia delivering software development, web and mobile applications, cloud solutions, cybersecurity, networking, IT consulting, digital transformation, and managed technology services for businesses and organizations.",
+    "Enterprise software, systems integration, digital health, cloud, cybersecurity, networking and managed ICT services from OceanNet Technologies in The Gambia.",
 };
 //
 export default function RootLayout({

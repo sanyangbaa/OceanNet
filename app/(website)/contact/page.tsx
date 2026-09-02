@@ -1,7 +1,16 @@
 import { getCompanyInfo } from "@/lib/data";
 import { ContactClient, type ContactClientProps } from "./contact-client";
+import { companyInfo as staticCompanyInfo } from "@/data/company";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata() {
+  return {
+    title: `Contacts | ${staticCompanyInfo.contactMetaTitle || "ONT"}`,
+    description:
+      staticCompanyInfo.contactMetaDescription || "OceanNet Technologies.",
+  };
+}
 
 export default async function ContactPage() {
   let companyInfo = null;

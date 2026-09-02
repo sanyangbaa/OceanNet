@@ -1,6 +1,15 @@
 import { getAllJobs } from "@/lib/careers";
 import { companyInfo } from "@/data/company";
 import { CareersClient } from "@/components/careers/careers-client";
+import { companyInfo as staticCompanyInfo } from "@/data/company";
+
+export async function generateMetadata() {
+  return {
+    title: `Careers | ${staticCompanyInfo.careerMetaTitle || "ONT"}`,
+    description:
+      staticCompanyInfo.careerMetaDescription || "OceanNet Technologies.",
+  };
+}
 
 export default async function CareersPage({
   searchParams,

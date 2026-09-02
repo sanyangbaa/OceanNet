@@ -10,39 +10,39 @@ import { AnimatedBubbles } from "@/components/shared/animated-bubbles";
 const features = [
   {
     icon: ShieldCheck,
-    title: "Local Presence, Regional Vision",
+    title: "Government & Public Sector",
     description:
-      "We understand local realities while delivering solutions aligned with international standards and best practices.",
-  },
-  {
-    icon: Clock,
-    title: "End-to-End Delivery",
-    description:
-      "From strategy and planning to implementation, training, and support, we provide complete project lifecycle services.",
-  },
-  {
-    icon: Award,
-    title: "Multidisciplinary Expertise",
-    description:
-      "Our team combines expertise across infrastructure, software, cybersecurity, cloud technologies, digital platforms, and emerging technologies.",
-  },
-  {
-    icon: Users,
-    title: "Expert Team",
-    description:
-      "Our diverse team of architects and engineers bring international standards to local construction challenges.",
-  },
-  {
-    icon: Zap,
-    title: "Strong Partnership Network",
-    description:
-      "We collaborate with leading technology providers, implementation partners, and subject matter experts to deliver comprehensive solutions.",
+      "Digital government systems, infrastructure, integration and institutional capacity building.",
   },
   {
     icon: RotateCcw,
-    title: "Sustainable Approach",
+    title: "Healthcare",
     description:
-      "We focus on solutions that are practical, scalable, maintainable, and designed for long-term success.",
+      "Disease surveillance, health information systems, interoperability and digital health infrastructure.",
+  },
+  {
+    icon: Clock,
+    title: "International Development",
+    description:
+      "Technology implementation and technical support for donor-funded programmes and project implementation units.",
+  },
+  {
+    icon: Award,
+    title: "Private Enterprise",
+    description:
+      "Cloud productivity, enterprise applications, infrastructure, security and managed ICT services.",
+  },
+  {
+    icon: Users,
+    title: "Financial & Professional Services",
+    description:
+      "Secure collaboration, infrastructure and systems that support operational continuity.",
+  },
+  {
+    icon: Zap,
+    title: "Telecommunications & Technology Partners",
+    description:
+      "Local implementation, systems integration, field support and specialist delivery partnerships.",
   },
 ];
 
@@ -50,7 +50,9 @@ export function WhyChooseUs() {
   return (
     <section
       className="relative py-16 md:py-20 text-white overflow-hidden"
-      style={{ background: "linear-gradient(145deg, #03045E 0%, #0077C8 100%)" }}
+      style={{
+        background: "linear-gradient(145deg, #03045E 0%, #0077C8 100%)",
+      }}
     >
       {/* Background ambient lighting effects */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl pointer-events-none -z-0" />
@@ -63,7 +65,7 @@ export function WhyChooseUs() {
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <SectionHeader
           subtitle="The OceanNet Advantage"
-          title="Why Choose Us"
+          title="Industries We Serve"
           description="We combine innovation, expertise, and reliable technology solutions to help organizations achieve sustainable growth and successful digital transformation."
           dark
         />

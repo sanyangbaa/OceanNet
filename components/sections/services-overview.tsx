@@ -4,7 +4,7 @@ import { ServicesOverviewClient } from "./services-overview-client";
 
 export async function ServicesOverview() {
   const services = await db.service.findMany({
-    take: 3,
+    take: 6,
     orderBy: { createdAt: "asc" },
   });
 
@@ -22,7 +22,7 @@ export async function ServicesOverview() {
             href="/services"
             className="inline-flex py-4 px-10 rounded-sm border-2 border-secondary font-black text-sm uppercase tracking-widest transition-all text-secondary hover:bg-secondary hover:text-white"
           >
-            VIEW ALL SERVICES
+            Explore All Services
           </a>
         </div>
       </div>

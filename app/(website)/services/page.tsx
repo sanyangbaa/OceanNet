@@ -1,6 +1,15 @@
 import { services } from "@/data/services";
 import { SectionHeader } from "@/components/shared/section-header";
 import { ServiceCardClient } from "@/components/sections/service-card-client";
+import { companyInfo as staticCompanyInfo } from "@/data/company";
+
+export async function generateMetadata() {
+  return {
+    title: `Services | ${staticCompanyInfo.servicesMetaTitle || "ONT"}`,
+    description:
+      staticCompanyInfo.servicesMetaDescription || "OceanNet Technologies.",
+  };
+}
 
 export default async function ServicesPage() {
   // Using static data from data/services.ts

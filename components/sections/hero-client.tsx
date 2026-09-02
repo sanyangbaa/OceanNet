@@ -21,10 +21,10 @@ const slides = [
   {
     id: 1,
     tag: "Accelerate. Transform. Scale. With OceanNet.",
-    titlePrefix: "Accelerating Your",
+    titlePrefix: "Accelerating Your.",
     titleHighlight: "Digital Future.",
     description:
-      "From enterprise software and cloud services to cybersecurity, we provide reliable digital solutions that drive growth and long-term success.",
+      "OceanNet Technologies designs, integrates and supports digital platforms, enterprise systems and ICT infrastructure that help governments, development organisations and businesses operate more securely, efficiently and intelligently.",
     image: "/images/ont_img.jpg",
     alt: "OceanNet Tech Team",
     badge: "Enterprise IT & Cloud Solutions",
@@ -40,17 +40,17 @@ const slides = [
     alt: "Modern enterprise systems in action",
     badge: "Digital Transformation & Systems",
   },
-  {
-    id: 3,
-    tag: "Security, Reliability & Performance.",
-    titlePrefix: "Building Smarter",
-    titleHighlight: "Digital Solutions.",
-    description:
-      "We prioritize security, reliability, and innovation in every solution we deliver. Our commitment to excellence helps organizations achieve sustainable digital growth.",
-    image: "/images/ont_img2.jpg",
-    alt: "OceanNet engineers collaborating",
-    badge: "Cybersecurity & Infrastructure",
-  },
+  // {
+  //   id: 3,
+  //   tag: "Security, Reliability & Performance.",
+  //   titlePrefix: "Building Smarter",
+  //   titleHighlight: "Digital Solutions.",
+  //   description:
+  //     "We prioritize security, reliability, and innovation in every solution we deliver. Our commitment to excellence helps organizations achieve sustainable digital growth.",
+  //   image: "/images/ont_img2.jpg",
+  //   alt: "OceanNet engineers collaborating",
+  //   badge: "Cybersecurity & Infrastructure",
+  // },
 ];
 
 const clientAvatars = [
@@ -123,7 +123,6 @@ export function HeroClient() {
               transition={{ duration: 0.5 }}
               className="flex flex-col"
             >
-
               {/* Main Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-[1.08] mb-5">
                 {slides[current].titlePrefix}{" "}
@@ -141,18 +140,18 @@ export function HeroClient() {
               {/* CTA Button Row */}
               <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-10">
                 <Link
-                  href="/projects"
+                  href="/services"
                   className="bg-primary hover:bg-white hover:text-secondary text-white font-bold px-8 py-4 rounded-full text-sm uppercase tracking-wider flex items-center gap-2.5 shadow-xl shadow-primary/30 transition-all duration-300 hover:scale-105 active:scale-95 group"
                 >
                   <Terminal className="h-4 w-4 text-accent group-hover:text-primary transition-colors" />
-                  <span>Get Started Now</span>
+                  <span>Explore Our Services</span>
                 </Link>
 
                 <Link
-                  href="/services"
+                  href="/contact"
                   className="inline-flex items-center gap-2 text-white/85 hover:text-accent font-semibold text-sm transition-colors py-2 group"
                 >
-                  <span>Explore Services</span>
+                  <span>Talk to Our Team</span>
                   <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -194,7 +193,9 @@ export function HeroClient() {
                   onClick={() => setCurrent(idx)}
                   className={cn(
                     "h-2 rounded-full transition-all duration-300",
-                    current === idx ? "w-6 bg-accent" : "w-2 bg-white/40 hover:bg-white",
+                    current === idx
+                      ? "w-6 bg-accent"
+                      : "w-2 bg-white/40 hover:bg-white",
                   )}
                   aria-label={`Go to slide ${idx + 1}`}
                 />
@@ -203,7 +204,7 @@ export function HeroClient() {
 
             {/* Floating Bottom Badge */}
             {/* <div className="absolute bottom-4 left-4 right-4 z-20 bg-secondary/90 backdrop-blur-md border border-white/15 p-4 rounded-2xl flex items-center justify-between"> */}
-              {/* <div>
+            {/* <div>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-accent block">
                   Featured Specialization
                 </span>
@@ -212,8 +213,8 @@ export function HeroClient() {
                 </h4>
               </div> */}
 
-              {/* Prev / Next Arrows */}
-              {/* <div className="flex items-center gap-1.5 shrink-0">
+            {/* Prev / Next Arrows */}
+            {/* <div className="flex items-center gap-1.5 shrink-0">
                 <button
                   onClick={handlePrev}
                   className="p-2 rounded-full bg-white/10 hover:bg-primary text-white transition-colors"
@@ -247,9 +248,7 @@ export function HeroClient() {
             <div className="text-xs sm:text-sm font-bold text-white/90 mt-0.5">
               {stat.label}
             </div>
-            <div className="text-[11px] text-white/60">
-              {stat.subtext}
-            </div>
+            <div className="text-[11px] text-white/60">{stat.subtext}</div>
           </div>
         ))}
       </div>

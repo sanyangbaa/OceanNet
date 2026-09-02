@@ -2,8 +2,17 @@ import { getProjects, getCompanyInfo } from "@/lib/data";
 import { Project } from "@/server/db";
 import { SectionHeader } from "@/components/shared/section-header";
 import { ProjectsClient } from "@/components/sections/projects-client";
+import { companyInfo as staticCompanyInfo } from "@/data/company";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata() {
+  return {
+    title: `Projects | ${staticCompanyInfo.projectsMetaTitle || "ONT"}`,
+    description:
+      staticCompanyInfo.projectsMetaDescription || "OceanNet Technologies.",
+  };
+}
 
 export default async function ProjectsPage() {
   let projects: Project[] = [];

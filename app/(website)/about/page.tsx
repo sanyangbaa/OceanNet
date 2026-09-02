@@ -6,8 +6,9 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   return {
-    title: `About Us | ${staticCompanyInfo.shortName || "ONT"}`,
-    description: staticCompanyInfo.description || "OceanNet Technologies.",
+    title: `About Us | ${staticCompanyInfo.aboutMetaTitle || "ONT"}`,
+    description:
+      staticCompanyInfo.aboutMetaDescription || "OceanNet Technologies.",
   };
 }
 
@@ -16,10 +17,7 @@ export default async function AboutPage() {
 
   return (
     <div className="pt-10 pb-10">
-      <AboutClient
-        companyInfo={staticCompanyInfo}
-        teamMembers={teamMembers}
-      />
+      <AboutClient companyInfo={staticCompanyInfo} teamMembers={teamMembers} />
     </div>
   );
 }

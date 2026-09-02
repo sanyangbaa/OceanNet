@@ -10,14 +10,13 @@ const footerLinks = [
     links: [
       { name: "About Us", href: "/about" },
       { name: "Our Projects", href: "/projects" },
-      { name: "Services", href: "/services" },
       { name: "Careers", href: "/careers" },
-      { name: "Contact Us", href: "/contact" },
+      { name: "Contact", href: "/contact" },
     ],
   },
   {
     title: "Services",
-    links: services.slice(0, 6).map((service) => ({
+    links: services.slice(0, 5).map((service) => ({
       name: service.title,
       href: `/services/${service.slug}`,
     })),
@@ -44,7 +43,7 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-sm text-white/85 leading-6 max-w-xs">
-              {companyInfo.description}
+              {companyInfo.footerDescription}
             </p>
             <div className="flex items-center gap-4">
               <a
@@ -153,7 +152,7 @@ export function Footer() {
             <div className="flex flex-col gap-4">
               <div className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-accent shrink-0" />
-                <p className="text-base text-white/85 leading-relaxed">
+                <p className="text-sm text-white/85 leading-relaxed">
                   {companyInfo.contacts.address}
                 </p>
               </div>
@@ -164,26 +163,6 @@ export function Footer() {
               <div className="flex items-center gap-3 text-base text-white/85">
                 <Mail className="h-5 w-5 text-accent" />
                 <span>{companyInfo.contacts.email}</span>
-              </div>
-            </div>
-            {/* Newsletter Simple */}
-            <div className="mt-4 flex flex-col gap-2">
-              <span className="text-xs font-semibold uppercase tracking-widest text-accent">
-                Newsletter
-              </span>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Your Email"
-                  className="bg-primary/40 border-none rounded-l-sm px-4 py-2 text-sm w-full focus:ring-1 focus:ring-accent outline-none"
-                  suppressHydrationWarning
-                />
-                <button
-                  className="bg-accent text-secondary px-4 py-2 rounded-r-sm hover:scale-105 transition-transform"
-                  suppressHydrationWarning
-                >
-                  <Send className="h-4 w-4" />
-                </button>
               </div>
             </div>
           </div>

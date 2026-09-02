@@ -57,7 +57,7 @@ export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
           >
             <div>
               <h3 className="text-3xl font-black uppercase mb-6 tracking-tight text-secondary">
-                Our History & Evolution
+                Technology Built Around Real-World Needs.
               </h3>
               <p className="text-muted-foreground leading-relaxed text-base md:text-lg mb-4 whitespace-pre-wrap">
                 {companyInfo.longDescription}
@@ -234,7 +234,7 @@ export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
       {/* Team Section with Tilt & fadeIn cards */}
       <section className="container mx-auto px-4 md:px-6 mb-24">
         <SectionHeader
-          subtitle="Our Leadership"
+          subtitle="Our Team"
           title="Meet The Team"
           description="Experienced technology professionals dedicated to delivering innovative, secure, and reliable digital solutions that empower organizations to achieve their strategic goals."
         />

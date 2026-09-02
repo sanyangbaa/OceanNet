@@ -366,12 +366,11 @@ export function CareersClient({
         </section>
 
         {/* Talent Community Callout Banner */}
-        <section className="max-w-5xl mx-auto">
+        <section className="max-w-7xl mx-auto">
           <div
             className="rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-2xl flex flex-col lg:flex-row gap-8 justify-between items-center"
             style={{
-              background:
-                "linear-gradient(135deg, #03045E 0%, #0077C8 100%)",
+              background: "linear-gradient(135deg, #03045E 0%, #0077C8 100%)",
             }}
           >
             {/* Background Glows */}
@@ -382,7 +381,7 @@ export function CareersClient({
               <span className="text-xs font-bold uppercase tracking-[0.2em] text-accent">
                 Not finding the right role?
               </span>
-              <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight leading-tight">
+              <h2 className="text-3xl md:text-5xl text-white/60 uppercase tracking-tight leading-tight">
                 Join Our Talent Community
                 <span className="text-accent">.</span>
               </h2>

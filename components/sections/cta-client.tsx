@@ -16,16 +16,16 @@ export function CTAClient({ phone = "+220 278 5585" }: { phone?: string }) {
       >
         {/* Eyebrow label */}
         <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4">
-          Ready to Transform?
+          Let’s Build What’s Next.
         </span>
         <h2 className="text-4xl md:text-6xl font-black uppercase text-secondary mb-6 leading-tight">
-          Ready to Transform <br /> Digitally?
+          Let’s Build What’s <br /> Next.
         </h2>
         <p className="text-lg font-medium text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Whether you are planning a digital transformation initiative,
-          implementing a new platform, strengthening your ICT infrastructure, or
-          seeking a trusted technology partner, OceanNet Technologies is ready
-          to help.
+          Whether you are modernising infrastructure, implementing a digital
+          platform, integrating enterprise systems or strengthening your cloud
+          environment, OceanNet can help turn your requirements into a
+          dependable operational solution.
         </p>
       </motion.div>
 
@@ -41,7 +41,7 @@ export function CTAClient({ phone = "+220 278 5585" }: { phone?: string }) {
           href="/contact"
           className="bg-primary text-white px-12 py-5 rounded-full font-black uppercase tracking-widest text-base flex items-center gap-3 transition-all hover:bg-secondary hover:text-white active:scale-95 shadow-xl shadow-primary/20 hover:scale-105 duration-300"
         >
-          Get Started Now
+          Start a Conversation
           <ArrowRight className="h-5 w-5" />
         </Link>
 
