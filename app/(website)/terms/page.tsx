@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { companyInfo } from "@/data/company";
+import { SectionHeader } from "@/components/shared/section-header";
 
 export const metadata = {
   title: `Terms of Service | ${companyInfo.name}`,
@@ -11,14 +12,15 @@ const updated = "2 September 2026";
 export default function TermsPage() {
   return (
     <article className="bg-background">
+      <SectionHeader
+        subtitle="Legal"
+        title="Terms of Service"
+        description="Terms governing use of the OceanNet Technologies website."
+        backgroundImage="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072"
+        withBackground
+      />
       <div className="container mx-auto max-w-4xl px-4 py-16 md:px-6 md:py-24">
         <header className="mb-12 border-b border-border pb-8">
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-primary">
-            Legal
-          </p>
-          <h1 className="text-4xl font-black uppercase tracking-tight text-secondary md:text-5xl">
-            Terms of Service
-          </h1>
           <p className="mt-4 text-muted-foreground">Last updated: {updated}</p>
         </header>
 
@@ -51,9 +53,9 @@ export default function TermsPage() {
               logos, graphics, images, layout, and software, belongs to OceanNet
               or its licensors and is protected by applicable intellectual
               property laws. You may view and print reasonable extracts for
-              personal, non-commercial reference. You may not reproduce,
-              modify, distribute, publish, or commercially exploit material
-              without our prior written permission.
+              personal, non-commercial reference. You may not reproduce, modify,
+              distribute, publish, or commercially exploit material without our
+              prior written permission.
             </p>
           </section>
 
@@ -63,10 +65,10 @@ export default function TermsPage() {
               We aim to keep the website accurate and useful, but descriptions,
               project examples, service information, availability, and contact
               details may change. Content is provided for general information
-              and is not professional, legal, financial, or technical advice.
-              We do not guarantee that the website or any content will always be
-              complete, current, uninterrupted, secure, or free from errors.
-              We may change, suspend, or withdraw features without notice.
+              and is not professional, legal, financial, or technical advice. We
+              do not guarantee that the website or any content will always be
+              complete, current, uninterrupted, secure, or free from errors. We
+              may change, suspend, or withdraw features without notice.
             </p>
           </section>
 
@@ -100,12 +102,18 @@ export default function TermsPage() {
             <p>
               We may update these terms by publishing a revised version on this
               page. The “Last updated” date identifies the current version. For
-              questions, contact {" "}
-              <a className="font-semibold text-primary hover:underline" href={`mailto:${companyInfo.contacts.email}`}>
+              questions, contact{" "}
+              <a
+                className="font-semibold text-primary hover:underline"
+                href={`mailto:${companyInfo.contacts.email}`}
+              >
                 {companyInfo.contacts.email}
               </a>
-              or use our {" "}
-              <Link className="font-semibold text-primary hover:underline" href="/contact">
+              or use our{" "}
+              <Link
+                className="font-semibold text-primary hover:underline"
+                href="/contact"
+              >
                 contact page
               </Link>
               .

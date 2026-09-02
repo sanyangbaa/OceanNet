@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { companyInfo } from "@/data/company";
+import { SectionHeader } from "@/components/shared/section-header";
 
 export const metadata = {
   title: `Privacy Policy | ${companyInfo.name}`,
@@ -11,14 +12,15 @@ const updated = "2 September 2026";
 export default function PrivacyPage() {
   return (
     <article className="bg-background">
+      <SectionHeader
+        subtitle="Legal"
+        title="Privacy Policy"
+        description="How OceanNet Technologies collects, uses, stores, and protects personal information."
+        backgroundImage="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072"
+        withBackground
+      />
       <div className="container mx-auto max-w-4xl px-4 py-16 md:px-6 md:py-24">
         <header className="mb-12 border-b border-border pb-8">
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-primary">
-            Legal
-          </p>
-          <h1 className="text-4xl font-black uppercase tracking-tight text-secondary md:text-5xl">
-            Privacy Policy
-          </h1>
           <p className="mt-4 text-muted-foreground">Last updated: {updated}</p>
         </header>
 
@@ -26,12 +28,18 @@ export default function PrivacyPage() {
           <p>
             OceanNet Technologies (“OceanNet”, “we”, “us”, or “our”) operates
             this website. We are a technology company based in The Gambia. For
-            privacy questions or requests, contact us at {" "}
-            <a className="font-semibold text-primary hover:underline" href={`mailto:${companyInfo.contacts.email}`}>
+            privacy questions or requests, contact us at{" "}
+            <a
+              className="font-semibold text-primary hover:underline"
+              href={`mailto:${companyInfo.contacts.email}`}
+            >
               {companyInfo.contacts.email}
             </a>
-            , call {companyInfo.contacts.phone}, or use our {" "}
-            <Link className="font-semibold text-primary hover:underline" href="/contact">
+            , call {companyInfo.contacts.phone}, or use our{" "}
+            <Link
+              className="font-semibold text-primary hover:underline"
+              href="/contact"
+            >
               contact page
             </Link>
             .
@@ -60,9 +68,15 @@ export default function PrivacyPage() {
             <p>We use submitted information to:</p>
             <ul className="mt-3 space-y-2">
               <li>respond to enquiries and provide requested information;</li>
-              <li>process and assess job applications and talent-pool submissions;</li>
-              <li>operate, secure, troubleshoot, and improve the website; and</li>
-              <li>meet legal, regulatory, and legitimate business obligations.</li>
+              <li>
+                process and assess job applications and talent-pool submissions;
+              </li>
+              <li>
+                operate, secure, troubleshoot, and improve the website; and
+              </li>
+              <li>
+                meet legal, regulatory, and legitimate business obligations.
+              </li>
             </ul>
             <p className="mt-4">
               We rely on your request or consent when you submit a form, steps
@@ -93,14 +107,16 @@ export default function PrivacyPage() {
               Depending on the deployment and configuration, OceanNet uses the
               following service providers: Netlify or Vercel for hosting and
               deployment; a PostgreSQL or MySQL provider configured through
-              <code className="mx-1 rounded bg-muted px-1.5 py-0.5 text-sm text-secondary">DATABASE_URL</code>
+              <code className="mx-1 rounded bg-muted px-1.5 py-0.5 text-sm text-secondary">
+                DATABASE_URL
+              </code>
               for application data; Resend for contact-enquiry notification
               email; and Supabase Storage or Cloudflare R2 for production file
               storage. Local development may use local file storage. These
               providers process information only as needed to provide their
-              services and may process it outside The Gambia. We use contractual,
-              organisational, and technical safeguards appropriate to the
-              service and applicable requirements.
+              services and may process it outside The Gambia. We use
+              contractual, organisational, and technical safeguards appropriate
+              to the service and applicable requirements.
             </p>
           </section>
 
@@ -109,8 +125,8 @@ export default function PrivacyPage() {
             <p>
               We retain enquiries only for as long as needed to respond, manage
               the relationship, maintain business records, and resolve disputes.
-              We retain recruitment records and CVs only for as long as needed to
-              assess an application, administer recruitment, consider future
+              We retain recruitment records and CVs only for as long as needed
+              to assess an application, administer recruitment, consider future
               opportunities where permitted, and meet legal obligations. We aim
               to review unsuccessful applicant records within 12 months and
               delete or anonymise them sooner when no longer needed, unless a
@@ -136,8 +152,11 @@ export default function PrivacyPage() {
               Subject to applicable law, you may ask us to access, correct,
               update, delete, or restrict use of your personal information, or
               object to a use based on legitimate interests. You may withdraw
-              consent where processing relies on consent. Send requests to {" "}
-              <a className="font-semibold text-primary hover:underline" href={`mailto:${companyInfo.contacts.email}`}>
+              consent where processing relies on consent. Send requests to{" "}
+              <a
+                className="font-semibold text-primary hover:underline"
+                href={`mailto:${companyInfo.contacts.email}`}
+              >
                 {companyInfo.contacts.email}
               </a>
               . We may need to verify your identity and may retain information
