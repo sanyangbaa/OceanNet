@@ -15,12 +15,17 @@ export interface Service {
   tools?: string[];
   order?: number;
   showOnHomepage?: boolean;
+  category?:
+    | "Core Digital Capabilities"
+    | "Infrastructure & Platforms"
+    | "Specialised & Managed Services";
 }
 
 export const services: Service[] = [
   {
     id: "digital-solutions",
     title: "Digital Solutions",
+    category: "Core Digital Capabilities",
     showOnHomepage: true,
     slug: "digital-solutions",
     description:
@@ -102,6 +107,7 @@ Our digital solutions are designed around business objectives, ensuring that tec
   {
     id: "systems-integration",
     title: "Systems Integration",
+    category: "Core Digital Capabilities",
     showOnHomepage: true,
     slug: "systems-integration",
     description:
@@ -179,6 +185,7 @@ OceanNet Technologies helps organizations connect systems, automate information 
   {
     id: "digital-health",
     title: "Digital Health",
+    category: "Core Digital Capabilities",
     showOnHomepage: true,
     slug: "digital-health-solutions",
     description:
@@ -253,6 +260,7 @@ OceanNet Technologies supports governments, healthcare institutions, and develop
   {
     id: "enterprise-software",
     title: "Enterprise Software",
+    category: "Core Digital Capabilities",
     showOnHomepage: true,
     slug: "enterprise-software-solutions",
     description:
@@ -325,6 +333,7 @@ OceanNet Technologies works with organizations to implement solutions that align
   {
     id: "networking",
     title: "ICT Infrastructure & Networking",
+    category: "Infrastructure & Platforms",
     showOnHomepage: true,
     slug: "networking-solutions",
     description:
@@ -401,6 +410,7 @@ OceanNet Technologies designs and deploys secure, scalable, and resilient networ
   {
     id: "ict-infrastructure",
     title: "ICT Infrastructure Solutions",
+    category: "Infrastructure & Platforms",
     slug: "ict-infrastructure-solutions",
     description:
       "We design and implement robust ICT infrastructure solutions that support business continuity, operational efficiency, and digital transformation.",
@@ -477,7 +487,9 @@ Whether deploying new infrastructure or modernizing existing environments, we de
   },
   {
     id: "cybersecurity",
-    title: "Cybersecurity Solutions",
+    title: "Cybersecurity & Cloud",
+    category: "Infrastructure & Platforms",
+    showOnHomepage: true,
     slug: "cybersecurity-solutions",
     description:
       "We help organizations identify risks, strengthen defenses, improve resilience, and protect critical systems, data, and operations.",
@@ -548,6 +560,7 @@ OceanNet Technologies provides practical cybersecurity solutions that help organ
   {
     id: "cloud-solutions",
     title: "Cloud Solutions",
+    category: "Infrastructure & Platforms",
     slug: "cloud-solutions",
     description:
       "We help organizations leverage cloud technologies to improve flexibility, scalability, collaboration, security, and operational efficiency.",
@@ -619,6 +632,7 @@ OceanNet Technologies helps clients plan, migrate, implement, and manage cloud s
   {
     id: "gis-solutions",
     title: "GIS Solutions",
+    category: "Specialised & Managed Services",
     slug: "gis-solutions",
     description:
       "We help organizations leverage Geographic Information Systems (GIS) and spatial technologies to improve planning, decision-making, resource management, and service delivery.",
@@ -696,6 +710,7 @@ OceanNet Technologies delivers GIS solutions that enable organizations to collec
   {
     id: "ai-data-analytics",
     title: "AI & Data Analytics",
+    category: "Specialised & Managed Services",
     slug: "ai-data-analytics",
     description:
       "We help organizations unlock the value of their data through analytics, visualization, artificial intelligence, and data-driven decision-making.",
@@ -777,6 +792,7 @@ OceanNet Technologies helps organizations collect, manage, analyze, and visualiz
   {
     id: "managed-services",
     title: "Managed Services",
+    category: "Specialised & Managed Services",
     slug: "managed-services",
     description:
       "We provide proactive managed services that help organizations maintain reliable, secure, and high-performing technology environments.",
@@ -843,6 +859,7 @@ Our managed services approach emphasizes reliability, responsiveness, security, 
   {
     id: "ict-procurement",
     title: "ICT Procurement Solutions",
+    category: "Specialised & Managed Services",
     slug: "ict-procurement-solutions",
     description:
       "We help organizations source, acquire, deploy, and support technology solutions that meet operational requirements, budget expectations, and long-term objectives.",

@@ -14,6 +14,11 @@ export async function generateMetadata() {
 export default async function ServicesPage() {
   // Using static data from data/services.ts
   const servicesData = services;
+  const categories = [
+    "Core Digital Capabilities",
+    "Infrastructure & Platforms",
+    "Specialised & Managed Services",
+  ] as const;
 
   return (
     <div className="pt-14 pb-12">
@@ -28,10 +33,34 @@ export default async function ServicesPage() {
 
       {/* Services List */}
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch pt-16">
-          {servicesData.map((service, idx) => (
-            <ServiceCardClient key={service.id} service={service} index={idx} />
-          ))}
+        <div className="space-y-16 pt-6 md:pt-10">
+          {categories.map((category) => {
+            const categoryServices = servicesData.filter(
+              (service) => service.category === category,
+            );
+
+            return (
+              <section key={category} aria-labelledby={`${category}-heading`}>
+                <div className="mb-8 border-l-4 border-primary pl-4">
+                  <h2
+                    id={`${category}-heading`}
+                    className="text-2xl md:text-3xl font-black text-secondary"
+                  >
+                    {category}
+                  </h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                  {categoryServices.map((service, idx) => (
+                    <ServiceCardClient
+                      key={service.id}
+                      service={service}
+                      index={idx}
+                    />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
         </div>
       </div>
     </div>
