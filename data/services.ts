@@ -14,12 +14,14 @@ export interface Service {
   typicalDeliverables?: string[];
   tools?: string[];
   order?: number;
+  showOnHomepage?: boolean;
 }
 
 export const services: Service[] = [
   {
     id: "digital-solutions",
     title: "Digital Solutions",
+    showOnHomepage: true,
     slug: "digital-solutions",
     description:
       "We design and implement innovative digital solutions that help organizations modernize operations, improve efficiency, enhance service delivery, and accelerate digital transformation.",
@@ -100,6 +102,7 @@ Our digital solutions are designed around business objectives, ensuring that tec
   {
     id: "systems-integration",
     title: "Systems Integration",
+    showOnHomepage: true,
     slug: "systems-integration",
     description:
       "We integrate applications, platforms, databases, and technologies to create seamless digital ecosystems that improve efficiency, visibility, and performance.",
@@ -175,7 +178,8 @@ OceanNet Technologies helps organizations connect systems, automate information 
   },
   {
     id: "digital-health",
-    title: "Digital Health Solutions",
+    title: "Digital Health",
+    showOnHomepage: true,
     slug: "digital-health-solutions",
     description:
       "We help healthcare organizations leverage digital technologies to improve health outcomes, strengthen service delivery, and support data-driven decision-making.",
@@ -248,7 +252,8 @@ OceanNet Technologies supports governments, healthcare institutions, and develop
   },
   {
     id: "enterprise-software",
-    title: "Enterprise Software Solutions",
+    title: "Enterprise Software",
+    showOnHomepage: true,
     slug: "enterprise-software-solutions",
     description:
       "We help organizations deploy, integrate, and optimize enterprise software solutions that improve efficiency, productivity, and decision-making.",
@@ -319,7 +324,8 @@ OceanNet Technologies works with organizations to implement solutions that align
   },
   {
     id: "networking",
-    title: "Networking Solutions",
+    title: "ICT Infrastructure & Networking",
+    showOnHomepage: true,
     slug: "networking-solutions",
     description:
       "We design, implement, optimize, and support modern network infrastructures that enable organizations to communicate, collaborate, and operate efficiently.",

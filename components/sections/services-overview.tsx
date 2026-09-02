@@ -1,12 +1,9 @@
-import { db } from "@/lib/db";
+import { services } from "@/data/services";
 import { SectionHeader } from "@/components/shared/section-header";
 import { ServicesOverviewClient } from "./services-overview-client";
 
 export async function ServicesOverview() {
-  const services = await db.service.findMany({
-    take: 6,
-    orderBy: { createdAt: "asc" },
-  });
+  const homepageServices = services.slice(0, 6);
 
   return (
     <section className="py-14 md:py-20 overflow-hidden bg-white">
@@ -16,7 +13,7 @@ export async function ServicesOverview() {
           title="What We Do"
           description="Delivering end-to-end technology solutions that modernize operations, improve efficiency, and accelerate digital transformation."
         />
-        <ServicesOverviewClient services={services} />
+        <ServicesOverviewClient services={homepageServices} />
         <div className="mt-12 md:mt-16 text-center">
           <a
             href="/services"
