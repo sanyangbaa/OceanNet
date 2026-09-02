@@ -31,7 +31,7 @@ export interface ContactClientProps {
   };
 }
 
-export function ContactClient() {
+export function ContactClient({ companyInfo }: ContactClientProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
