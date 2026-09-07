@@ -47,14 +47,15 @@ export const companyInfo = {
 
   servicesMetaTitle: "Technology Services | OceanNet Technologies",
   servicesMetaDescription:
-    "Services	Technology Services | OceanNet Technologies	Explore OceanNet's digital solutions, systems integration, digital health, enterprise software, cloud, cybersecurity, networking, GIS and managed ICT services.",
+    "Explore OceanNet's digital solutions, systems integration, digital health, enterprise software, cloud, cybersecurity, networking, GIS and managed ICT services.",
 
   projectsMetaTitle: "Technology Projects & Experience | OceanNet Technologies",
   projectsMetaDescription:
     "Explore selected OceanNet projects across digital government, digital health, cloud services, enterprise infrastructure and managed ICT.",
 
-  careerMetaTitle: "Career",
-  careerMetaDescription: "Career",
+  careerMetaTitle: "Careers at OceanNet Technologies | The Gambia",
+  careerMetaDescription:
+    "Join the OceanNet Technologies team. We are building a multidisciplinary team working across software, systems integration, cloud, infrastructure and digital transformation in The Gambia.",
 
   contactMetaTitle: "Contact OceanNet Technologies | The Gambia",
   contactMetaDescription:

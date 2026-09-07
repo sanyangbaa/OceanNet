@@ -70,8 +70,8 @@ export function ServicesOverviewClient({ services }: { services: Service[] }) {
               className="flex-shrink-0 w-[95%] sm:w-[450px] md:w-auto snap-center flex flex-col"
             >
               <Tilt
-                options={{ max: 45, scale: 1.02, speed: 450 }}
-                className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 border border-border flex flex-col justify-between items-start h-full"
+                options={{ max: 15, scale: 1.02, speed: 450 }}
+                className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-border flex flex-col justify-between items-start h-full"
               >
                 <div className="w-full">
                   {/* Icon Container */}

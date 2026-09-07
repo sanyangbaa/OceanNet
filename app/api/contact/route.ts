@@ -26,7 +26,12 @@ function escapeHtml(value: string) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { name, email, phone, subject, message } = body;
+    const { name, email, phone, subject, message, website, hp_field } = body;
+
+    // Silent honeypot bot check
+    if (website || hp_field) {
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
 
     if (
       !name ||

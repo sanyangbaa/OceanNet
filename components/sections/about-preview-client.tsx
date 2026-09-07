@@ -34,7 +34,7 @@ export function AboutPreviewClient() {
         {/* Floating Experience Card with Tilt */}
         <div className="absolute -bottom-10 -right-10 hidden md:block z-20">
           <Tilt
-            options={{ max: 45, scale: 1.05, speed: 450 }}
+            options={{ max: 15, scale: 1.02, speed: 450 }}
             className="bg-primary p-8 rounded-2xl shadow-lg border-2 border-white/20"
           >
             <span className="text-5xl font-black text-white leading-none block">

@@ -5,9 +5,11 @@ import { companyInfo as staticCompanyInfo } from "@/data/company";
 
 export async function generateMetadata() {
   return {
-    title: `Services | ${staticCompanyInfo.servicesMetaTitle || "ONT"}`,
+    title: staticCompanyInfo.servicesMetaTitle || "Technology Services | OceanNet Technologies",
     description:
-      staticCompanyInfo.servicesMetaDescription || "OceanNet Technologies.",
+      staticCompanyInfo.servicesMetaDescription ||
+      "Explore OceanNet's digital solutions, systems integration, digital health, enterprise software, cloud, cybersecurity, networking, GIS and managed ICT services.",
+    alternates: { canonical: "/services" },
   };
 }
 

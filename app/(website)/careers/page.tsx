@@ -5,9 +5,11 @@ import { companyInfo as staticCompanyInfo } from "@/data/company";
 
 export async function generateMetadata() {
   return {
-    title: `Careers | ${staticCompanyInfo.careerMetaTitle || "ONT"}`,
+    title: staticCompanyInfo.careerMetaTitle || "Careers at OceanNet Technologies | The Gambia",
     description:
-      staticCompanyInfo.careerMetaDescription || "OceanNet Technologies.",
+      staticCompanyInfo.careerMetaDescription ||
+      "Join the OceanNet Technologies team. We are building a multidisciplinary team working across software, systems integration, cloud, infrastructure and digital transformation in The Gambia.",
+    alternates: { canonical: "/careers" },
   };
 }
 

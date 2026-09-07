@@ -89,7 +89,7 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
                     viewport={{ once: true }}
                   >
                     <Tilt
-                      options={{ max: 25, scale: 1.02, speed: 450 }}
+                      options={{ max: 15, scale: 1.02, speed: 450 }}
                       className="bg-white p-4 rounded-xl border border-border shadow-sm flex items-start h-full"
                     >
                       <span className="w-2.5 h-2.5 rounded-full bg-accent mt-2 mr-3 shrink-0" />
@@ -125,7 +125,7 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
                     viewport={{ once: true }}
                   >
                     <Tilt
-                      options={{ max: 20, scale: 1.01, speed: 450 }}
+                      options={{ max: 15, scale: 1.01, speed: 450 }}
                       className="bg-white p-6 rounded-2xl border border-border border-l-4 border-l-primary shadow-sm hover:shadow-lg transition-all"
                     >
                       <h3 className="text-lg font-bold text-secondary mb-2">
@@ -163,7 +163,7 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
                     viewport={{ once: true }}
                   >
                     <Tilt
-                      options={{ max: 25, scale: 1.02, speed: 450 }}
+                      options={{ max: 15, scale: 1.02, speed: 450 }}
                       className="bg-white p-4 rounded-xl border border-border shadow-sm flex items-start h-full"
                     >
                       <span className="w-2.5 h-2.5 rounded-full bg-accent mt-2 mr-3 shrink-0" />
@@ -224,7 +224,7 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
                     viewport={{ once: true }}
                   >
                     <Tilt
-                      options={{ max: 20, scale: 1.02, speed: 450 }}
+                      options={{ max: 15, scale: 1.02, speed: 450 }}
                       className="bg-white p-3.5 rounded-xl border border-border flex items-center shadow-sm"
                     >
                       <span className="w-2.5 h-2.5 rounded-full bg-accent mr-3 shrink-0" />
@@ -253,17 +253,17 @@ export function ServiceDetailClient({ service }: ServiceDetailClientProps) {
             <AnimatedBubbles count={12} variant="mixed" />
             <div className="relative z-10">
               <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight mb-4 text-white">
-                Ready to get started?
+                Ready to Discuss Your Requirements?
               </h2>
               <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-                Contact us to discuss how {service.title} can help your
-                organization.
+                Contact our team to discuss how {service.title} can support
+                your organisation.
               </p>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 bg-white text-secondary hover:bg-secondary hover:text-white font-bold px-8 py-3.5 rounded-full transition-all shadow-lg hover:scale-105 active:scale-95 duration-300 uppercase tracking-wider text-sm"
               >
-                Get in Touch
+                Talk to Us
                 <ArrowRight size={18} />
               </Link>
             </div>

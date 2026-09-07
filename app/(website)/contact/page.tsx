@@ -6,9 +6,11 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   return {
-    title: `Contacts | ${staticCompanyInfo.contactMetaTitle || "ONT"}`,
+    title: staticCompanyInfo.contactMetaTitle || "Contact OceanNet Technologies | The Gambia",
     description:
-      staticCompanyInfo.contactMetaDescription || "OceanNet Technologies.",
+      staticCompanyInfo.contactMetaDescription ||
+      "Contact OceanNet Technologies to discuss software, systems integration, cloud, infrastructure, cybersecurity and managed ICT requirements.",
+    alternates: { canonical: "/contact" },
   };
 }
 

@@ -22,6 +22,7 @@ export interface Service {
 }
 
 export const services: Service[] = [
+  // ─── CORE DIGITAL CAPABILITIES ───────────────────────────────────────────
   {
     id: "digital-solutions",
     title: "Digital Solutions",
@@ -29,78 +30,62 @@ export const services: Service[] = [
     showOnHomepage: true,
     slug: "digital-solutions",
     description:
-      "We design and implement innovative digital solutions that help organizations modernize operations, improve efficiency, enhance service delivery, and accelerate digital transformation.",
-    detailText: `Organizations today face increasing pressure to improve efficiency, deliver better services, and adapt to rapidly changing digital environments.
+      "Custom digital platforms and applications designed around organisational processes, users and service-delivery objectives.",
+    detailText: `Digital platforms designed around the way your organisation actually works.
 
-OceanNet Technologies helps organizations transform manual and fragmented processes into modern digital solutions that improve productivity, transparency, collaboration, and decision-making.
+OceanNet Technologies helps organisations transform manual and fragmented processes into modern digital solutions that improve productivity, transparency, collaboration and decision-making.
 
 Our digital solutions are designed around business objectives, ensuring that technology delivers measurable value and sustainable impact.`,
     icon: "Code2",
     challenges: [
-      "Manual and paper-based processes",
-      "Inefficient workflows",
-      "Data silos and fragmented information",
+      "Manual and fragmented processes",
+      "Disconnected information and workflows",
       "Limited visibility into operations",
-      "Poor customer or citizen experience",
-      "Lack of automation",
-      "Limited reporting and analytics capabilities",
+      "Legacy tools that no longer meet service needs",
     ],
     solutions: [
       {
-        title: "Business Process Automation",
-        description: "Automating repetitive tasks and workflows.",
-      },
-      {
-        title: "Digital Service Platforms",
+        title: "Custom Web and Business Applications",
         description:
-          "Building platforms that improve service delivery and stakeholder engagement.",
+          "Tailored applications built around your specific operational requirements and user journeys.",
       },
       {
-        title: "Workflow Management Systems",
-        description: "Digitizing and streamlining operational processes.",
-      },
-      {
-        title: "Custom Digital Applications",
+        title: "Workflow Digitisation and Automation",
         description:
-          "Developing solutions tailored to specific business needs.",
+          "Converting manual, paper-heavy processes into efficient digital workflows.",
       },
       {
-        title: "Reporting & Dashboards",
+        title: "Digital Service Portals",
         description:
-          "Providing real-time visibility into organizational performance.",
+          "Online platforms that improve how services are delivered to staff, citizens and stakeholders.",
       },
       {
-        title: "Mobile Solutions",
+        title: "Database-Backed Operational Systems",
         description:
-          "Extending services through mobile platforms and applications.",
+          "Structured data platforms that give visibility and control over core operations.",
+      },
+      {
+        title: "Mobile and Field-Data Solutions",
+        description:
+          "Extending digital capability to field teams and mobile users.",
+      },
+      {
+        title: "Application Modernisation",
+        description:
+          "Replacing or upgrading legacy systems to modern, maintainable platforms.",
       },
     ],
     benefits: [
-      "Increased operational efficiency",
-      "Faster service delivery",
-      "Improved transparency",
-      "Better decision-making",
-      "Reduced manual effort",
-      "Enhanced user experience",
-      "Greater scalability",
-    ],
-    typicalDeliverables: [
-      "Digital transformation assessments",
-      "Business process reviews",
-      "Workflow automation solutions",
-      "Web-based platforms",
-      "Mobile applications",
-      "Reporting dashboards",
-      "User training and support",
+      "Improved service delivery",
+      "Reduced manual work",
+      "Better data visibility",
+      "Scalable systems designed for future integration",
     ],
     industriesServed: [
       "Government",
+      "Development programmes",
       "Healthcare",
-      "Telecommunications",
-      "Financial Services",
-      "Education",
-      "Development Organizations",
-      "Private Sector",
+      "Private enterprise",
     ],
     order: 1,
   },
@@ -111,449 +96,431 @@ Our digital solutions are designed around business objectives, ensuring that tec
     showOnHomepage: true,
     slug: "systems-integration",
     description:
-      "We integrate applications, platforms, databases, and technologies to create seamless digital ecosystems that improve efficiency, visibility, and performance.",
-    detailText: `Many organizations operate multiple systems that do not communicate effectively with one another.
+      "Connect applications, data and platforms into one dependable digital environment.",
+    detailText: `Connect applications, data and platforms into one dependable digital environment.
 
-This results in duplicate data entry, inconsistent information, inefficiencies, and limited visibility.
+Many organisations operate multiple systems that do not communicate effectively with one another, resulting in duplicate data entry, inconsistent information, inefficiencies and limited visibility.
 
-OceanNet Technologies helps organizations connect systems, automate information exchange, and create integrated environments that support informed decision-making and efficient operations.`,
+OceanNet Technologies helps organisations connect systems, automate information exchange and create integrated environments that support informed decision-making and efficient operations.`,
     icon: "Building2",
     challenges: [
-      "Disconnected business systems",
-      "Duplicate data entry",
-      "Inconsistent information",
-      "Manual data transfers",
-      "Reporting challenges",
-      "Poor interoperability",
-      "Limited visibility across departments",
+      "Disconnected applications and duplicated data",
+      "Manual data transfer",
+      "Legacy systems with limited interoperability",
+      "Cloud and on-premise systems operating in silos",
     ],
     solutions: [
       {
-        title: "Application Integration",
-        description: "Connecting enterprise applications and platforms.",
-      },
-      {
-        title: "API Integration",
+        title: "REST API Integration",
         description:
-          "Designing and implementing secure API-based integrations.",
+          "Designing and implementing secure, standards-based API connections between systems.",
       },
       {
-        title: "Data Integration",
-        description: "Synchronizing information across multiple systems.",
+        title: "Database and Data Integration",
+        description:
+          "Synchronising and consolidating information across multiple data sources.",
       },
       {
-        title: "Enterprise Service Integration",
-        description: "Building interoperable technology environments.",
+        title: "Cloud/On-Premise Integration",
+        description:
+          "Connecting cloud services with existing on-premise infrastructure and applications.",
       },
       {
-        title: "Cloud-to-On-Premise Integration",
-        description: "Connecting cloud services with existing infrastructure.",
+        title: "Identity and Access Integration",
+        description:
+          "Centralising authentication and access control across connected systems.",
       },
       {
-        title: "Platform Modernization",
-        description: "Enhancing existing systems through integration.",
+        title: "Legacy System Integration",
+        description:
+          "Extending and connecting older systems without full replacement.",
+      },
+      {
+        title: "Integration Architecture and Technical Advisory",
+        description:
+          "Designing integration strategies and roadmaps aligned with business objectives.",
       },
     ],
     benefits: [
-      "Improved efficiency",
-      "Better data quality",
-      "Reduced operational costs",
-      "Enhanced visibility",
-      "Faster decision-making",
-      "Improved interoperability",
-      "Greater business agility",
-    ],
-    typicalDeliverables: [
-      "Integration architecture design",
-      "API development",
-      "Data migration",
-      "Data synchronization",
-      "Integration testing",
-      "Documentation",
-      "User training",
+      "Consistent data across systems",
+      "Fewer manual handoffs",
+      "Improved automation",
+      "Stronger operational visibility",
     ],
     industriesServed: [
       "Government",
       "Healthcare",
-      "Telecommunications",
-      "Financial Services",
-      "Utilities",
-      "Development Organizations",
+      "Enterprise",
+      "Development programmes",
     ],
     order: 2,
   },
   {
     id: "digital-health",
-    title: "Digital Health",
+    title: "Digital Health Solutions",
     category: "Core Digital Capabilities",
     showOnHomepage: true,
     slug: "digital-health-solutions",
     description:
-      "We help healthcare organizations leverage digital technologies to improve health outcomes, strengthen service delivery, and support data-driven decision-making.",
-    detailText: `Digital health technologies play a critical role in improving healthcare delivery, disease surveillance, public health response, supply chain management, and health information management.
+      "Digital health platforms that strengthen surveillance, information flow and public-health operations.",
+    detailText: `Digital health platforms that strengthen surveillance, information flow and public-health operations.
 
-OceanNet Technologies supports governments, healthcare institutions, and development organizations in implementing innovative digital health solutions that improve efficiency, transparency, and impact.`,
+Digital health technologies play a critical role in improving healthcare delivery, disease surveillance, public health response, supply chain management and health information management.
+
+OceanNet Technologies supports governments, healthcare institutions and development organisations in implementing digital health solutions that improve efficiency, transparency and impact.`,
     icon: "Shield",
     challenges: [
-      "Fragmented health information systems",
-      "Limited visibility into health data",
-      "Disease surveillance challenges",
-      "Supply chain inefficiencies",
-      "Manual reporting processes",
+      "Fragmented health information",
+      "Manual surveillance workflows",
       "Limited interoperability",
-      "Delayed decision-making",
+      "Weak technical capacity for platform administration",
     ],
     solutions: [
       {
-        title: "Disease Surveillance Platforms",
+        title: "Disease Surveillance and Outbreak-Response Platforms",
         description:
-          "Implementation and support of disease monitoring and response systems.",
+          "Implementation and support of platforms such as SORMAS for national disease monitoring and response.",
       },
       {
         title: "Health Information Systems",
         description:
-          "Deployment and integration of health information platforms.",
+          "Deployment and integration of health information platforms including DHIS2 and related tools.",
       },
       {
-        title: "Supply Chain Solutions",
+        title: "Health Supply-Chain Solutions",
         description:
           "Supporting efficient management of health commodities and medicines.",
       },
       {
-        title: "Data Analytics & Reporting",
-        description: "Providing insights for evidence-based decision-making.",
+        title: "Interoperability and API Integration",
+        description:
+          "Connecting health information systems and enabling data exchange across platforms.",
       },
       {
-        title: "Interoperability Solutions",
-        description: "Connecting health information systems and data sources.",
+        title: "Deployment and Infrastructure Support",
+        description:
+          "Server configuration, hosting, network and infrastructure support for health platforms.",
       },
       {
-        title: "Training & Capacity Building",
-        description: "Strengthening user adoption and sustainability.",
+        title: "Training, System Administration and Operational Support",
+        description:
+          "Building local capacity through training, mentoring and ongoing technical support.",
       },
     ],
     benefits: [
-      "Improved health outcomes",
-      "Enhanced disease surveillance",
-      "Better resource utilization",
-      "Stronger reporting capabilities",
-      "Faster response to public health events",
-      "Increased data quality",
+      "Faster information flow",
+      "Improved surveillance and response",
+      "Better data quality",
+      "Sustainable local administration",
     ],
-    technologies: [
-      "SORMAS",
-      "DHIS2",
-      "OpenLMIS",
-      "GIS Platforms",
-      "Analytics Solutions",
-    ],
-    typicalDeliverables: [
-      "System deployment",
-      "Configuration and customization",
-      "Training and change management",
-      "Systems integration",
-      "Reporting dashboards",
-      "Technical support",
+    technologies: ["SORMAS", "DHIS2", "OpenLMIS", "GIS Platforms", "PostgreSQL"],
+    industriesServed: [
+      "Ministries of Health",
+      "Public-health programmes",
+      "Health facilities",
+      "Development partners",
     ],
     order: 3,
   },
   {
     id: "enterprise-software",
-    title: "Enterprise Software",
+    title: "Enterprise Software Solutions",
     category: "Core Digital Capabilities",
     showOnHomepage: true,
     slug: "enterprise-software-solutions",
     description:
-      "We help organizations deploy, integrate, and optimize enterprise software solutions that improve efficiency, productivity, and decision-making.",
-    detailText: `Enterprise software solutions provide organizations with the tools needed to manage operations, streamline workflows, improve collaboration, and support strategic growth.
+      "Enterprise applications that improve workflows, collaboration and operational control.",
+    detailText: `Enterprise applications that improve workflows, collaboration and operational control.
 
-OceanNet Technologies works with organizations to implement solutions that align technology investments with business objectives.`,
+Enterprise software solutions provide organisations with the tools needed to manage operations, streamline workflows, improve collaboration and support strategic growth.
+
+OceanNet Technologies works with organisations to implement solutions that align technology investments with business objectives, ensuring sustainable outcomes.`,
     icon: "Laptop",
     challenges: [
-      "Inefficient business processes",
-      "Limited visibility into operations",
-      "Fragmented information",
-      "Manual reporting",
-      "Lack of scalability",
-      "Poor collaboration",
+      "Manual approvals and paper-heavy processes",
+      "Disconnected departmental tools",
+      "Limited reporting",
+      "Legacy systems that constrain growth",
     ],
     solutions: [
       {
-        title: "Enterprise Resource Planning (ERP)",
-        description: "Integrated platforms for managing business operations.",
-      },
-      {
-        title: "Human Resource Management Systems",
-        description: "Modern workforce management solutions.",
-      },
-      {
-        title: "Document Management Systems",
+        title: "ERP and Business Systems",
         description:
-          "Secure storage and management of organizational information.",
+          "Integrated platforms for managing core business operations across departments.",
+      },
+      {
+        title: "HRMIS",
+        description:
+          "Modern human resource and workforce management solutions.",
+      },
+      {
+        title: "Document and Records Management",
+        description:
+          "Secure storage, retrieval and lifecycle management of organisational documents.",
       },
       {
         title: "Workflow Automation",
-        description: "Digitizing and automating business processes.",
+        description:
+          "Digitising and automating approval processes and operational workflows.",
       },
       {
         title: "Collaboration Platforms",
-        description: "Improving communication and teamwork.",
+        description:
+          "Improving communication, teamwork and information sharing across teams.",
       },
       {
-        title: "Reporting & Analytics",
-        description: "Delivering actionable business insights.",
+        title: "Reporting and Analytics",
+        description:
+          "Delivering actionable management information and performance insights.",
+      },
+      {
+        title: "Custom Enterprise Applications",
+        description:
+          "Bespoke applications built around specific organisational requirements.",
+      },
+      {
+        title: "Legacy System Modernisation",
+        description:
+          "Upgrading and replacing systems that constrain operational growth.",
       },
     ],
     benefits: [
-      "Improved efficiency",
-      "Better visibility",
-      "Enhanced collaboration",
-      "Reduced operational costs",
-      "Stronger compliance",
-      "Increased scalability",
-    ],
-    typicalDeliverables: [
-      "Solution assessment",
-      "System implementation",
-      "Integration services",
-      "Data migration",
-      "User training",
-      "Support and maintenance",
+      "Standardised processes",
+      "Improved productivity",
+      "Better management information",
+      "Secure and scalable operations",
     ],
     industriesServed: [
       "Government",
-      "Healthcare",
-      "Telecommunications",
-      "Financial Services",
-      "Education",
-      "Private Sector",
+      "Enterprise",
+      "NGOs",
+      "Project implementation units",
     ],
     order: 4,
   },
+
+  // ─── INFRASTRUCTURE & PLATFORMS ──────────────────────────────────────────
   {
     id: "networking",
-    title: "ICT Infrastructure & Networking",
+    title: "Networking Solutions",
     category: "Infrastructure & Platforms",
     showOnHomepage: true,
     slug: "networking-solutions",
     description:
-      "We design, implement, optimize, and support modern network infrastructures that enable organizations to communicate, collaborate, and operate efficiently.",
-    detailText: `A reliable network is the foundation of every modern organization. From internet connectivity and wireless access to enterprise-wide communication and cloud services, network performance directly impacts productivity and business operations.
+      "Secure and resilient connectivity for offices, campuses and distributed operations.",
+    detailText: `Secure and resilient connectivity for offices, campuses and distributed operations.
 
-OceanNet Technologies designs and deploys secure, scalable, and resilient networking solutions that support current needs while preparing organizations for future growth.`,
+A reliable network is the foundation of every modern organisation. From internet connectivity and wireless access to enterprise-wide communication and cloud services, network performance directly impacts productivity and operations.
+
+OceanNet Technologies designs and deploys secure, scalable and resilient networking solutions that support current needs while preparing organisations for future growth.`,
     icon: "BarChart3",
     challenges: [
-      "Poor network performance",
       "Unreliable connectivity",
-      "Limited wireless coverage",
-      "Network security vulnerabilities",
-      "Complex multi-site environments",
-      "Lack of visibility into network operations",
-      "Scalability challenges",
+      "Poor wireless coverage",
+      "Unstructured or ageing networks",
+      "Limited network visibility and security",
     ],
     solutions: [
       {
-        title: "Enterprise Network Design",
-        description: "Designing secure and scalable network architectures.",
-      },
-      {
-        title: "Wireless Networking",
-        description: "Deployment of enterprise-grade Wi-Fi solutions.",
-      },
-      {
-        title: "Network Optimization",
-        description: "Improving network performance and reliability.",
-      },
-      {
-        title: "Multi-Site Connectivity",
-        description: "Connecting branches, offices, and remote locations.",
-      },
-      {
-        title: "Network Monitoring",
+        title: "LAN/WAN Design",
         description:
-          "Providing visibility into network health and performance.",
+          "Designing structured, scalable local and wide-area network architectures.",
       },
       {
-        title: "Network Security Integration",
+        title: "Structured Cabling",
         description:
-          "Implementing secure access and traffic management controls.",
+          "Professional cabling installation and infrastructure for reliable physical connectivity.",
+      },
+      {
+        title: "Enterprise Wi-Fi",
+        description:
+          "Deployment of enterprise-grade wireless access with consistent coverage.",
+      },
+      {
+        title: "Routing, Switching and Firewall Integration",
+        description:
+          "Configuring core network components for performance, security and control.",
+      },
+      {
+        title: "Site-to-Site Connectivity and VPN",
+        description:
+          "Connecting offices, branches and remote locations securely.",
+      },
+      {
+        title: "Network Assessment and Optimisation",
+        description:
+          "Evaluating existing networks and improving performance, security and reliability.",
       },
     ],
     benefits: [
-      "Improved reliability",
-      "Better performance",
-      "Enhanced user experience",
-      "Increased productivity",
-      "Stronger security",
-      "Simplified management",
-      "Future-ready infrastructure",
+      "Reliable connectivity",
+      "Improved performance",
+      "Better security",
+      "Simpler support and expansion",
     ],
     technologies: [
       "Cisco",
       "Ubiquiti UniFi",
       "MikroTik",
+      "Fortinet",
       "Enterprise Switching Platforms",
-      "Wireless Controllers",
       "VPN Technologies",
     ],
-    typicalDeliverables: [
-      "Network assessments",
-      "Network architecture designs",
-      "Wireless surveys",
-      "Network deployment",
-      "Configuration and optimization",
-      "Monitoring solutions",
-      "Documentation and training",
+    industriesServed: [
+      "Offices",
+      "Government facilities",
+      "Healthcare",
+      "Education",
+      "Enterprise",
     ],
     order: 5,
   },
   {
     id: "ict-infrastructure",
-    title: "ICT Infrastructure Solutions",
+    title: "ICT Infrastructure",
     category: "Infrastructure & Platforms",
     slug: "ict-infrastructure-solutions",
     description:
-      "We design and implement robust ICT infrastructure solutions that support business continuity, operational efficiency, and digital transformation.",
-    detailText: `Technology infrastructure serves as the backbone of every digital organization.
+      "Reliable infrastructure for the systems your organisation depends on.",
+    detailText: `Reliable infrastructure for the systems your organisation depends on.
 
-OceanNet Technologies helps organizations build resilient, secure, and scalable ICT environments that support critical business systems and future growth.
+Technology infrastructure serves as the backbone of every digital organisation. OceanNet Technologies helps organisations build resilient, secure and scalable ICT environments that support critical business systems and future growth.
 
-Whether deploying new infrastructure or modernizing existing environments, we deliver solutions aligned with business objectives and industry best practices.`,
+Whether deploying new infrastructure or modernising existing environments, we deliver solutions aligned with business objectives and industry best practices.`,
     icon: "Building2",
     challenges: [
-      "Aging infrastructure",
-      "Limited scalability",
-      "Poor system availability",
-      "Business continuity risks",
-      "Data protection concerns",
-      "Performance bottlenecks",
-      "Infrastructure complexity",
+      "Ageing equipment",
+      "Inadequate compute/storage capacity",
+      "Weak backup and power protection",
+      "Poorly planned server and end-user environments",
     ],
     solutions: [
       {
-        title: "Server Infrastructure",
+        title: "Server and Storage Infrastructure",
         description:
-          "Deployment and management of enterprise server environments.",
+          "Deployment and management of enterprise server and storage environments.",
       },
       {
-        title: "Data Center Solutions",
+        title: "End-User Computing",
         description:
-          "Design and implementation of modern data center infrastructure.",
+          "Sourcing, deployment and support of workstations, laptops and peripherals.",
       },
       {
-        title: "Virtualization Platforms",
+        title: "Data-Centre and Server-Room Solutions",
         description:
-          "Improving efficiency through virtualization technologies.",
+          "Design and implementation of structured server and data-centre environments.",
       },
       {
-        title: "Backup & Recovery Solutions",
-        description: "Protecting critical organizational data.",
+        title: "Backup and NAS Solutions",
+        description:
+          "Protecting critical organisational data with reliable backup and network-attached storage.",
       },
       {
-        title: "Business Continuity Solutions",
-        description: "Reducing operational risk and downtime.",
+        title: "UPS and Power Protection",
+        description:
+          "Ensuring system availability through uninterruptible power supply and power conditioning.",
       },
       {
-        title: "Infrastructure Modernization",
-        description: "Upgrading legacy environments to modern platforms.",
+        title: "Infrastructure Assessment and Deployment",
+        description:
+          "Evaluating existing environments and planning structured deployment programmes.",
       },
     ],
     benefits: [
-      "Improved system availability",
-      "Increased reliability",
-      "Better scalability",
-      "Reduced downtime",
-      "Stronger data protection",
-      "Enhanced operational efficiency",
+      "Higher availability",
+      "Improved resilience",
+      "Scalable capacity",
+      "Better lifecycle management",
     ],
     technologies: [
-      "VMware",
-      "Hyper-V",
       "Windows Server",
       "Linux Platforms",
-      "Storage Solutions",
-      "Backup Technologies",
+      "VMware",
+      "Hyper-V",
+      "Veeam Backup",
+      "UPS Solutions",
     ],
-    typicalDeliverables: [
-      "Infrastructure assessments",
-      "Infrastructure architecture design",
-      "Server deployment",
-      "Virtualization implementation",
-      "Backup solutions",
-      "Disaster recovery planning",
-      "Documentation and support",
+    industriesServed: [
+      "Government",
+      "Enterprise",
+      "Healthcare",
+      "Development projects",
     ],
     order: 6,
   },
   {
     id: "cybersecurity",
-    title: "Cybersecurity & Cloud",
+    title: "Cybersecurity Solutions",
     category: "Infrastructure & Platforms",
     showOnHomepage: true,
     slug: "cybersecurity-solutions",
     description:
-      "We help organizations identify risks, strengthen defenses, improve resilience, and protect critical systems, data, and operations.",
-    detailText: `Cybersecurity is no longer optional. As organizations become increasingly dependent on digital technologies, the risks associated with cyber threats continue to grow.
+      "Security-focused technology and practices that reduce operational risk.",
+    detailText: `Security-focused technology and practices that reduce operational risk.
 
-OceanNet Technologies provides practical cybersecurity solutions that help organizations strengthen security posture, manage risks, and improve resilience against evolving threats.`,
+As organisations become increasingly dependent on digital technologies, cybersecurity risks continue to grow. OceanNet Technologies provides practical cybersecurity solutions that help organisations strengthen security posture, manage risks and improve resilience against evolving threats.`,
     icon: "Shield",
     challenges: [
-      "Cybersecurity risks",
-      "Weak security controls",
-      "Increasing cyber threats",
-      "Regulatory compliance requirements",
-      "Limited security awareness",
-      "Vulnerability management challenges",
-      "Data protection concerns",
+      "Weak identity controls",
+      "Unprotected endpoints and networks",
+      "Inconsistent security configuration",
+      "Limited visibility into security events",
     ],
     solutions: [
       {
-        title: "Security Assessments",
-        description: "Evaluating security posture and identifying risks.",
+        title: "Security Assessment and Hardening",
+        description:
+          "Evaluating security posture and implementing targeted improvements.",
       },
       {
-        title: "Vulnerability Assessments",
-        description: "Identifying weaknesses before they can be exploited.",
+        title: "Firewall and Network Security",
+        description:
+          "Deploying and configuring firewalls and network security controls.",
       },
       {
-        title: "Security Architecture Design",
-        description: "Designing secure technology environments.",
+        title: "Endpoint Protection",
+        description:
+          "Protecting user devices and systems from malware and threats.",
       },
       {
-        title: "Endpoint Security",
-        description: "Protecting user devices and systems.",
+        title: "Identity and Access Management",
+        description:
+          "Implementing centralised identity, authentication and access controls.",
       },
       {
-        title: "Security Awareness Training",
-        description: "Building a culture of cybersecurity awareness.",
+        title: "MFA and Access Controls",
+        description:
+          "Enforcing multi-factor authentication and least-privilege access policies.",
       },
       {
-        title: "Security Policy Development",
-        description: "Supporting governance and compliance initiatives.",
+        title: "Security Monitoring and Advisory",
+        description:
+          "Ongoing monitoring of security events and strategic advisory services.",
+      },
+      {
+        title: "Backup and Recovery Security",
+        description:
+          "Ensuring backup systems are secure, tested and recoverable.",
       },
     ],
     benefits: [
-      "Reduced risk exposure",
-      "Improved compliance",
-      "Stronger security controls",
-      "Enhanced business resilience",
-      "Better protection of sensitive information",
-      "Increased stakeholder confidence",
+      "Reduced attack surface",
+      "Stronger access control",
+      "Improved resilience",
+      "Better security governance",
     ],
     technologies: [
       "Fortinet",
       "Sophos",
-      "Microsoft Security Solutions",
+      "Microsoft Defender",
+      "Microsoft Entra ID",
       "Endpoint Protection Platforms",
-      "Security Monitoring Solutions",
     ],
-    typicalDeliverables: [
-      "Security assessments",
-      "Risk analysis reports",
-      "Vulnerability assessments",
-      "Security policies",
-      "Awareness training programs",
-      "Remediation plans",
+    industriesServed: [
+      "Government",
+      "Enterprise",
+      "Healthcare",
+      "Development programmes",
     ],
     order: 7,
   },
@@ -563,147 +530,146 @@ OceanNet Technologies provides practical cybersecurity solutions that help organ
     category: "Infrastructure & Platforms",
     slug: "cloud-solutions",
     description:
-      "We help organizations leverage cloud technologies to improve flexibility, scalability, collaboration, security, and operational efficiency.",
-    detailText: `Cloud computing enables organizations to modernize operations, reduce infrastructure complexity, improve accessibility, and accelerate innovation.
+      "Cloud services that improve collaboration, availability and operational flexibility.",
+    detailText: `Cloud services that improve collaboration, availability and operational flexibility.
 
-OceanNet Technologies helps clients plan, migrate, implement, and manage cloud solutions that align with business goals and operational requirements.`,
+Cloud computing enables organisations to modernise operations, reduce infrastructure complexity, improve accessibility and accelerate productivity. OceanNet Technologies helps clients plan, migrate, implement and manage cloud solutions that align with business goals and operational requirements.`,
     icon: "Laptop",
     challenges: [
-      "Aging infrastructure",
-      "Limited scalability",
-      "Remote work challenges",
-      "Collaboration inefficiencies",
-      "High infrastructure costs",
-      "Complex system management",
-      "Business continuity concerns",
+      "On-premise limitations",
+      "Complex email and collaboration environments",
+      "Inconsistent backup",
+      "Need for secure remote access",
     ],
     solutions: [
       {
-        title: "Cloud Readiness Assessments",
-        description: "Evaluating organizational readiness for cloud adoption.",
-      },
-      {
-        title: "Cloud Migration Services",
+        title: "Cloud Migration",
         description:
-          "Moving applications, systems, and workloads to the cloud.",
+          "Planning and executing migration of applications, data and workloads to the cloud.",
       },
       {
-        title: "Microsoft 365 Solutions",
-        description: "Enhancing productivity and collaboration.",
+        title: "Microsoft 365",
+        description:
+          "Implementation, configuration and administration of Microsoft 365 including Exchange Online, Teams, SharePoint and OneDrive.",
       },
       {
-        title: "Hybrid Cloud Solutions",
-        description: "Combining cloud and on-premises environments.",
+        title: "Google Workspace",
+        description:
+          "Implementation, migration and administration of Google Workspace productivity and collaboration tools.",
       },
       {
-        title: "Cloud Security",
-        description: "Protecting cloud-based assets and information.",
+        title: "Cloud Hosting",
+        description:
+          "Secure hosting of websites, applications and workloads in cloud environments.",
       },
       {
-        title: "Cloud Optimization",
-        description: "Improving performance, governance, and cost efficiency.",
+        title: "Identity and Access Management",
+        description:
+          "Configuring cloud identity, MFA and access controls for secure environments.",
+      },
+      {
+        title: "Cloud Backup",
+        description:
+          "Protecting cloud data with structured backup and recovery solutions.",
+      },
+      {
+        title: "Hybrid-Cloud Architecture",
+        description:
+          "Designing environments that combine cloud and on-premise resources effectively.",
+      },
+      {
+        title: "Ongoing Cloud Administration",
+        description:
+          "Day-to-day management, user support and optimisation of cloud environments.",
       },
     ],
     benefits: [
-      "Greater flexibility",
-      "Improved scalability",
-      "Enhanced collaboration",
-      "Reduced infrastructure costs",
-      "Increased availability",
-      "Better disaster recovery capabilities",
+      "Anywhere access",
+      "Improved collaboration",
+      "Simpler administration",
+      "Scalable services and business continuity",
     ],
     technologies: [
-      "Microsoft Azure",
       "Microsoft 365",
-      "Amazon Web Services (AWS)",
-      "Hybrid Cloud Platforms",
+      "Microsoft Azure",
+      "Google Workspace",
+      "Microsoft Entra ID",
       "Cloud Backup Solutions",
     ],
-    typicalDeliverables: [
-      "Cloud strategy development",
-      "Cloud readiness assessments",
-      "Migration planning",
-      "Cloud implementation",
-      "Security configuration",
-      "User training and support",
+    industriesServed: [
+      "SMEs",
+      "Government projects",
+      "NGOs",
+      "Professional services",
+      "Enterprise",
     ],
     order: 8,
   },
+
+  // ─── SPECIALISED & MANAGED SERVICES ──────────────────────────────────────
   {
     id: "gis-solutions",
     title: "GIS Solutions",
     category: "Specialised & Managed Services",
     slug: "gis-solutions",
     description:
-      "We help organizations leverage Geographic Information Systems (GIS) and spatial technologies to improve planning, decision-making, resource management, and service delivery.",
-    detailText: `Location matters. Whether managing infrastructure, public services, land administration, utilities, health programs, or development initiatives, spatial information provides critical insights for effective decision-making.
+      "Geospatial platforms that turn location data into operational insight.",
+    detailText: `Geospatial platforms that turn location data into operational insight.
 
-OceanNet Technologies delivers GIS solutions that enable organizations to collect, analyze, visualize, and manage geographic data to support operational and strategic objectives.`,
+Location matters. Whether managing infrastructure, public services, land administration, utilities, health programmes or development initiatives, spatial information provides critical insights for effective decision-making.
+
+OceanNet Technologies delivers GIS solutions that enable organisations to collect, analyse, visualise and manage geographic data to support operational and strategic objectives.`,
     icon: "Map",
     challenges: [
-      "Limited visibility into geographic data",
-      "Inefficient field operations",
-      "Poor asset tracking",
-      "Fragmented spatial information",
-      "Manual mapping processes",
-      "Limited location-based analysis",
-      "Ineffective planning and monitoring",
+      "Disconnected spatial and business data",
+      "Paper-based mapping and land records",
+      "Limited geospatial access",
+      "Difficulty integrating maps into operational systems",
     ],
     solutions: [
       {
-        title: "GIS Strategy & Planning",
-        description: "Developing GIS roadmaps and implementation strategies.",
-      },
-      {
-        title: "Digital Mapping Solutions",
-        description: "Creating accurate digital maps and spatial datasets.",
-      },
-      {
-        title: "Asset Management Systems",
+        title: "GIS-Enabled Applications",
         description:
-          "Tracking and managing physical infrastructure and assets.",
+          "Custom applications with embedded mapping, spatial queries and location-based features.",
       },
       {
-        title: "Land Information Systems",
+        title: "PostGIS Spatial Databases",
         description:
-          "Supporting modern land administration and land management initiatives.",
+          "Structured spatial databases for storing, querying and analysing geographic data.",
       },
       {
-        title: "Spatial Analytics",
+        title: "Web Mapping",
         description:
-          "Providing location-based insights for better decision-making.",
+          "Interactive map platforms accessible through browsers and portals.",
       },
       {
-        title: "GIS Integration",
+        title: "Geospatial Data Integration",
         description:
-          "Connecting GIS platforms with enterprise systems and databases.",
+          "Connecting GIS platforms with enterprise systems and operational databases.",
+      },
+      {
+        title: "Land and Asset Information Systems",
+        description:
+          "Supporting modern land administration and asset management through GIS.",
+      },
+      {
+        title: "GIS Infrastructure and Technical Support",
+        description:
+          "Hosting, administration and technical support for GIS environments.",
       },
     ],
     benefits: [
-      "Improved planning and decision-making",
-      "Better visibility of assets and resources",
-      "Enhanced operational efficiency",
-      "Improved data accuracy",
-      "Stronger monitoring and evaluation",
-      "Better resource allocation",
+      "Location-aware decision making",
+      "Integrated spatial records",
+      "Improved service planning",
+      "Better access to geospatial information",
     ],
     industriesServed: [
+      "Land administration",
       "Government",
-      "Land Administration",
       "Utilities",
-      "Healthcare",
-      "Agriculture",
-      "Development Organizations",
-      "Telecommunications",
-    ],
-    typicalDeliverables: [
-      "GIS assessments",
-      "GIS implementation roadmaps",
-      "Digital maps",
-      "Spatial databases",
-      "GIS dashboards",
-      "GIS integrations",
-      "User training",
+      "Environment",
+      "Infrastructure",
     ],
     order: 9,
   },
@@ -713,79 +679,69 @@ OceanNet Technologies delivers GIS solutions that enable organizations to collec
     category: "Specialised & Managed Services",
     slug: "ai-data-analytics",
     description:
-      "We help organizations unlock the value of their data through analytics, visualization, artificial intelligence, and data-driven decision-making.",
-    detailText: `Data is one of the most valuable assets an organization possesses. However, data only becomes valuable when transformed into meaningful insights that support informed decisions and measurable outcomes.
+      "Practical analytics and AI capabilities focused on measurable operational value.",
+    detailText: `Practical analytics and AI capabilities focused on measurable operational value.
 
-OceanNet Technologies helps organizations collect, manage, analyze, and visualize data while exploring the potential of artificial intelligence to improve efficiency, forecasting, and service delivery.`,
+Data is one of the most valuable assets an organisation possesses. However, data only becomes valuable when transformed into meaningful insights that support informed decisions and measurable outcomes.
+
+OceanNet Technologies helps organisations collect, manage, analyse and visualise data while exploring the practical potential of artificial intelligence to improve efficiency, decision support and service delivery.`,
     icon: "BarChart3",
     challenges: [
-      "Limited visibility into organizational performance",
-      "Poor data quality",
-      "Fragmented information sources",
-      "Manual reporting processes",
-      "Delayed decision-making",
-      "Limited predictive capabilities",
-      "Underutilized data assets",
+      "Data spread across multiple sources",
+      "Manual reporting",
+      "Limited decision visibility",
+      "Repetitive information-processing tasks",
     ],
     solutions: [
       {
-        title: "Business Intelligence",
-        description: "Transforming data into actionable insights.",
-      },
-      {
-        title: "Dashboard Development",
-        description: "Real-time visibility into key performance indicators.",
-      },
-      {
-        title: "Data Analytics",
-        description: "Advanced analysis to support strategic decisions.",
-      },
-      {
-        title: "Data Integration",
-        description: "Combining information from multiple sources.",
-      },
-      {
-        title: "AI Readiness Assessments",
+        title: "Data Integration and Preparation",
         description:
-          "Evaluating opportunities for artificial intelligence adoption.",
+          "Consolidating data from multiple sources into structured, usable formats.",
       },
       {
-        title: "AI-Enabled Solutions",
+        title: "Dashboards and Visualisation",
         description:
-          "Supporting automation, prediction, and intelligent decision-making initiatives.",
+          "Real-time dashboards that make key performance indicators visible and actionable.",
+      },
+      {
+        title: "Operational Analytics",
+        description:
+          "Analysis to support operational management, planning and service improvement.",
+      },
+      {
+        title: "AI-Enabled Workflow Support",
+        description:
+          "Practical AI capabilities embedded into operational processes for efficiency gains.",
+      },
+      {
+        title: "Document and Information Intelligence",
+        description:
+          "Extracting and processing information from documents and unstructured data sources.",
+      },
+      {
+        title: "Prototype and Use-Case Development",
+        description:
+          "Building proofs of concept to validate AI and analytics applications before full deployment.",
       },
     ],
     benefits: [
-      "Faster decision-making",
-      "Improved operational visibility",
-      "Better performance monitoring",
-      "Enhanced forecasting capabilities",
-      "Improved service delivery",
-      "Greater organizational agility",
+      "Faster insight",
+      "Better reporting",
+      "Reduced repetitive work",
+      "Evidence-based decision support",
     ],
     technologies: [
       "Power BI",
+      "Python",
+      "PostgreSQL",
       "Data Warehousing Platforms",
-      "Artificial Intelligence Platforms",
-      "Machine Learning Frameworks",
-      "Analytics Solutions",
+      "AI/ML Frameworks",
     ],
     industriesServed: [
       "Government",
+      "Enterprise",
       "Healthcare",
-      "Telecommunications",
-      "Financial Services",
-      "Education",
-      "Development Organizations",
-      "Private Sector",
-    ],
-    typicalDeliverables: [
-      "Data strategy assessments",
-      "Dashboards and reports",
-      "Business intelligence platforms",
-      "Data integration solutions",
-      "Analytics frameworks",
-      "AI readiness assessments",
+      "Development programmes",
     ],
     order: 10,
   },
@@ -795,130 +751,138 @@ OceanNet Technologies helps organizations collect, manage, analyze, and visualiz
     category: "Specialised & Managed Services",
     slug: "managed-services",
     description:
-      "We provide proactive managed services that help organizations maintain reliable, secure, and high-performing technology environments.",
-    detailText: `Managing technology infrastructure can be complex and resource-intensive.
+      "Ongoing technical administration and support that keeps critical systems working.",
+    detailText: `Ongoing technical administration and support that keeps critical systems working.
 
-OceanNet Technologies provides managed services that allow organizations to focus on their core mission while we monitor, maintain, support, and optimize their technology environments.
+Managing technology infrastructure can be complex and resource-intensive. OceanNet Technologies provides managed services that allow organisations to focus on their core mission while we monitor, maintain, support and optimise their technology environments.
 
-Our managed services approach emphasizes reliability, responsiveness, security, and continuous improvement.`,
+Our managed services approach emphasises reliability, responsiveness, security and continuous improvement.`,
     icon: "ClipboardList",
     challenges: [
-      "Limited internal IT resources",
-      "Frequent system downtime",
-      "Reactive support models",
-      "Security concerns",
-      "Infrastructure management challenges",
-      "Lack of monitoring and reporting",
-      "Operational inefficiencies",
+      "Limited internal ICT capacity",
+      "Recurring system administration workload",
+      "Inconsistent maintenance",
+      "Need for specialist support without full-time staffing",
     ],
     solutions: [
       {
-        title: "IT Support Services",
-        description: "Responsive technical support for users and systems.",
-      },
-      {
-        title: "Infrastructure Monitoring",
+        title: "Cloud Administration",
         description:
-          "Proactive monitoring of critical technology environments.",
+          "Day-to-day management of cloud platforms including user accounts, licensing and security.",
       },
       {
-        title: "System Administration",
-        description: "Management of servers, networks, and platforms.",
+        title: "Microsoft 365 and Google Workspace Administration",
+        description:
+          "Ongoing administration of productivity and collaboration platforms.",
       },
       {
-        title: "Security Monitoring",
-        description: "Ongoing monitoring of security controls and risks.",
+        title: "Hosting and Domain Management",
+        description:
+          "Managing website hosting, domain registration, DNS and SSL certificates.",
       },
       {
-        title: "Preventive Maintenance",
-        description: "Reducing downtime through proactive management.",
+        title: "Infrastructure and Network Support",
+        description:
+          "Monitoring and supporting on-premise servers, networks and infrastructure.",
       },
       {
-        title: "Technology Advisory Services",
-        description: "Strategic guidance and planning support.",
+        title: "User Support",
+        description:
+          "Responsive helpdesk and user support for ICT issues and requests.",
+      },
+      {
+        title: "Technical Advisory",
+        description:
+          "Strategic guidance on technology planning, upgrades and procurement decisions.",
+      },
+      {
+        title: "Preventive Maintenance and Troubleshooting",
+        description:
+          "Scheduled maintenance and proactive troubleshooting to reduce downtime.",
       },
     ],
     benefits: [
-      "Reduced downtime",
-      "Improved reliability",
-      "Enhanced security",
-      "Predictable support costs",
-      "Better performance",
-      "Increased user satisfaction",
+      "Predictable support",
+      "Reduced operational burden",
+      "Improved continuity",
+      "Access to broader technical expertise",
     ],
-    typicalDeliverables: [
-      "Service level agreements (SLAs)",
-      "Monitoring reports",
-      "Maintenance schedules",
-      "Incident management",
-      "Technical support",
-      "Infrastructure optimization",
+    industriesServed: [
+      "SMEs",
+      "Projects",
+      "NGOs",
+      "Professional services",
+      "Public institutions",
     ],
     order: 11,
   },
   {
     id: "ict-procurement",
-    title: "ICT Procurement Solutions",
+    title: "ICT Procurement",
     category: "Specialised & Managed Services",
     slug: "ict-procurement-solutions",
     description:
-      "We help organizations source, acquire, deploy, and support technology solutions that meet operational requirements, budget expectations, and long-term objectives.",
-    detailText: `Technology procurement involves more than purchasing hardware and software. Successful procurement requires careful planning, technical evaluation, vendor management, deployment support, and lifecycle management.
+      "Technology procurement supported by technical requirements, evaluation and deployment expertise.",
+    detailText: `Technology procurement supported by technical requirements, evaluation and deployment expertise.
 
-OceanNet Technologies helps organizations navigate complex procurement processes while ensuring solutions align with business needs and industry standards.`,
+Successful ICT procurement requires careful planning, technical evaluation, vendor management, deployment support and lifecycle management — not just purchasing.
+
+OceanNet Technologies helps organisations navigate complex procurement processes while ensuring solutions align with business needs, technical requirements and long-term objectives.`,
     icon: "Package",
     challenges: [
-      "Complex procurement requirements",
-      "Technology selection challenges",
-      "Vendor management issues",
-      "Budget constraints",
-      "Deployment coordination difficulties",
-      "Warranty and support concerns",
-      "Lifecycle management challenges",
+      "Poorly specified requirements",
+      "Incompatible equipment purchases",
+      "Weak technical evaluation",
+      "Procurement disconnected from implementation",
     ],
     solutions: [
       {
-        title: "Technology Advisory",
-        description: "Supporting informed procurement decisions.",
-      },
-      {
-        title: "Hardware Procurement",
+        title: "Requirements and Specification Development",
         description:
-          "Servers, networking equipment, security solutions, end-user devices, and peripherals.",
+          "Defining technical requirements and specifications before procurement begins.",
       },
       {
-        title: "Software Procurement",
+        title: "Technical Evaluation",
         description:
-          "Licensing, subscriptions, and enterprise software acquisition.",
+          "Assessing vendor proposals, products and solutions against defined requirements.",
       },
       {
-        title: "Vendor Management",
-        description: "Coordinating suppliers and technology partners.",
+        title: "Sourcing Support",
+        description:
+          "Identifying suitable suppliers and supporting procurement processes.",
       },
       {
-        title: "Deployment Services",
-        description: "Installation, configuration, and commissioning support.",
+        title: "Equipment Supply",
+        description:
+          "Supplying hardware, peripherals and ICT equipment aligned with specifications.",
       },
       {
-        title: "Lifecycle Management",
-        description: "Managing technology assets throughout their lifecycle.",
+        title: "Installation and Configuration",
+        description:
+          "Deploying, installing and configuring procured equipment and software.",
+      },
+      {
+        title: "Acceptance Testing",
+        description:
+          "Verifying that delivered equipment and systems meet specified requirements.",
+      },
+      {
+        title: "Lifecycle and Warranty Coordination",
+        description:
+          "Managing warranties, support contracts and equipment lifecycle planning.",
       },
     ],
     benefits: [
-      "Better procurement outcomes",
-      "Reduced procurement risk",
-      "Improved vendor coordination",
-      "Cost optimization",
-      "Technical assurance",
-      "Simplified deployment",
+      "Better-fit purchases",
+      "Reduced compatibility risk",
+      "Clear technical accountability",
+      "Faster deployment",
     ],
-    typicalDeliverables: [
-      "Technical specifications",
-      "Vendor evaluations",
-      "Procurement support",
-      "Deployment planning",
-      "Installation coordination",
-      "Warranty management",
+    industriesServed: [
+      "Government",
+      "Development projects",
+      "Enterprise",
+      "NGOs",
     ],
     order: 12,
   },

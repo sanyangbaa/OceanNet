@@ -299,7 +299,7 @@ export function ProjectDetailClient({
                 className="flex flex-col h-full"
               >
                 <Tilt
-                  options={{ max: 35, scale: 1.02, speed: 450 }}
+                  options={{ max: 15, scale: 1.02, speed: 450 }}
                   className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all p-4 border border-border flex flex-col h-full"
                 >
                   <Link

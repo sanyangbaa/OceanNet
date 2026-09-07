@@ -94,8 +94,8 @@ export function ProjectsClient({
               className="flex flex-col h-full"
             >
               <Tilt
-                options={{ max: 45, scale: 1.02, speed: 450 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col border border-border hover:border-primary/30 h-full"
+                options={{ max: 15, scale: 1.02, speed: 450 }}
+                className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col border border-border hover:border-primary/30 h-full"
               >
                 <Link
                   href={`/projects/${project.slug || project.id}`}

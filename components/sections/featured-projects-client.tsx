@@ -39,8 +39,8 @@ export function FeaturedProjectsClient({
             className="shrink-0 w-[95%] sm:w-96 md:w-auto snap-center flex flex-col"
           >
             <Tilt
-              options={{ max: 45, scale: 1.02, speed: 450 }}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col border border-gray-100 hover:border-primary/30 h-full"
+              options={{ max: 15, scale: 1.02, speed: 450 }}
+              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col border border-gray-100 hover:border-primary/30 h-full"
             >
               <Link
                 href={`/projects/${project.slug || project.id}`}

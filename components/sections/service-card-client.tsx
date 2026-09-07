@@ -66,9 +66,9 @@ export function ServiceCardClient({ service, index }: ServiceCardProps) {
       className="flex flex-col h-full"
     >
       <Tilt
-        options={{ max: 45, scale: 1.02, speed: 450 }}
+        options={{ max: 15, scale: 1.02, speed: 450 }}
         id={service.id}
-        className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 border border-border flex flex-col justify-between items-start group h-full"
+        className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-border flex flex-col justify-between items-start group h-full"
       >
         <div className="w-full">
           {/* Top left Icon Container */}

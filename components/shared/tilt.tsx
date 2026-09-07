@@ -19,7 +19,7 @@ interface TiltProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function Tilt({
   children,
-  options = { max: 45, scale: 1, speed: 450 },
+  options = { max: 15, scale: 1.02, speed: 450 },
   className = "",
   style,
   ...props
@@ -30,8 +30,8 @@ export function Tilt({
     transition: `all ${options.speed || 450}ms ${options.easing || "cubic-bezier(.03,.98,.52,.99)"}`,
   });
 
-  const max = options.max ?? 45;
-  const scale = options.scale ?? 1;
+  const max = options.max ?? 15;
+  const scale = options.scale ?? 1.02;
   const speed = options.speed ?? 450;
   const perspective = options.perspective ?? 1000;
 

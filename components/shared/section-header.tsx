@@ -35,7 +35,7 @@ export function SectionHeader({
     <div
       className={cn(
         "relative w-full overflow-hidden",
-        withBackground ? "py-16 md:py-20 mb-10" : "py-8",
+        withBackground ? "py-14 md:py-16 mb-10" : "py-8",
         className,
       )}
     >

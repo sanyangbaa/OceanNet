@@ -25,8 +25,8 @@ export function TestimonialsClient({
             className="flex-shrink-0 w-[95%] sm:w-[500px] md:w-auto snap-center flex flex-col"
           >
             <Tilt
-              options={{ max: 35, scale: 1.02, speed: 450 }}
-              className="bg-gray-50 border border-gray-100 rounded-2xl p-6 relative flex flex-col group hover:shadow-2xl hover:border-primary/20 transition-all duration-500 h-full justify-between"
+              options={{ max: 15, scale: 1.02, speed: 450 }}
+              className="bg-gray-50 border border-gray-100 rounded-2xl p-6 relative flex flex-col group hover:shadow-xl hover:border-primary/20 transition-all duration-300 h-full justify-between"
             >
               <Quote className="absolute top-6 right-6 text-gray-200 w-10 h-10 rotate-180 transition-all duration-500 group-hover:scale-110 group-hover:text-primary/20" />
 

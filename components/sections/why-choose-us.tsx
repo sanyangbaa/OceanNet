@@ -83,8 +83,8 @@ export function WhyChooseUs() {
                 className="flex-shrink-0 w-[95%] sm:w-[450px] md:w-auto snap-center flex flex-col"
               >
                 <Tilt
-                  options={{ max: 45, scale: 1.02, speed: 450 }}
-                  className="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 border border-white/70 flex flex-col justify-start items-start h-full"
+                  options={{ max: 15, scale: 1.02, speed: 450 }}
+                  className="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-white/70 flex flex-col justify-start items-start h-full"
                 >
                   {/* Icon */}
                   <div className="bg-primary/10 p-3 rounded-lg inline-flex items-center justify-center mb-3 ring-1 ring-primary/15">

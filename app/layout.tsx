@@ -35,7 +35,45 @@ export const metadata: Metadata = {
     images: ["/logo/official_logo.png"],
   },
 };
-//
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "OceanNet Technologies",
+  alternateName: "ONT",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://oceannettechnologies.com",
+  logo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://oceannettechnologies.com"}/logo/official_logo.png`,
+  description:
+    "Enterprise software, systems integration, digital health, cloud, cybersecurity, networking and managed ICT services from OceanNet Technologies in The Gambia.",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress:
+      "2nd Floor, Jula Finance Complex, Opposite The Gambia Tourism and Hospitality Institute",
+    addressLocality: "Kanifing",
+    addressRegion: "Kanifing Municipality",
+    addressCountry: "GM",
+  },
+  telephone: "+220 2785585",
+  email: "info@oceannettechnologies.com",
+  sameAs: [
+    "https://facebook.com/oceannettechnologies",
+    "https://linkedin.com/company/oceannet-technologies",
+  ],
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      opens: "09:00",
+      closes: "17:00",
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Friday"],
+      opens: "09:00",
+      closes: "12:30",
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -43,6 +81,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+      </head>
       <body className="min-h-full font-sans">{children}</body>
     </html>
   );

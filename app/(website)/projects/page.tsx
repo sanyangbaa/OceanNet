@@ -8,9 +8,11 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   return {
-    title: `Projects | ${staticCompanyInfo.projectsMetaTitle || "ONT"}`,
+    title: staticCompanyInfo.projectsMetaTitle || "Technology Projects & Experience | OceanNet Technologies",
     description:
-      staticCompanyInfo.projectsMetaDescription || "OceanNet Technologies.",
+      staticCompanyInfo.projectsMetaDescription ||
+      "Explore selected OceanNet projects across digital government, digital health, cloud services, enterprise infrastructure and managed ICT.",
+    alternates: { canonical: "/projects" },
   };
 }
 

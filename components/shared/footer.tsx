@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { companyInfo } from "@/data/company";
 import { services } from "@/data/services";
 
@@ -16,10 +16,14 @@ const footerLinks = [
   },
   {
     title: "Services",
-    links: services.slice(0, 5).map((service) => ({
-      name: service.title,
-      href: `/services/${service.slug}`,
-    })),
+    links: [
+      { name: "Digital Solutions", href: "/services/digital-solutions" },
+      { name: "Systems Integration", href: "/services/systems-integration" },
+      { name: "Digital Health", href: "/services/digital-health-solutions" },
+      { name: "Enterprise Software", href: "/services/enterprise-software-solutions" },
+      { name: "Cloud Solutions", href: "/services/cloud-solutions" },
+      { name: "View All Services →", href: "/services" },
+    ],
   },
 ];
 
