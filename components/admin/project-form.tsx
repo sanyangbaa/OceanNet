@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Save, Trash2, Plus } from "lucide-react";
+import { Loader2, Save, Trash2, Plus, Bold, Italic, Underline, List } from "lucide-react";
 import Image from "next/image";
 
 interface ProjectFormProps {
@@ -18,9 +18,7 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
     shortDescription: (initialData?.shortDescription as string) || "",
     location: (initialData?.location as string) || "",
     category: (initialData?.category as string) || "",
-    customCategory: (initialData?.customCategory as string) || "",
     industry: (initialData?.industry as string) || "",
-    customIndustry: (initialData?.customIndustry as string) || "",
     projectType: (initialData?.projectType as string) || "",
     role: (initialData?.role as string) || "",
     servicesDelivered: (initialData?.servicesDelivered as string) || "",
@@ -40,6 +38,29 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
       ? initialData.technologies
       : []) as string[],
   });
+
+  const [techInput, setTechInput] = useState("");
+  const [useRichText, setUseRichText] = useState(false);
+
+  // Uncontrolled ref for rich text editor — prevents cursor jump on every keystroke
+  const editorRef = useRef<HTMLDivElement>(null);
+  const editorInitialized = useRef(false);
+
+  useEffect(() => {
+    if (useRichText && editorRef.current && !editorInitialized.current) {
+      editorRef.current.innerHTML = formData.description || "";
+      editorInitialized.current = true;
+    }
+    if (!useRichText) {
+      editorInitialized.current = false;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [useRichText]);
+
+  const execFormat = (cmd: string, value?: string) => {
+    document.execCommand(cmd, false, value);
+    editorRef.current?.focus();
+  };
 
   const handleImageUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -93,51 +114,39 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
     }
   };
 
-  const [techInput, setTechInput] = useState("");
-  const [useRichText, setUseRichText] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setIsLoading(true);
+    // Sync rich text editor content before submit
+    const latestDescription = useRichText
+      ? (editorRef.current?.innerHTML ?? formData.description)
+      : formData.description;
 
+    if (
+      !formData.title?.toString().trim() ||
+      !formData.shortDescription?.toString().trim() ||
+      !latestDescription?.toString().trim() ||
+      !formData.image?.toString().trim()
+    ) {
+      alert(
+        "Please fill the required fields: Title, Short Description, Full Description, and Project Thumbnail.",
+      );
+      return;
+    }
+    setIsLoading(true);
     try {
-      // Client-side validation for required fields
-      if (
-        !formData.title?.toString().trim() ||
-        !formData.shortDescription?.toString().trim() ||
-        !formData.description?.toString().trim() ||
-        !formData.image?.toString().trim()
-      ) {
-        alert(
-          "Please fill the required fields: Title, Short Description, Full Description, and Project Thumbnail.",
-        );
-        setIsLoading(false);
-        return;
-      }
       const url = id ? `/api/admin/projects/${id}` : "/api/admin/projects";
       const method = id ? "PATCH" : "POST";
-
-      // Prepare payload, allow custom category/industry to override 'Other'
       const payload: Record<string, unknown> = {
         ...formData,
+        description: latestDescription,
         youtubeUrl: formData.youtubeUrl?.toString().trim() || null,
       };
-      if (payload.category === "Other" && (payload as any).customCategory) {
-        payload.category = (payload as any).customCategory;
-      }
-      if (payload.industry === "Other" && (payload as any).customIndustry) {
-        payload.industry = (payload as any).customIndustry;
-      }
-      // Remove transient helper fields before sending to server
-      delete (payload as any).customCategory;
-      delete (payload as any).customIndustry;
-
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-
       if (res.ok) {
         router.push("/admin/projects");
         router.refresh();
@@ -234,37 +243,28 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                 <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
                   Category
                 </label>
-                <select
+                <input
+                  list="category-options"
                   value={formData.category}
                   onChange={(e) =>
                     setFormData({ ...formData, category: e.target.value })
                   }
-                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium appearance-none"
-                >
-                  <option value="">Select Category</option>
-                  <option value="Web Development">Web Development</option>
-                  <option value="Mobile Development">Mobile Development</option>
-                  <option value="UI/UX Design">UI/UX Design</option>
-                  <option value="Cloud Solutions">Cloud Solutions</option>
-                  <option value="AI Solutions">AI Solutions</option>
-                  <option value="Cybersecurity">Cybersecurity</option>
-                  <option value="DevOps">DevOps</option>
-                  <option value="Other">Other</option>
-                </select>
-                {formData.category === "Other" && (
-                  <input
-                    type="text"
-                    value={formData.customCategory}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        customCategory: e.target.value,
-                      })
-                    }
-                    className="w-full bg-black/30 border border-white/5 px-3 py-2 rounded-sm text-sm mt-2"
-                    placeholder="Enter custom category"
-                  />
-                )}
+                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
+                  placeholder="Select or type..."
+                />
+                <datalist id="category-options">
+                  <option value="Web Development" />
+                  <option value="Mobile Development" />
+                  <option value="UI/UX Design" />
+                  <option value="Cloud Solutions" />
+                  <option value="AI Solutions" />
+                  <option value="Cybersecurity" />
+                  <option value="DevOps" />
+                  <option value="Systems Integration" />
+                  <option value="Digital Transformation" />
+                  <option value="ICT Infrastructure" />
+                  <option value="Managed Services" />
+                </datalist>
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
@@ -294,60 +294,51 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                 <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
                   Industry
                 </label>
-                <select
+                <input
+                  list="industry-options"
                   value={formData.industry}
                   onChange={(e) =>
                     setFormData({ ...formData, industry: e.target.value })
                   }
-                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium appearance-none"
-                >
-                  <option value="">Select Industry</option>
-                  <option value="Finance">Finance</option>
-                  <option value="Healthcare">Healthcare</option>
-                  <option value="Education">Education</option>
-                  <option value="Government">Government</option>
-                  <option value="Logistics">Logistics</option>
-                  <option value="E-Commerce">E-Commerce</option>
-                  <option value="Telecommunications">Telecommunications</option>
-                  <option value="Agriculture">Agriculture</option>
-                  <option value="Other">Other</option>
-                </select>
-                {formData.industry === "Other" && (
-                  <input
-                    type="text"
-                    value={formData.customIndustry}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        customIndustry: e.target.value,
-                      })
-                    }
-                    className="w-full bg-black/30 border border-white/5 px-3 py-2 rounded-sm text-sm mt-2"
-                    placeholder="Enter custom industry"
-                  />
-                )}
+                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
+                  placeholder="Select or type..."
+                />
+                <datalist id="industry-options">
+                  <option value="Finance" />
+                  <option value="Healthcare" />
+                  <option value="Education" />
+                  <option value="Government" />
+                  <option value="Logistics" />
+                  <option value="E-Commerce" />
+                  <option value="Telecommunications" />
+                  <option value="Agriculture" />
+                  <option value="Development Programmes" />
+                  <option value="NGO / International Organisations" />
+                  <option value="Retail" />
+                  <option value="Energy" />
+                </datalist>
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
                   Project Type
                 </label>
-                <select
+                <input
+                  list="project-type-options"
                   value={formData.projectType}
                   onChange={(e) =>
                     setFormData({ ...formData, projectType: e.target.value })
                   }
-                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium appearance-none"
-                >
-                  <option value="">Select Type</option>
-                  <option value="Client Project">Client Project</option>
-                  <option value="Internal Project">Internal Project</option>
-                  <option value="Product Development">
-                    Product Development
-                  </option>
-                  <option value="Open Source Project">
-                    Open Source Project
-                  </option>
-                </select>
+                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
+                  placeholder="Select or type..."
+                />
+                <datalist id="project-type-options">
+                  <option value="Client Project" />
+                  <option value="Internal Project" />
+                  <option value="Product Development" />
+                  <option value="Open Source Project" />
+                  <option value="Government Contract" />
+                  <option value="Pilot / Proof of Concept" />
+                </datalist>
               </div>
             </div>
 
@@ -389,7 +380,7 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
             </h3>
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Client
+                Client Name
               </label>
               <input
                 type="text"
@@ -408,6 +399,51 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                 }
                 className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium mt-2"
                 placeholder="Client Website (optional): https://example.com"
+              />
+            </div>
+          </div>
+
+          {/* Delivery Evidence — moved to left column under Client Details */}
+          <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
+            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
+              Delivery Evidence
+            </h3>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
+                OceanNet&apos;s Role
+              </label>
+              <textarea
+                rows={3}
+                value={formData.role}
+                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
+                placeholder="Describe OceanNet's responsibility on this assignment"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
+                Services Delivered
+              </label>
+              <textarea
+                rows={3}
+                value={formData.servicesDelivered}
+                onChange={(e) =>
+                  setFormData({ ...formData, servicesDelivered: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
+                placeholder="List the verified services delivered"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
+                Outcome
+              </label>
+              <textarea
+                rows={3}
+                value={formData.outcome}
+                onChange={(e) => setFormData({ ...formData, outcome: e.target.value })}
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
+                placeholder="Describe the verified result or operational improvement"
               />
             </div>
           </div>
@@ -529,117 +565,102 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
           </div>
 
           <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary">
                 Detailed Description *
               </h3>
-              <div className="flex items-center gap-3">
-                <label className="text-[10px] font-bold uppercase text-gray-400">
-                  Rich Text
-                </label>
-                <input
-                  type="checkbox"
-                  checked={useRichText}
-                  onChange={(e) => setUseRichText(e.target.checked)}
-                  className="w-4 h-4"
-                />
-              </div>
+              <label className="flex items-center gap-2 cursor-pointer select-none">
+                <span className="text-[10px] font-bold uppercase text-gray-400">Rich Text</span>
+                <div
+                  onClick={() => setUseRichText((v) => !v)}
+                  className={`relative w-10 h-5 rounded-full transition-colors cursor-pointer ${
+                    useRichText ? "bg-primary" : "bg-white/20"
+                  }`}
+                >
+                  <div
+                    className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${
+                      useRichText ? "translate-x-5" : "translate-x-0"
+                    }`}
+                  />
+                </div>
+              </label>
             </div>
             {useRichText ? (
               <div>
-                <div className="flex gap-2 mb-2">
+                <div className="flex gap-1 mb-2 flex-wrap">
                   <button
                     type="button"
-                    onClick={() => document.execCommand("bold")}
-                    className="px-2 py-1 bg-white/5 rounded-sm"
+                    onMouseDown={(e) => { e.preventDefault(); execFormat("bold"); }}
+                    title="Bold"
+                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors"
                   >
-                    B
+                    <Bold size={13} />
                   </button>
                   <button
                     type="button"
-                    onClick={() => document.execCommand("italic")}
-                    className="px-2 py-1 bg-white/5 rounded-sm"
+                    onMouseDown={(e) => { e.preventDefault(); execFormat("italic"); }}
+                    title="Italic"
+                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors"
                   >
-                    I
+                    <Italic size={13} />
                   </button>
                   <button
                     type="button"
-                    onClick={() => document.execCommand("underline")}
-                    className="px-2 py-1 bg-white/5 rounded-sm"
+                    onMouseDown={(e) => { e.preventDefault(); execFormat("underline"); }}
+                    title="Underline"
+                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors"
                   >
-                    U
+                    <Underline size={13} />
+                  </button>
+                  <button
+                    type="button"
+                    onMouseDown={(e) => { e.preventDefault(); execFormat("insertUnorderedList"); }}
+                    title="Bullet list"
+                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors"
+                  >
+                    <List size={13} />
+                  </button>
+                  <button
+                    type="button"
+                    onMouseDown={(e) => { e.preventDefault(); execFormat("formatBlock", "p"); }}
+                    title="New paragraph"
+                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm text-[10px] font-bold transition-colors"
+                  >
+                    ¶
                   </button>
                 </div>
+                {/* Uncontrolled contentEditable — initialized once, no dangerouslySetInnerHTML on rerender */}
                 <div
+                  ref={editorRef}
                   contentEditable
                   suppressContentEditableWarning
-                  onInput={(e) =>
-                    setFormData({
-                      ...formData,
-                      description: (e.target as HTMLDivElement).innerHTML,
-                    })
-                  }
-                  className="min-h-30 w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
-                  dangerouslySetInnerHTML={{ __html: formData.description }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      document.execCommand("insertParagraph");
+                    }
+                  }}
+                  className="min-h-[180px] w-full bg-black/40 border border-white/10 px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all"
+                  style={{ lineHeight: "1.7" }}
                 />
+                <p className="text-[10px] text-gray-600 mt-1">
+                  Press Enter for a new paragraph &middot; Shift+Enter for line break
+                </p>
               </div>
             ) : (
               <textarea
-                rows={4}
+                rows={8}
                 value={formData.description}
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
-                placeholder="Write a compelling project description..."
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-y"
+                placeholder="Write a compelling project description. Each new line becomes a paragraph on the public page."
               />
             )}
           </div>
 
-          <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
-              Delivery Evidence
-            </h3>
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                OceanNet&apos;s Role
-              </label>
-              <textarea
-                rows={3}
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
-                placeholder="Describe OceanNet&apos;s responsibility on this assignment"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Services Delivered
-              </label>
-              <textarea
-                rows={3}
-                value={formData.servicesDelivered}
-                onChange={(e) =>
-                  setFormData({ ...formData, servicesDelivered: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
-                placeholder="List the verified services delivered"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Outcome
-              </label>
-              <textarea
-                rows={3}
-                value={formData.outcome}
-                onChange={(e) => setFormData({ ...formData, outcome: e.target.value })}
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
-                placeholder="Describe the verified result or operational improvement"
-              />
-            </div>
-          </div>
-
+          {/* Technologies — moved to right column under Detailed Description */}
           <div className="bg-white/5 border border-white/10 p-6 rounded-sm">
             <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
               Technologies

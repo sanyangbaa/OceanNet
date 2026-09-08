@@ -11,28 +11,24 @@ interface FAQItem {
 export default function FAQAccordion({ items }: { items?: FAQItem[] }) {
   const defaultItems: FAQItem[] = [
     {
-      q: "How do I apply for a job?",
-      a: "Open the job details page and click the 'Apply Now' button. You can submit a short application form and upload your resume (PDF/DOC/DOCX) directly on the page.",
+      q: "How do I apply for a position at OceanNet?",
+      a: "When vacancies are open, select the role from the Open Positions list and click 'Apply Now'. You can submit your details and upload your CV (PDF, DOC, or DOCX) directly through the secure form.",
     },
     {
-      q: "Can I apply for multiple roles?",
-      a: "Yes. You may apply to multiple roles; each application is tracked separately in our system and reviewed by our recruitment team independently.",
+      q: "What should I do if there are currently no open positions?",
+      a: "You can submit your CV to our Talent Community below. We keep submitted profiles on file for suitable future opportunities that match your technical skill set, subject to our Privacy Policy.",
     },
     {
-      q: "What happens after I apply?",
-      a: "Our recruitment team reviews all applications and will contact shortlisted candidates via email. You will receive an automatic email confirmation as soon as you submit your application.",
+      q: "What qualities does OceanNet look for in team members?",
+      a: "We value practical engineering skills, operational curiosity, high integrity, and dedication to delivering dependable technology solutions tailored to real-world environments.",
     },
     {
-      q: "Do you offer internships and entry-level roles?",
-      a: "Yes — we run internship programs and early-career hiring. Filter by 'Internship' in the job type filter above to see current openings.",
+      q: "How does OceanNet handle applicant data and CV retention?",
+      a: "All CV uploads and candidate records are stored securely with strict access control, processed solely for recruitment purposes, and handled in full accordance with our Privacy Policy.",
     },
     {
-      q: "How long does the hiring process take?",
-      a: "Our typical hiring process takes 2–4 weeks from application to offer. It includes an initial screening, a skills assessment, and one or more interviews depending on the role.",
-    },
-    {
-      q: "Can I join the talent pool if there are no open positions?",
-      a: "Absolutely. Scroll down to the 'Join Our Talent Community' section and submit your profile. We'll reach out when a suitable role opens up.",
+      q: "What technology domains does OceanNet work across?",
+      a: "Our multidisciplinary team works across custom software, systems integration, digital health platforms (e.g. SORMAS), enterprise systems, cloud productivity, networking, and cybersecurity.",
     },
   ];
 

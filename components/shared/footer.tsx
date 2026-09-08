@@ -35,15 +35,16 @@ export function Footer() {
           {/* Brand Column */}
           <div className="flex flex-col gap-6">
             <Link href="/" className="flex items-center group">
-              <div className="relative flex items-center justify-center w-44 h-20 rounded-xl border-[3px] border-accent/80 bg-white px-4 py-3 shadow-[0_6px_18px_rgba(0,119,200,0.12)] ring-2 ring-primary/25">
-                <div className="absolute inset-1 rounded-lg bg-white" />
-                <Image
-                  src="/logo/official_logo.png"
-                  alt="OceanNet Technologies"
-                  fill
-                  sizes="(max-width: 768px) 176px, 176px"
-                  className="relative object-contain object-left group-hover:scale-105 transition-transform duration-300"
-                />
+              <div className="relative flex items-center justify-center w-52 md:w-56 h-20 rounded-xl border-[3px] border-accent/80 bg-white py-1 pl-1 shadow-[0_6px_18px_rgba(0,119,200,0.12)] ring-2 ring-primary/25">
+                <div className="relative w-full h-full">
+                  <Image
+                    src="/logo/official_logo.png"
+                    alt="OceanNet Technologies"
+                    fill
+                    sizes="(max-width: 768px) 208px, 224px"
+                    className="object-contain object-left group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
               </div>
             </Link>
             <p className="text-sm text-white/85 leading-6 max-w-xs">

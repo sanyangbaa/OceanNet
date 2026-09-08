@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 export default function TalentFormClient({
   defaultAreaOfInterest,
@@ -157,6 +158,27 @@ export default function TalentFormClient({
             </a>
           </p>
         )}
+      </div>
+      
+      <div className="flex items-start gap-2 pt-1">
+        <input
+          type="checkbox"
+          id="talent-consent"
+          required
+          className="mt-0.5 rounded border-border text-primary focus:ring-primary cursor-pointer"
+        />
+        <label
+          htmlFor="talent-consent"
+          className={`text-[11px] leading-tight cursor-pointer ${
+            variant === "dark" ? "text-white/80" : "text-muted-foreground"
+          }`}
+        >
+          I consent to OceanNet retaining my profile and CV for future job opportunities, subject to the{" "}
+          <Link href="/privacy" className="underline font-semibold hover:text-primary">
+            Privacy Policy
+          </Link>
+          .
+        </label>
       </div>
       <div className="pt-2">
         <button

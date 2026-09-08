@@ -28,7 +28,7 @@ export function ProjectDetailClient({
   relatedProjects,
 }: ProjectDetailClientProps) {
   return (
-    <div className="pt-14 pb-12 min-h-screen bg-white overflow-hidden">
+    <div className="pt-14 pb-12 min-h-screen bg-white overflow-x-clip">
       {/* Dynamic Hero Section with Animated Bubbles */}
       <section className="relative h-[48vh] min-h-80 w-full overflow-hidden">
         <Image
@@ -78,7 +78,7 @@ export function ProjectDetailClient({
       {/* Main Details Grid */}
       <section className="py-14 md:py-20">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
             {/* Left Column: Description & Gallery */}
             <div className="lg:col-span-8 flex flex-col gap-12">
               <div>
@@ -92,7 +92,12 @@ export function ProjectDetailClient({
                   Project Overview
                   <div className="h-1 grow bg-gray-100" />
                 </motion.h2>
-                <p className="text-xl text-muted-foreground leading-relaxed">
+                {project.shortDescription && (
+                  <p className="text-base text-muted-foreground leading-relaxed whitespace-pre-line mb-4">
+                    {project.shortDescription}
+                  </p>
+                )}
+                <p className="text-base text-muted-foreground leading-relaxed whitespace-pre-line">
                   {project.description}
                 </p>
               </div>
@@ -146,7 +151,7 @@ export function ProjectDetailClient({
             </div>
 
             {/* Right Column: Project Info Sidebar */}
-            <div className="lg:col-span-4 lg:sticky lg:top-32 h-fit">
+            <div className="lg:col-span-4 lg:sticky lg:top-24 self-start">
               <Tilt
                 options={{ max: 20, scale: 1.01, speed: 450 }}
                 className="bg-secondary text-white p-8 md:p-10 rounded-3xl shadow-2xl relative overflow-hidden group border border-white/10"

@@ -34,10 +34,10 @@ export function ScrollToTop() {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 10, scale: 0.8 }}
           onClick={scrollToTop}
-          className="fixed bottom-24 right-6 z-50 flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-secondary text-white shadow-lg shadow-secondary/30 transition-all hover:-translate-y-1 hover:bg-primary hover:text-white focus:outline-none ring-2 ring-white/20"
+          className="fixed bottom-24 right-6 z-50 flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-secondary text-white shadow-lg shadow-secondary/30 transition-all hover:-translate-y-1 hover:bg-primary hover:text-white focus:outline-none ring-2 ring-white/20"
           aria-label="Back to Top"
         >
-          <ArrowUp className="h-5 w-5 md:h-6 md:w-6" />
+          <ArrowUp className="h-4 w-4 md:h-5 md:w-5" />
         </motion.button>
       )}
     </AnimatePresence>
