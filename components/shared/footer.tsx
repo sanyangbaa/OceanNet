@@ -20,8 +20,10 @@ const footerLinks = [
       { name: "Digital Solutions", href: "/services/digital-solutions" },
       { name: "Systems Integration", href: "/services/systems-integration" },
       { name: "Digital Health", href: "/services/digital-health-solutions" },
-      { name: "Enterprise Software", href: "/services/enterprise-software-solutions" },
-      { name: "Cloud Solutions", href: "/services/cloud-solutions" },
+      {
+        name: "Enterprise Software",
+        href: "/services/enterprise-software-solutions",
+      },
       { name: "View All Services →", href: "/services" },
     ],
   },

@@ -5,7 +5,9 @@ import { companyInfo as staticCompanyInfo } from "@/data/company";
 
 export async function generateMetadata() {
   return {
-    title: staticCompanyInfo.servicesMetaTitle || "Technology Services | OceanNet Technologies",
+    title:
+      staticCompanyInfo.servicesMetaTitle ||
+      "Technology Services | OceanNet Technologies",
     description:
       staticCompanyInfo.servicesMetaDescription ||
       "Explore OceanNet's digital solutions, systems integration, digital health, enterprise software, cloud, cybersecurity, networking, GIS and managed ICT services.",
@@ -51,7 +53,7 @@ export default async function ServicesPage() {
                     {category}
                   </h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
                   {categoryServices.map((service, idx) => (
                     <ServiceCardClient
                       key={service.id}
