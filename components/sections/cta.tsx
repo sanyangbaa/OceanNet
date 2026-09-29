@@ -16,8 +16,8 @@ export async function CallToAction() {
         OCEANNET
       </div>
 
-      <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
-        <div className="max-w-4xl mx-auto flex flex-col gap-8">
+      <div className="container mx-auto w-full px-4 md:px-6 relative z-10 text-center">
+        <div className="mx-auto flex w-full flex-col gap-8 md:max-w-4xl">
           <CTAClient phone={"+220 278 5585"} />
         </div>
       </div>

@@ -76,7 +76,7 @@ export function WhyChooseUs() {
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
-                variants={fadeIn("up", "spring", index * 0.1, 0.75)}
+                variants={fadeIn("", "tween", index * 0.1, 0.4)}
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.15 }}

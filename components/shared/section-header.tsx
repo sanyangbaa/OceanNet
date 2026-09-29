@@ -69,14 +69,14 @@ export function SectionHeader({
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
         className={cn(
-          "relative z-20 mx-auto max-w-4xl px-6 flex flex-col gap-4",
+          "relative z-20 mx-auto w-full max-w-4xl px-0 sm:px-4 md:px-6 flex flex-col gap-3 sm:gap-4",
           align === "center" ? "text-center" : "text-left",
         )}
       >
         {subtitle && (
           <span
             className={cn(
-              "text-xs font-bold uppercase tracking-[0.3em] mb-2",
+              "text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1 sm:mb-2",
               isDarkOrBg ? "text-accent" : "text-primary",
             )}
           >
@@ -85,7 +85,7 @@ export function SectionHeader({
         )}
         <h2
           className={cn(
-            "text-3xl md:text-5xl font-black uppercase tracking-tight",
+            "w-full text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tight",
             isDarkOrBg ? "text-white" : "text-secondary",
           )}
         >
@@ -95,7 +95,7 @@ export function SectionHeader({
         {description && (
           <p
             className={cn(
-              "text-lg leading-relaxed max-w-2xl",
+              "w-full max-w-none md:max-w-2xl text-base sm:text-lg leading-relaxed",
               align === "center" ? "mx-auto" : "",
               isDarkOrBg ? "text-white/85" : "text-muted-foreground",
             )}

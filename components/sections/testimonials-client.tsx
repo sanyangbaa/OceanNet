@@ -18,7 +18,7 @@ export function TestimonialsClient({
         {testimonials.map((testimonial, index) => (
           <motion.div
             key={testimonial.id}
-            variants={fadeIn("up", "spring", index * 0.1, 0.75)}
+            variants={fadeIn("", "tween", index * 0.1, 0.4)}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.15 }}
