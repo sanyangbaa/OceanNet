@@ -58,10 +58,12 @@ function AvatarImage({
 }
 
 export function Header() {
-  const { toggle, collapsed, toggleCollapse } = useSidebar();
+  const { toggle, isOpen, collapsed, toggleCollapse } = useSidebar();
   const pathname = usePathname();
   const [unreadCount, setUnreadCount] = useState(0);
   const [latestMessages, setLatestMessages] = useState<any[]>([]);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<{
     projects: any[];
@@ -70,6 +72,8 @@ export function Header() {
   } | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const notificationsRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Do not poll automatically on mount to avoid unnecessary background requests.
@@ -132,18 +136,32 @@ export function Header() {
       ) {
         setSearchResults(null);
       }
+      if (
+        notificationsRef.current &&
+        !notificationsRef.current.contains(event.target as Node)
+      ) {
+        setNotificationsOpen(false);
+      }
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(event.target as Node)
+      ) {
+        setProfileOpen(false);
+      }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("pointerdown", handleClickOutside);
+    return () => document.removeEventListener("pointerdown", handleClickOutside);
   }, []);
 
   return (
-    <header className="h-20 flex items-center gap-3 px-0 mb-8 relative z-50">
+    <header className="h-20 w-full flex items-center gap-3 px-0 relative z-50">
       {/* ── Mobile hamburger ── */}
       <button
         onClick={toggle}
         className="lg:hidden shrink-0 p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-gray-400 hover:text-white transition-all"
         aria-label="Open menu"
+        aria-expanded={isOpen}
+        aria-controls="admin-sidebar"
       >
         <Menu size={20} />
       </button>
@@ -300,13 +318,16 @@ export function Header() {
       {/* ── Right-side controls ── */}
       <div className="flex items-center gap-2 ml-auto">
         {/* Notifications */}
-        <div
-          className="relative group"
-          onMouseEnter={handleOpenNotifications}
-          onFocus={handleOpenNotifications}
-        >
+        <div className="relative" ref={notificationsRef}>
           <button
-            onClick={handleOpenNotifications}
+            onClick={() => {
+              handleOpenNotifications();
+              setProfileOpen(false);
+              setNotificationsOpen((open) => !open);
+            }}
+            aria-label="Notifications"
+            aria-expanded={notificationsOpen}
+            aria-controls="admin-notifications-menu"
             className="relative p-2.5 text-gray-400 hover:text-white transition-all hover:bg-white/5 rounded-xl border border-transparent hover:border-white/10"
           >
             <Bell size={20} />
@@ -317,7 +338,10 @@ export function Header() {
             )}
           </button>
 
-          <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          <div
+            id="admin-notifications-menu"
+            className={`absolute right-0 mt-2 w-72 max-w-[calc(100vw-2rem)] sm:w-80 bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl p-4 transition-all z-60 ${notificationsOpen ? "visible opacity-100" : "invisible pointer-events-none opacity-0"}`}
+          >
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
               <h3 className="font-black text-xs uppercase tracking-widest text-white italic">
                 Recent <span className="text-primary not-italic">Messages</span>
@@ -335,6 +359,7 @@ export function Header() {
                     key={msg.id}
                     href={`/admin/contact?id=${msg.id}`}
                     prefetch={false}
+                    onClick={() => setNotificationsOpen(false)}
                     className="flex gap-3 p-3 hover:bg-white/5 rounded-xl transition-all border border-transparent hover:border-white/5 group"
                   >
                     <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 border border-primary/20">
@@ -362,6 +387,7 @@ export function Header() {
             <Link
               href="/admin/contact"
               prefetch={false}
+              onClick={() => setNotificationsOpen(false)}
               className="block w-full mt-4 py-3 text-[10px] font-black uppercase tracking-[0.2em] text-center text-primary hover:bg-primary/5 rounded-xl transition-all border-t border-white/5 pt-4"
             >
               View All Messages
@@ -373,6 +399,8 @@ export function Header() {
         <Link
           href="/admin/settings"
           prefetch={false}
+          aria-label="Admin settings"
+          title="Settings"
           className="p-2.5 text-gray-400 hover:text-white transition-all hover:bg-white/5 rounded-xl border border-transparent hover:border-white/10"
         >
           <Settings size={20} />
@@ -381,8 +409,17 @@ export function Header() {
         <div className="h-8 w-px bg-white/10 mx-1 hidden sm:block"></div>
 
         {/* User Profile */}
-        <div className="relative group">
-          <button className="flex items-center gap-2 p-1.5 sm:pr-3 hover:bg-white/5 rounded-xl border border-transparent hover:border-white/10 transition-all">
+        <div className="relative" ref={profileRef}>
+          <button
+            onClick={() => {
+              setNotificationsOpen(false);
+              setProfileOpen((open) => !open);
+            }}
+            aria-label="Administrator menu"
+            aria-expanded={profileOpen}
+            aria-controls="admin-profile-menu"
+            className="flex min-h-11 items-center gap-2 p-1.5 sm:pr-3 hover:bg-white/5 rounded-xl border border-transparent hover:border-white/10 transition-all"
+          >
             <div className="h-9 w-9 rounded-xl bg-linear-to-br from-primary/20 to-primary/5 flex items-center justify-center border border-primary/20 group-hover:border-primary/40 transition-colors overflow-hidden shrink-0">
               <User size={18} className="text-primary" />
             </div>
@@ -400,7 +437,10 @@ export function Header() {
             />
           </button>
 
-          <div className="absolute right-0 mt-2 w-52 bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          <div
+            id="admin-profile-menu"
+            className={`absolute right-0 mt-2 w-52 max-w-[calc(100vw-2rem)] bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl p-2 transition-all z-60 ${profileOpen ? "visible opacity-100" : "invisible pointer-events-none opacity-0"}`}
+          >
             <div className="p-4 border-b border-white/5 mb-2">
               <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">
                 Signed in as
@@ -410,6 +450,7 @@ export function Header() {
             <Link
               href="/admin/settings"
               prefetch={false}
+              onClick={() => setProfileOpen(false)}
               className="w-full flex items-center gap-3 px-3 py-2.5 text-xs text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all"
             >
               <User size={14} className="text-primary/50" /> Profile Settings
@@ -417,6 +458,7 @@ export function Header() {
             <Link
               href="/admin/settings"
               prefetch={false}
+              onClick={() => setProfileOpen(false)}
               className="w-full flex items-center gap-3 px-3 py-2.5 text-xs text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all"
             >
               <Settings size={14} className="text-primary/50" /> System
@@ -425,6 +467,7 @@ export function Header() {
             <div className="h-px bg-white/5 my-2"></div>
             <button
               onClick={async () => {
+                setProfileOpen(false);
                 await fetch("/api/admin/logout", { method: "POST" });
                 window.location.href = "/admin/login";
               }}
