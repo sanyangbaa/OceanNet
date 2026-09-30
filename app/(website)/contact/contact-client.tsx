@@ -1,15 +1,27 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion } from "framer-motion";
+import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { SectionHeader } from "@/components/shared/section-header";
-import { MapPin, Phone, Mail, Clock, Send, ChevronDown } from "lucide-react";
+import {
+  Check,
+  ChevronDown,
+  Clock,
+  FolderOpen,
+  Lightbulb,
+  LifeBuoy,
+  Mail,
+  MapPin,
+  MessageSquare,
+  Phone,
+  Send,
+} from "lucide-react";
 import { useState } from "react";
 import { slideIn, textVariant, staggerContainer } from "@/lib/motion";
 import { Tilt } from "@/components/shared/tilt";
-import { companyInfo } from "@/data/company";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -20,6 +32,29 @@ const formSchema = z.object({
     .string()
     .min(10, { message: "Message must be at least 10 characters." }),
 });
+
+const subjectOptions = [
+  {
+    value: "Project Inquiry",
+    description: "Discuss a project or digital solution",
+    icon: FolderOpen,
+  },
+  {
+    value: "Consultation",
+    description: "Plan a consultation with our team",
+    icon: Lightbulb,
+  },
+  {
+    value: "Support",
+    description: "Get help with an existing service",
+    icon: LifeBuoy,
+  },
+  {
+    value: "Other",
+    description: "Contact us about something else",
+    icon: MessageSquare,
+  },
+];
 
 export interface ContactClientProps {
   companyInfo: {
@@ -45,6 +80,7 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
       message: "",
     },
   });
+  const subjectValue = useWatch({ control: form.control, name: "subject" });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
@@ -270,20 +306,56 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
                   >
                     Subject
                   </label>
-                  <div className="relative">
-                    <select
-                      {...form.register("subject")}
+                  <SelectPrimitive.Root
+                    name="subject"
+                    value={subjectValue || null}
+                    onValueChange={(value) =>
+                      form.setValue("subject", value ?? "", {
+                        shouldValidate: true,
+                      })
+                    }
+                  >
+                    <SelectPrimitive.Trigger
                       id="subject"
-                      className={`w-full bg-gray-50 border ${form.formState.errors.subject ? "border-red-500" : "border-gray-200"} rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all appearance-none cursor-pointer`}
+                      aria-invalid={Boolean(form.formState.errors.subject)}
+                      className={`flex w-full items-center justify-between gap-3 rounded-xl border bg-gray-50 px-4 py-3 text-left text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${form.formState.errors.subject ? "border-red-500" : "border-gray-200 hover:border-primary/50"}`}
                     >
-                      <option value="">Select a Subject</option>
-                      <option value="Project Inquiry">Project Inquiry</option>
-                      <option value="Consultation">Consultation</option>
-                      <option value="Support">Support</option>
-                      <option value="Other">Other</option>
-                    </select>
-                    <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-                  </div>
+                      <SelectPrimitive.Value placeholder="Select a Subject" />
+                      <SelectPrimitive.Icon>
+                        <ChevronDown className="h-4 w-4 text-primary" />
+                      </SelectPrimitive.Icon>
+                    </SelectPrimitive.Trigger>
+                    <SelectPrimitive.Portal>
+                      <SelectPrimitive.Positioner sideOffset={8} align="start" className="z-50">
+                        <SelectPrimitive.Popup className="w-(--anchor-width) rounded-2xl border border-primary/15 bg-white p-2 shadow-xl shadow-secondary/10 outline-none data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0">
+                          <SelectPrimitive.List className="space-y-1">
+                            {subjectOptions.map((option) => (
+                              <SelectPrimitive.Item
+                                key={option.value}
+                                value={option.value}
+                                className="flex cursor-pointer items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-secondary outline-none transition-colors data-highlighted:border-primary/15 data-highlighted:bg-primary/5 data-selected:bg-primary/10"
+                              >
+                                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/10">
+                                  <option.icon aria-hidden="true" className="h-5 w-5" />
+                                </span>
+                                <span className="min-w-0 flex-1">
+                                  <span className="block text-sm font-semibold">
+                                    {option.value}
+                                  </span>
+                                  <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
+                                    {option.description}
+                                  </span>
+                                </span>
+                                <SelectPrimitive.ItemIndicator className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                                  <Check aria-hidden="true" className="h-3 w-3" />
+                                </SelectPrimitive.ItemIndicator>
+                              </SelectPrimitive.Item>
+                            ))}
+                          </SelectPrimitive.List>
+                        </SelectPrimitive.Popup>
+                      </SelectPrimitive.Positioner>
+                    </SelectPrimitive.Portal>
+                  </SelectPrimitive.Root>
                   {form.formState.errors.subject && (
                     <p className="text-red-500 text-xs mt-1">
                       {form.formState.errors.subject.message}
