@@ -38,6 +38,13 @@ export async function getAdminRole(userId: string) {
     return admin?.role || "admin";
 }
 
+export async function getCurrentAdmin() {
+    const session = await getSession();
+    if (!session) return null;
+    const { db } = await import("@/server/db");
+    return db.admin.findUnique({ where: { id: session.userId } });
+}
+
 export async function deleteSession() {
   const cookieStore = await cookies();
   cookieStore.delete("admin_token");

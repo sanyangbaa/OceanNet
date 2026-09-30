@@ -9,6 +9,13 @@ export async function GET() {
     if (!session)
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+    const currentAdmin = await db.admin.findUnique({
+      where: { id: session.userId },
+    });
+    if (!currentAdmin || currentAdmin.role !== "super_admin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
     const admins = await db.admin.findMany();
     return NextResponse.json(admins);
   } catch (error) {
@@ -25,6 +32,13 @@ export async function POST(request: Request) {
     const session = await getSession();
     if (!session)
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    const currentAdmin = await db.admin.findUnique({
+      where: { id: session.userId },
+    });
+    if (!currentAdmin || currentAdmin.role !== "super_admin") {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
 
     const { username, password, role } = await request.json();
 

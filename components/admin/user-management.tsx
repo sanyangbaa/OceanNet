@@ -26,6 +26,7 @@ export function UserManagement() {
   const [admins, setAdmins] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAdmin, setEditingAdmin] = useState<AdminUser | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,18 +39,38 @@ export function UserManagement() {
 
   const fetchAdmins = useCallback(async () => {
     try {
-      const res = await fetch("/api/admin/admins", {
-        credentials: "same-origin",
-      });
+      const [meRes, adminsRes] = await Promise.all([
+        fetch("/api/admin/me", { credentials: "same-origin" }),
+        fetch("/api/admin/admins", { credentials: "same-origin" }),
+      ]);
 
-      if (!res.ok) {
-        const payload = await res
+      if (!meRes.ok) {
+        setIsSuperAdmin(false);
+        setAdmins([]);
+        setLoading(false);
+        setError("You do not have permission to manage admin accounts.");
+        return;
+      }
+
+      const me = await meRes.json().catch(() => ({ role: null }));
+      const isAllowed = me.role === "super_admin";
+      setIsSuperAdmin(isAllowed);
+
+      if (!isAllowed) {
+        setAdmins([]);
+        setLoading(false);
+        setError("Only the super admin can access admin management.");
+        return;
+      }
+
+      if (!adminsRes.ok) {
+        const payload = await adminsRes
           .json()
           .catch(() => ({ error: "Unable to load admin accounts." }));
         throw new Error(payload.error || "Unable to load admin accounts.");
       }
 
-      const data = await res.json();
+      const data = await adminsRes.json();
       setError(null);
       setAdmins(Array.isArray(data) ? data : []);
     } catch (error) {
@@ -64,7 +85,10 @@ export function UserManagement() {
   }, []);
 
   useEffect(() => {
-    void fetchAdmins();
+    const timer = window.setTimeout(() => {
+      void fetchAdmins();
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [fetchAdmins]);
 
   const handleOpenModal = (admin?: AdminUser) => {
@@ -161,6 +185,12 @@ export function UserManagement() {
         </div>
       )}
 
+      {!isSuperAdmin && !loading && (
+        <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-gray-300">
+          You do not have permission to manage admin users.
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-black text-white uppercase tracking-widest italic">
@@ -173,13 +203,15 @@ export function UserManagement() {
             Manage accounts and permissions for the ONT Admin Panel.
           </p>
         </div>
-        <button
-          onClick={() => handleOpenModal()}
-          className="bg-primary text-black font-bold py-2.5 px-5 rounded-xl flex items-center justify-center gap-2 hover:bg-white transition-all transform active:scale-95 text-xs uppercase tracking-widest shadow-lg shadow-primary/20 w-full sm:w-auto"
-        >
-          <UserPlus size={16} />
-          Create Account
-        </button>
+        {isSuperAdmin && (
+          <button
+            onClick={() => handleOpenModal()}
+            className="bg-primary text-black font-bold py-2.5 px-5 rounded-xl flex items-center justify-center gap-2 hover:bg-white transition-all transform active:scale-95 text-xs uppercase tracking-widest shadow-lg shadow-primary/20 w-full sm:w-auto"
+          >
+            <UserPlus size={16} />
+            Create Account
+          </button>
+        )}
       </div>
 
       {/* Mobile card list — hidden on md+ */}

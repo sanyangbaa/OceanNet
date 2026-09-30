@@ -21,6 +21,9 @@ export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<Tab>("general");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [currentRole, setCurrentRole] = useState<
+    "super_admin" | "admin" | "editor" | null
+  >(null);
   const [formData, setFormData] = useState({
     name: "OceanNet Technologies",
     email: "",
@@ -34,6 +37,19 @@ export default function SettingsPage() {
   });
 
   useEffect(() => {
+    async function fetchCurrentAdmin() {
+      try {
+        const res = await fetch("/api/admin/me", {
+          credentials: "same-origin",
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        setCurrentRole(data.role || null);
+      } catch (error) {
+        console.error("Failed to fetch current admin role:", error);
+      }
+    }
+
     async function fetchSettings() {
       try {
         const res = await fetch("/api/admin/settings", {
@@ -57,8 +73,11 @@ export default function SettingsPage() {
         setIsLoading(false);
       }
     }
+    fetchCurrentAdmin();
     fetchSettings();
   }, []);
+
+  const isSuperAdmin = currentRole === "super_admin";
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -118,17 +137,19 @@ export default function SettingsPage() {
               <SettingsIcon size={13} />
               <span>General</span>
             </button>
-            <button
-              onClick={() => setActiveTab("users")}
-              className={`flex flex-1 sm:flex-none items-center justify-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg sm:rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
-                activeTab === "users"
-                  ? "bg-primary text-black"
-                  : "text-gray-500 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              <ShieldCheck size={13} />
-              <span>Admins</span>
-            </button>
+            {isSuperAdmin && (
+              <button
+                onClick={() => setActiveTab("users")}
+                className={`flex flex-1 sm:flex-none items-center justify-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg sm:rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+                  activeTab === "users"
+                    ? "bg-primary text-black"
+                    : "text-gray-500 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <ShieldCheck size={13} />
+                <span>Admins</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -137,7 +158,7 @@ export default function SettingsPage() {
       </div>
 
       <AnimatePresence mode="wait">
-        {activeTab === "general" ? (
+        {activeTab === "general" || !isSuperAdmin ? (
           <motion.div
             key="general"
             initial={{ opacity: 0, y: 10 }}
