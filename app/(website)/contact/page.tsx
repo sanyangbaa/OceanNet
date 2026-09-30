@@ -24,7 +24,7 @@ export default async function ContactPage() {
 
   const serializedCompanyInfo: ContactClientProps["companyInfo"] = {
     contacts: {
-      address: companyInfo?.address || "Kanifing, The Gambia",
+      address: staticCompanyInfo.contacts.address,
       phone: companyInfo?.phone || "+220 278 5585",
       email: companyInfo?.email || "info@oceannettechnologies.com",
     },

@@ -130,7 +130,7 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.01 }}
-          className="flex flex-col gap-12 lg:gap-16"
+          className="flex flex-col gap-12 lg:grid lg:grid-cols-2 lg:items-start lg:gap-16"
         >
           {/* Left Part: Contact Information with slideIn left */}
           <motion.div
@@ -153,20 +153,20 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Tilt
-                options={{ max: 35, scale: 1.03, speed: 450 }}
+                options={{ max: 8, scale: 1.01, speed: 450 }}
                 className="bg-gray-50 p-6 rounded-2xl border-l-4 border-primary shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-start"
               >
                 <MapPin className="h-6 w-6 text-primary mb-4" />
                 <h4 className="font-bold uppercase text-sm mb-2 text-secondary">
                   Main Office
                 </h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   {companyInfo.contacts.address}
                 </p>
               </Tilt>
 
               <Tilt
-                options={{ max: 35, scale: 1.03, speed: 450 }}
+                options={{ max: 8, scale: 1.01, speed: 450 }}
                 className="bg-gray-50 p-6 rounded-2xl border-l-4 border-secondary shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-start"
               >
                 <Phone className="h-6 w-6 text-secondary mb-4" />
@@ -182,7 +182,7 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
               </Tilt>
 
               <Tilt
-                options={{ max: 35, scale: 1.03, speed: 450 }}
+                options={{ max: 8, scale: 1.01, speed: 450 }}
                 className="bg-gray-50 p-6 rounded-2xl border-l-4 border-secondary shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-start"
               >
                 <Mail className="h-6 w-6 text-secondary mb-4" />
@@ -195,14 +195,14 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
               </Tilt>
 
               <Tilt
-                options={{ max: 35, scale: 1.03, speed: 450 }}
+                options={{ max: 8, scale: 1.01, speed: 450 }}
                 className="bg-gray-50 p-6 rounded-2xl border-l-4 border-primary shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-start"
               >
                 <Clock className="h-6 w-6 text-primary mb-4" />
                 <h4 className="font-bold uppercase text-sm mb-2 text-secondary">
                   Working Hours
                 </h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   Mon - Thursday: 9:00 AM - 5:00 PM
                   <br />
                   Fri: 9:00 AM - 12:30 PM
@@ -214,7 +214,7 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
           {/* Right Part: Contact Form with slideIn right */}
           <motion.div
             variants={slideIn("right", "tween", 0.2, 1)}
-            className="bg-white -mx-4 px-4 py-8 rounded-none border-x-0 border-t border-gray-100 shadow-[0_-4px_24px_rgba(0,0,0,0.07)] relative md:mx-0 md:rounded-3xl md:border md:p-10 md:shadow-2xl"
+            className="bg-white -mx-4 px-4 py-8 rounded-none border-x-0 border-t border-gray-100 shadow-[0_-4px_24px_rgba(0,0,0,0.07)] relative md:mx-0 md:rounded-3xl md:border md:p-10 md:shadow-lg"
           >
             <motion.h3
               variants={textVariant(0.1)}
@@ -326,8 +326,12 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
                       </SelectPrimitive.Icon>
                     </SelectPrimitive.Trigger>
                     <SelectPrimitive.Portal>
-                      <SelectPrimitive.Positioner sideOffset={8} align="start" className="z-50">
-                        <SelectPrimitive.Popup className="w-(--anchor-width) rounded-2xl border border-primary/15 bg-white p-2 shadow-xl shadow-secondary/10 outline-none data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0">
+                      <SelectPrimitive.Positioner
+                        sideOffset={8}
+                        align="end"
+                        className="z-50"
+                      >
+                        <SelectPrimitive.Popup className="w-(--anchor-width) max-w-[calc(100vw-2rem)] rounded-2xl border border-primary/15 bg-white p-2 shadow-xl shadow-secondary/10 outline-none data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 lg:w-72">
                           <SelectPrimitive.List className="space-y-1">
                             {subjectOptions.map((option) => (
                               <SelectPrimitive.Item
@@ -336,7 +340,10 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
                                 className="flex cursor-pointer items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-secondary outline-none transition-colors data-highlighted:border-primary/15 data-highlighted:bg-primary/5 data-selected:bg-primary/10"
                               >
                                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/10">
-                                  <option.icon aria-hidden="true" className="h-5 w-5" />
+                                  <option.icon
+                                    aria-hidden="true"
+                                    className="h-5 w-5"
+                                  />
                                 </span>
                                 <span className="min-w-0 flex-1">
                                   <span className="block text-sm font-semibold">
@@ -347,7 +354,10 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
                                   </span>
                                 </span>
                                 <SelectPrimitive.ItemIndicator className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary text-white">
-                                  <Check aria-hidden="true" className="h-3 w-3" />
+                                  <Check
+                                    aria-hidden="true"
+                                    className="h-3 w-3"
+                                  />
                                 </SelectPrimitive.ItemIndicator>
                               </SelectPrimitive.Item>
                             ))}
