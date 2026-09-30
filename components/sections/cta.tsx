@@ -17,7 +17,7 @@ export async function CallToAction() {
       </div>
 
       <div className="container mx-auto w-full px-4 md:px-6 relative z-10 text-center">
-        <div className="mx-auto flex w-full flex-col gap-8 md:max-w-4xl">
+        <div className="mx-auto flex w-full flex-col gap-5 sm:gap-8 md:max-w-4xl">
           <CTAClient phone={"+220 278 5585"} />
         </div>
       </div>

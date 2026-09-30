@@ -38,7 +38,7 @@ export function WhyOceanNet() {
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
           subtitle="Why OceanNet"
-          title="Technology Delivery With Context"
+          title="Built for Context"
           description="We bring practical local knowledge, broad engineering capability and accountable delivery to every engagement."
           //   align="left"
           withBubbles={false}

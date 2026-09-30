@@ -80,7 +80,7 @@ export function WhyChooseUs() {
           <div
             ref={scrollContainerRef}
             onScroll={handleScroll}
-            className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0"
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-4 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0"
           >
             {features.map((feature, index) => (
               <motion.div
@@ -113,13 +113,15 @@ export function WhyChooseUs() {
             ))}
           </div>
 
-          <MobileCarouselControls
-            activeIndex={activeIndex}
-            count={features.length}
-            itemLabel="industry"
-            onSelect={scrollTo}
-            light
-          />
+          <div className="relative -top-6">
+            <MobileCarouselControls
+              activeIndex={activeIndex}
+              count={features.length}
+              itemLabel="industry"
+              onSelect={scrollTo}
+              light
+            />
+          </div>
         </div>
       </div>
     </section>
