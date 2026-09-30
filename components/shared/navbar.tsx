@@ -132,7 +132,7 @@ export function Navbar() {
                     className="bg-primary text-white text-center py-3 rounded-full font-bold uppercase tracking-wider text-xs shadow-lg"
                     onClick={() => setIsOpen(false)}
                   >
-                    Get in Touch
+                    Contact Us
                   </Link>
 
                   <a

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check, ChevronDown } from "lucide-react";
 import { ensureStringArray } from "@/lib/utils";
 import type { Project } from "@/server/db";
 import { fadeIn } from "@/lib/motion";
@@ -16,6 +16,8 @@ export function ProjectsClient({
   initialProjects: Project[];
 }) {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const mobileFilterRef = useRef<HTMLDivElement>(null);
 
   const categories = [
     "All",
@@ -27,41 +29,93 @@ export function ProjectsClient({
       ? initialProjects
       : initialProjects.filter((p) => p.category === activeFilter);
 
+  useEffect(() => {
+    function handlePointerDown(event: PointerEvent) {
+      if (
+        mobileFilterRef.current &&
+        !mobileFilterRef.current.contains(event.target as Node)
+      ) {
+        setIsMobileFilterOpen(false);
+      }
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setIsMobileFilterOpen(false);
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       {/* Filter Section */}
       <section className="container mx-auto px-4 md:px-6 mb-6">
-        {/* Mobile Select Filter */}
+        {/* Mobile Category Filter */}
         <div className="md:hidden mb-8">
-          <label htmlFor="category-filter" className="sr-only">
-            Filter projects by category
-          </label>
-          <div className="relative">
-            <select
-              id="category-filter"
-              value={activeFilter}
-              onChange={(e) => setActiveFilter(e.target.value)}
-              className="appearance-none w-full bg-white border-2 border-border text-secondary py-4 px-6 rounded-sm font-bold uppercase tracking-widest text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all shadow-sm pr-12"
+          <div ref={mobileFilterRef} className="relative">
+            <p className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+              Browse by category
+            </p>
+            <button
+              type="button"
+              onClick={() => setIsMobileFilterOpen((open) => !open)}
+              aria-expanded={isMobileFilterOpen}
+              aria-haspopup="listbox"
+              className="flex w-full items-center justify-between rounded-lg border border-border bg-white px-4 py-3.5 text-left shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-primary/40"
             >
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-6 text-muted-foreground">
-              <svg
-                className="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
+              <span>
+                <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                  Selected category
+                </span>
+                <span className="mt-1 block text-sm font-black uppercase tracking-wider text-secondary">
+                  {activeFilter}
+                </span>
+              </span>
+              <ChevronDown
+                size={18}
+                className={`text-primary transition-transform ${
+                  isMobileFilterOpen ? "rotate-180" : ""
+                }`}
               >
-                <path
-                  fillRule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
+              </ChevronDown>
+            </button>
+
+            {isMobileFilterOpen && (
+              <div
+                role="listbox"
+                aria-label="Filter projects by category"
+                className="absolute left-0 right-0 top-full z-30 mt-2 max-h-72 overflow-y-auto rounded-lg border border-border bg-white p-2 shadow-[0_16px_40px_rgba(3,4,94,0.16)]"
+              >
+                {categories.map((category) => {
+                  const isSelected = activeFilter === category;
+                  return (
+                    <button
+                      key={category}
+                      type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      onClick={() => {
+                        setActiveFilter(category);
+                        setIsMobileFilterOpen(false);
+                      }}
+                      className={`flex w-full items-center justify-between rounded-md px-3 py-3 text-left text-xs font-bold uppercase tracking-wider transition-colors ${
+                        isSelected
+                          ? "bg-primary text-white"
+                          : "text-secondary hover:bg-muted"
+                      }`}
+                    >
+                      {category}
+                      {isSelected && <Check size={16} />}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
 

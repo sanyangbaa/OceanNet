@@ -94,7 +94,7 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.01 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start"
+          className="flex flex-col gap-12 lg:gap-16"
         >
           {/* Left Part: Contact Information with slideIn left */}
           <motion.div
@@ -178,7 +178,7 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
           {/* Right Part: Contact Form with slideIn right */}
           <motion.div
             variants={slideIn("right", "tween", 0.2, 1)}
-            className="bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-gray-100 relative"
+            className="bg-white -mx-4 px-4 py-8 rounded-none border-x-0 border-t border-gray-100 shadow-[0_-4px_24px_rgba(0,0,0,0.07)] relative md:mx-0 md:rounded-3xl md:border md:p-10 md:shadow-2xl"
           >
             <motion.h3
               variants={textVariant(0.1)}

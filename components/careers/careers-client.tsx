@@ -146,7 +146,9 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
               Build Meaningful Technology With Us
             </h2>
             <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-              Our projects provide opportunities to solve real operational problems and contribute to technology initiatives serving businesses, public institutions and development programmes.
+              Our projects provide opportunities to solve real operational
+              problems and contribute to technology initiatives serving
+              businesses, public institutions and development programmes.
             </p>
           </motion.div>
 
@@ -195,7 +197,8 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
               Values That Guide Our Delivery
             </h2>
             <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-              Our culture emphasizes quality, ownership, and practical engineering over shortcuts.
+              Our culture emphasizes quality, ownership, and practical
+              engineering over shortcuts.
             </p>
           </motion.div>
 
@@ -248,7 +251,8 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
               Open Positions
             </h2>
             <p className="text-muted-foreground text-sm">
-              Current openings across our engineering, consulting, and operational teams.
+              Current openings across our engineering, consulting, and
+              operational teams.
             </p>
           </motion.div>
 
@@ -269,8 +273,8 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
               </h3>
               <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-lg mx-auto">
                 There are currently no open positions. You can still join our
-                talent community and we will keep your profile for suitable future
-                opportunities, subject to our Privacy Policy.
+                talent community and we will keep your profile for suitable
+                future opportunities, subject to our Privacy Policy.
               </p>
               <div className="pt-2">
                 <a
@@ -390,7 +394,8 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
               How We Evaluate &amp; Hire
             </h2>
             <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
-              We look for genuine problem-solving capability, technical diligence, and positive collaboration.
+              We look for genuine problem-solving capability, technical
+              diligence, and positive collaboration.
             </p>
           </motion.div>
 
@@ -437,16 +442,20 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
               Frequently Asked Questions
             </h2>
             <p className="text-muted-foreground text-sm">
-              Answers regarding our work, recruitment practices, and talent community.
+              Answers regarding our work, recruitment practices, and talent
+              community.
             </p>
           </motion.div>
           <FAQAccordion />
         </section>
 
         {/* Talent Community Callout Banner */}
-        <section id="talent-community" className="max-w-7xl mx-auto scroll-mt-24">
+        <section
+          id="talent-community"
+          className="-mx-4 w-[calc(100%+2rem)] scroll-mt-24 md:mx-0 md:w-full"
+        >
           <div
-            className="rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-2xl flex flex-col lg:flex-row gap-8 justify-between items-center"
+            className="rounded-none p-6 md:rounded-3xl md:p-12 text-white relative overflow-hidden shadow-2xl flex flex-col lg:flex-row gap-8 justify-between items-center"
             style={{
               background: "linear-gradient(135deg, #0A192F 0%, #0077C8 100%)",
             }}
@@ -484,7 +493,7 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
               </ul>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 md:p-8 rounded-2xl w-full lg:w-[420px] relative z-10 shrink-0">
+            <div className="bg-white/10 backdrop-blur-md border border-white/20 p-6 md:p-8 rounded-2xl w-full lg:flex-1 relative z-10 shrink-0">
               <TalentFormClient variant="dark" />
             </div>
           </div>
