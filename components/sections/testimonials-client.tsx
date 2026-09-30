@@ -1,20 +1,29 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import Image from "next/image";
 import type { Testimonial } from "@/server/db";
 import { fadeIn } from "@/lib/motion";
 import { Tilt } from "@/components/shared/tilt";
+import { MobileCarouselControls } from "@/components/shared/mobile-carousel-controls";
+import { useMobileCarousel } from "@/components/shared/use-mobile-carousel";
 
 export function TestimonialsClient({
   testimonials,
 }: {
   testimonials: Testimonial[];
 }) {
+  const { activeIndex, handleScroll, scrollContainerRef, scrollTo } =
+    useMobileCarousel(testimonials.length);
+
   return (
     <div className="relative group/carousel">
-      <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-4 md:pb-6 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0 mt-8">
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-4 md:pb-6 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0 mt-8"
+      >
         {testimonials.map((testimonial, index) => (
           <motion.div
             key={testimonial.id}
@@ -79,12 +88,12 @@ export function TestimonialsClient({
         ))}
       </div>
 
-      {/* Mobile indicator */}
-      <div className="flex justify-center gap-2 mt-4 md:hidden">
-        {testimonials.map((_, i) => (
-          <div key={i} className="w-1.5 h-1.5 rounded-full bg-black/10" />
-        ))}
-      </div>
+      <MobileCarouselControls
+        activeIndex={activeIndex}
+        count={testimonials.length}
+        itemLabel="testimonial"
+        onSelect={scrollTo}
+      />
     </div>
   );
 }

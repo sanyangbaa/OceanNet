@@ -7,6 +7,8 @@ import { ArrowRight } from "lucide-react";
 import { ensureStringArray } from "@/lib/utils";
 import { fadeIn } from "@/lib/motion";
 import { Tilt } from "@/components/shared/tilt";
+import { MobileCarouselControls } from "@/components/shared/mobile-carousel-controls";
+import { useMobileCarousel } from "@/components/shared/use-mobile-carousel";
 
 interface Project {
   id: string;
@@ -26,9 +28,16 @@ interface FeaturedProjectsClientProps {
 export function FeaturedProjectsClient({
   projects,
 }: FeaturedProjectsClientProps) {
+  const { activeIndex, handleScroll, scrollContainerRef, scrollTo } =
+    useMobileCarousel(projects.length, "start");
+
   return (
     <div className="relative group/carousel">
-      <div className="flex md:grid md:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0">
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-4 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0 touch-auto overscroll-x-contain scroll-pl-4 md:scroll-pl-0"
+      >
         {projects.map((project, index) => (
           <motion.div
             key={project.id}
@@ -36,7 +45,7 @@ export function FeaturedProjectsClient({
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.15 }}
-            className="shrink-0 w-[95%] sm:w-96 md:w-auto snap-center flex flex-col"
+            className="shrink-0 w-[84vw] max-w-full sm:w-[380px] md:w-full snap-start flex flex-col"
           >
             <Tilt
               options={{ max: 15, scale: 1.02, speed: 450 }}
@@ -97,12 +106,12 @@ export function FeaturedProjectsClient({
         ))}
       </div>
 
-      {/* Mobile indicator */}
-      <div className="flex justify-center gap-2 mt-4 md:hidden">
-        {projects.map((_, i) => (
-          <div key={i} className="w-1.5 h-1.5 rounded-full bg-black/20" />
-        ))}
-      </div>
+      <MobileCarouselControls
+        activeIndex={activeIndex}
+        count={projects.length}
+        itemLabel="project"
+        onSelect={scrollTo}
+      />
     </div>
   );
 }

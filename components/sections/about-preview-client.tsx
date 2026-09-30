@@ -14,12 +14,12 @@ export function AboutPreviewClient() {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, amount: 0.15 }}
-      className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center"
+      className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
     >
       {/* Left Part: Image Side with slideIn left */}
       <motion.div
         variants={slideIn("left", "tween", 0.2, 1)}
-        className="relative h-100 md:h-112.5 lg:h-125"
+        className="relative h-[260px] sm:h-100 md:h-112.5 lg:h-125"
       >
         <div className="relative h-full rounded-2xl overflow-hidden shadow-xl border border-gray-100">
           <Image
@@ -50,28 +50,28 @@ export function AboutPreviewClient() {
       {/* Right Part: Content Side with slideIn right */}
       <motion.div
         variants={slideIn("right", "tween", 0.2, 1)}
-        className="flex flex-col gap-4 md:gap-6"
+        className="flex flex-col gap-4 md:gap-8"
       >
         <motion.div variants={textVariant(0.1)}>
-          <span className="text-xs font-bold uppercase tracking-[0.3em] text-primary block mb-2">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-primary block mb-2">
             About Our Company
           </span>
-          <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-secondary leading-tight">
-            Building a Smarter <br />
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-secondary leading-tight">
+            Building a Smarter <br className="hidden sm:inline" />
             Digital Future<span className="text-primary">.</span>
           </h2>
         </motion.div>
 
         <motion.p
           variants={textVariant(0.2)}
-          className="text-lg text-muted-foreground leading-relaxed"
+          className="text-base sm:text-lg text-muted-foreground leading-relaxed"
         >
           OceanNet Technologies delivers innovative technology solutions that
           help organizations improve efficiency, enhance transparency,
           strengthen resilience, and achieve measurable results.
         </motion.p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 pt-2 md:pt-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 pt-4 md:pt-4">
           {[
             "Enterprise Ready",
             "Security-Focused",
@@ -87,7 +87,7 @@ export function AboutPreviewClient() {
           ))}
         </div>
 
-        <div className="pt-4 md:pt-6">
+        <div className="pt-4 md:pt-8">
           <Link
             href="/about"
             className="inline-flex items-center gap-2 bg-secondary text-white px-8 py-4 rounded-lg font-bold transition-all hover:bg-primary hover:text-white shadow-xl hover:scale-105 active:scale-95 duration-300 text-sm uppercase tracking-wider"

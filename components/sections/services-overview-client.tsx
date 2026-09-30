@@ -23,6 +23,8 @@ import {
 } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
 import { Tilt } from "@/components/shared/tilt";
+import { MobileCarouselControls } from "@/components/shared/mobile-carousel-controls";
+import { useMobileCarousel } from "@/components/shared/use-mobile-carousel";
 
 type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 const iconMap: Record<string, IconComponent> = {
@@ -55,9 +57,16 @@ interface Service {
 }
 
 export function ServicesOverviewClient({ services }: { services: Service[] }) {
+  const { activeIndex, handleScroll, scrollContainerRef, scrollTo } =
+    useMobileCarousel(services.length);
+
   return (
     <div className="relative group/carousel">
-      <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0">
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0"
+      >
         {services.map((service, index) => {
           const IconComponent = iconMap[service.icon] || Code2;
           return (
@@ -95,12 +104,12 @@ export function ServicesOverviewClient({ services }: { services: Service[] }) {
         })}
       </div>
 
-      {/* Mobile indicator */}
-      <div className="flex justify-center gap-2 mt-4 md:hidden">
-        {services.map((_, i) => (
-          <div key={i} className="w-1.5 h-1.5 rounded-full bg-primary/25" />
-        ))}
-      </div>
+      <MobileCarouselControls
+        activeIndex={activeIndex}
+        count={services.length}
+        itemLabel="service"
+        onSelect={scrollTo}
+      />
     </div>
   );
 }

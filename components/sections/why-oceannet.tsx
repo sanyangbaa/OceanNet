@@ -34,7 +34,7 @@ const reasons = [
 
 export function WhyOceanNet() {
   return (
-    <section className="bg-background py-16 md:py-20">
+    <section className="bg-background py-10 sm:py-16 md:py-20">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
           subtitle="Why OceanNet"

@@ -6,6 +6,8 @@ import { SectionHeader } from "@/components/shared/section-header";
 import { fadeIn } from "@/lib/motion";
 import { Tilt } from "@/components/shared/tilt";
 import { AnimatedBubbles } from "@/components/shared/animated-bubbles";
+import { MobileCarouselControls } from "@/components/shared/mobile-carousel-controls";
+import { useMobileCarousel } from "@/components/shared/use-mobile-carousel";
 
 const features = [
   {
@@ -47,9 +49,12 @@ const features = [
 ];
 
 export function WhyChooseUs() {
+  const { activeIndex, handleScroll, scrollContainerRef, scrollTo } =
+    useMobileCarousel(features.length);
+
   return (
     <section
-      className="relative py-16 md:py-20 text-white overflow-hidden"
+      className="relative py-10 sm:py-16 md:py-20 text-white overflow-hidden"
       style={{
         background: "linear-gradient(145deg, #03045E 0%, #0077C8 100%)",
       }}
@@ -72,7 +77,11 @@ export function WhyChooseUs() {
 
         {/* Features Container: Carousel on mobile, Grid on desktop */}
         <div className="relative group/carousel">
-          <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0">
+          <div
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0"
+          >
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
@@ -104,12 +113,13 @@ export function WhyChooseUs() {
             ))}
           </div>
 
-          {/* Mobile indicator */}
-          <div className="flex justify-center gap-2 mt-4 pb-4 md:pb-0 md:hidden">
-            {features.map((_, i) => (
-              <div key={i} className="w-1.5 h-1.5 rounded-full bg-white/30" />
-            ))}
-          </div>
+          <MobileCarouselControls
+            activeIndex={activeIndex}
+            count={features.length}
+            itemLabel="industry"
+            onSelect={scrollTo}
+            light
+          />
         </div>
       </div>
     </section>

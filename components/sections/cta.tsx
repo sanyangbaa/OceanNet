@@ -10,7 +10,7 @@ export async function CallToAction() {
   }
 
   return (
-    <section className="py-14 md:py-20 relative overflow-hidden bg-white">
+    <section className="py-12 sm:py-16 md:py-20 relative overflow-hidden bg-white">
       {/* Subtle decorative background watermark */}
       <div className="absolute mx-auto px-4 md:px-6 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[8rem] md:text-[18rem] font-black text-secondary/5 pointer-events-none whitespace-nowrap select-none">
         OCEANNET

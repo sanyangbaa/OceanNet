@@ -6,7 +6,7 @@ export async function ServicesOverview() {
   const homepageServices = services.slice(0, 6);
 
   return (
-    <section className="py-14 md:py-20 overflow-hidden bg-white">
+    <section className="py-10 sm:py-16 md:py-20 overflow-hidden bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
           subtitle="Our Expertise"

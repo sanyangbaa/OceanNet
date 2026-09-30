@@ -5,12 +5,12 @@ import { FeaturedProjectsClient } from "./featured-projects-client";
 
 export async function FeaturedProjects() {
   const projects = await db.project.findMany({
-    take: 3,
+    take: 6,
     orderBy: { createdAt: "desc" },
   });
 
   return (
-    <section className="py-14 md:py-20 overflow-hidden bg-white">
+    <section className="py-10 sm:py-16 md:py-24 overflow-hidden bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
           subtitle="Our Work"
@@ -21,7 +21,7 @@ export async function FeaturedProjects() {
 
         <FeaturedProjectsClient projects={projects} />
 
-        <div className="mt-12 md:mt-16 text-center">
+        <div className="mt-8 sm:mt-12 md:mt-16 text-center">
           <Link
             href="/projects"
             className="inline-flex py-4 px-10 rounded-sm border-2 border-secondary text-secondary font-black text-sm uppercase tracking-widest transition-all hover:bg-secondary hover:text-white"

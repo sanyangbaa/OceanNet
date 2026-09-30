@@ -13,7 +13,7 @@ export async function Testimonials() {
   }
 
   return (
-    <section className="py-14 md:py-20 bg-white overflow-hidden">
+    <section className="py-10 sm:py-16 md:py-20 bg-white overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
           subtitle="Client Success"
