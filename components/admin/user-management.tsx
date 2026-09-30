@@ -38,7 +38,6 @@ export function UserManagement() {
 
   const fetchAdmins = useCallback(async () => {
     try {
-      setError(null);
       const res = await fetch("/api/admin/admins", {
         credentials: "same-origin",
       });
@@ -51,6 +50,7 @@ export function UserManagement() {
       }
 
       const data = await res.json();
+      setError(null);
       setAdmins(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Failed to fetch admins:", error);
@@ -255,13 +255,13 @@ export function UserManagement() {
             {loading
               ? [1, 2, 3].map((i) => (
                   <tr key={i} className="animate-pulse">
-                    <td colSpan={3} className="px-6 py-8 bg-white/[0.02]"></td>
+                    <td colSpan={3} className="px-6 py-8 bg-white/2"></td>
                   </tr>
                 ))
               : admins.map((admin) => (
                   <tr
                     key={admin.id}
-                    className="hover:bg-white/[0.02] transition-colors group"
+                    className="hover:bg-white/2 transition-colors group"
                   >
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-3">
@@ -325,7 +325,7 @@ export function UserManagement() {
       {/* Modal */}
       <AnimatePresence>
         {isModalOpen && (
-          <div className="fixed inset-0 z-[110] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-110 flex items-center justify-center p-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

@@ -1123,7 +1123,7 @@ const projects = {
       params,
     );
     if (opts?.orderBy) sql += buildOrderBy(opts.orderBy);
-    else sql += ` ORDER BY createdAt DESC`;
+    else sql += ` ORDER BY "createdAt" DESC`;
     const limit = opts?.take || opts?.limit;
     if (limit) {
       sql += ` LIMIT ?`;
@@ -1380,7 +1380,7 @@ const admins = {
     const p = getPool();
     if (!p) return [];
     const [rows] = await p.execute(
-      `SELECT * FROM "Admin" ORDER BY createdAt DESC`,
+      `SELECT "id", "username", "role", "createdAt" FROM "Admin" ORDER BY "createdAt" DESC`,
     );
     return normalizeResult<Admin[]>(rows, "Admin");
   },
