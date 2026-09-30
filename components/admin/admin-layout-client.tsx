@@ -37,7 +37,7 @@ export default function AdminLayoutClient({
           isOpen ? "lg:block hidden" : "lg:block",
         )}
       >
-        <div className="w-full max-w-full px-4 md:px-6 lg:px-8 pt-32">
+        <div className="w-full max-w-full px-4 md:px-6 lg:px-8 pt-28">
           <div className="w-full max-w-full overflow-hidden pb-16">
             {children}
           </div>

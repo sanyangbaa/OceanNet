@@ -21,12 +21,25 @@ import Link from "next/link";
 import { useSidebar } from "@/contexts/sidebar-context";
 import Image from "next/image";
 
+type SearchResults = {
+  projects: {
+    id: string;
+    image?: string | null;
+    title: string;
+    category: string;
+  }[];
+  services: { id: string; title: string }[];
+  team: { id: string; image?: string | null; name: string; role: string }[];
+};
+
+type NotificationMessage = { id: string; name: string; subject: string };
+
 function AvatarImage({
   src,
   alt,
   className,
 }: {
-  src?: any;
+  src?: string | null;
   alt?: string;
   className?: string;
 }) {
@@ -61,24 +74,19 @@ export function Header() {
   const { toggle, isOpen, collapsed, toggleCollapse } = useSidebar();
   const pathname = usePathname();
   const [unreadCount, setUnreadCount] = useState(0);
-  const [latestMessages, setLatestMessages] = useState<any[]>([]);
+  const [latestMessages, setLatestMessages] = useState<NotificationMessage[]>(
+    [],
+  );
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<{
-    projects: any[];
-    services: any[];
-    team: any[];
-  } | null>(null);
+  const [searchResults, setSearchResults] = useState<SearchResults | null>(
+    null,
+  );
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const notificationsRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Do not poll automatically on mount to avoid unnecessary background requests.
-    // Messages will be fetched lazily when the user interacts with the notification control.
-  }, []);
 
   const [hasFetchedUnread, setHasFetchedUnread] = useState(false);
 
@@ -93,7 +101,9 @@ export function Header() {
 
   const fetchUnreadCount = async () => {
     try {
-      const res = await fetch("/api/admin/messages/unread-count");
+      const res = await fetch("/api/admin/messages/unread-count", {
+        credentials: "same-origin",
+      });
       const data = await res.json();
       setUnreadCount(data.count || 0);
       setLatestMessages(data.latest || []);
@@ -104,29 +114,32 @@ export function Header() {
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      if (searchQuery) {
-        performSearch();
-      } else {
+      if (!searchQuery) {
         setSearchResults(null);
+        return;
       }
+
+      async function search() {
+        setIsSearching(true);
+        try {
+          const res = await fetch(
+            `/api/admin/search?q=${encodeURIComponent(searchQuery)}`,
+            { credentials: "same-origin" },
+          );
+          if (!res.ok) throw new Error("Search request failed");
+          const data = (await res.json()) as SearchResults;
+          setSearchResults(data);
+        } catch (error) {
+          console.error("Search failed:", error);
+        } finally {
+          setIsSearching(false);
+        }
+      }
+
+      void search();
     }, 300);
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
-
-  const performSearch = async () => {
-    setIsSearching(true);
-    try {
-      const res = await fetch(
-        `/api/admin/search?q=${encodeURIComponent(searchQuery)}`,
-      );
-      const data = await res.json();
-      setSearchResults(data);
-    } catch (error) {
-      console.error("Search failed:", error);
-    } finally {
-      setIsSearching(false);
-    }
-  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -150,7 +163,8 @@ export function Header() {
       }
     };
     document.addEventListener("pointerdown", handleClickOutside);
-    return () => document.removeEventListener("pointerdown", handleClickOutside);
+    return () =>
+      document.removeEventListener("pointerdown", handleClickOutside);
   }, []);
 
   return (
@@ -340,7 +354,7 @@ export function Header() {
 
           <div
             id="admin-notifications-menu"
-            className={`absolute right-0 mt-2 w-72 max-w-[calc(100vw-2rem)] sm:w-80 bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl p-4 transition-all z-60 ${notificationsOpen ? "visible opacity-100" : "invisible pointer-events-none opacity-0"}`}
+            className={`absolute left-1/2 top-full mt-2 w-[min(22rem,calc(100vw-1.5rem))] -translate-x-1/2 sm:left-auto sm:right-0 sm:translate-x-0 sm:w-80 bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl p-4 transition-all z-60 ${notificationsOpen ? "visible opacity-100" : "invisible pointer-events-none opacity-0"}`}
           >
             <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
               <h3 className="font-black text-xs uppercase tracking-widest text-white italic">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   UserPlus,
   Trash2,
@@ -10,7 +10,6 @@ import {
   Edit,
   X,
   Check,
-  Search,
   Key,
   User,
 } from "lucide-react";
@@ -26,6 +25,7 @@ interface AdminUser {
 export function UserManagement() {
   const [admins, setAdmins] = useState<AdminUser[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAdmin, setEditingAdmin] = useState<AdminUser | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,21 +36,36 @@ export function UserManagement() {
     role: "admin" as "super_admin" | "admin" | "editor",
   });
 
-  useEffect(() => {
-    fetchAdmins();
-  }, []);
-
-  const fetchAdmins = async () => {
+  const fetchAdmins = useCallback(async () => {
     try {
-      const res = await fetch("/api/admin/admins");
+      setError(null);
+      const res = await fetch("/api/admin/admins", {
+        credentials: "same-origin",
+      });
+
+      if (!res.ok) {
+        const payload = await res
+          .json()
+          .catch(() => ({ error: "Unable to load admin accounts." }));
+        throw new Error(payload.error || "Unable to load admin accounts.");
+      }
+
       const data = await res.json();
-      setAdmins(data);
+      setAdmins(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Failed to fetch admins:", error);
+      setError(
+        error instanceof Error ? error.message : "Failed to fetch admins.",
+      );
+      setAdmins([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    void fetchAdmins();
+  }, [fetchAdmins]);
 
   const handleOpenModal = (admin?: AdminUser) => {
     if (admin) {
@@ -83,12 +98,13 @@ export function UserManagement() {
     try {
       const res = await fetch(url, {
         method,
+        credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (res.ok) {
-        fetchAdmins();
+        void fetchAdmins();
         setIsModalOpen(false);
       } else {
         const error = await res.json();
@@ -105,10 +121,15 @@ export function UserManagement() {
     if (!confirm("Are you sure you want to delete this admin account?")) return;
 
     try {
-      const res = await fetch(`/api/admin/admins/${id}`, { method: "DELETE" });
-      if (res.ok) fetchAdmins();
+      const res = await fetch(`/api/admin/admins/${id}`, {
+        method: "DELETE",
+        credentials: "same-origin",
+      });
+      if (res.ok) void fetchAdmins();
       else {
-        const error = await res.json();
+        const error = await res
+          .json()
+          .catch(() => ({ error: "Failed to delete" }));
         alert(error.error || "Failed to delete");
       }
     } catch (error) {
@@ -133,6 +154,13 @@ export function UserManagement() {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div className="rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+          <p className="font-semibold">Unable to load admin accounts.</p>
+          <p className="mt-1 text-xs text-red-100/80">{error}</p>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-xl font-black text-white uppercase tracking-widest italic">
@@ -158,7 +186,10 @@ export function UserManagement() {
       <div className="flex flex-col gap-3 md:hidden">
         {loading
           ? [1, 2, 3].map((i) => (
-              <div key={i} className="animate-pulse bg-white/5 border border-white/10 rounded-2xl p-4 h-20" />
+              <div
+                key={i}
+                className="animate-pulse bg-white/5 border border-white/10 rounded-2xl p-4 h-20"
+              />
             ))
           : admins.map((admin) => (
               <div
@@ -175,9 +206,13 @@ export function UserManagement() {
                     </p>
                     <div className="flex items-center gap-1.5 mt-1">
                       {getRoleIcon(admin.role)}
-                      <span className={`text-[10px] font-black uppercase tracking-widest ${
-                        admin.role === "super_admin" ? "text-primary" : "text-gray-400"
-                      }`}>
+                      <span
+                        className={`text-[10px] font-black uppercase tracking-widest ${
+                          admin.role === "super_admin"
+                            ? "text-primary"
+                            : "text-gray-400"
+                        }`}
+                      >
                         {getRoleLabel(admin.role)}
                       </span>
                     </div>
@@ -200,7 +235,9 @@ export function UserManagement() {
               </div>
             ))}
         {!loading && admins.length === 0 && (
-          <div className="text-center py-12 text-gray-500 text-sm">No admins found.</div>
+          <div className="text-center py-12 text-gray-500 text-sm">
+            No admins found.
+          </div>
         )}
       </div>
 
@@ -245,14 +282,18 @@ export function UserManagement() {
                       <div className="flex items-center gap-2">
                         <div
                           className={`p-1.5 rounded-lg ${
-                            admin.role === "super_admin" ? "bg-primary/10" : "bg-white/5"
+                            admin.role === "super_admin"
+                              ? "bg-primary/10"
+                              : "bg-white/5"
                           } shrink-0`}
                         >
                           {getRoleIcon(admin.role)}
                         </div>
                         <span
                           className={`text-[10px] font-black uppercase tracking-widest truncate ${
-                            admin.role === "super_admin" ? "text-primary" : "text-gray-400"
+                            admin.role === "super_admin"
+                              ? "text-primary"
+                              : "text-gray-400"
                           }`}
                         >
                           {getRoleLabel(admin.role)}
@@ -356,7 +397,10 @@ export function UserManagement() {
                   <select
                     value={formData.role}
                     onChange={(e) =>
-                      setFormData({ ...formData, role: e.target.value as any })
+                      setFormData({
+                        ...formData,
+                        role: e.target.value as AdminUser["role"],
+                      })
                     }
                     className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-sm focus:outline-none focus:border-primary transition-all appearance-none text-white"
                   >

@@ -3,13 +3,11 @@
 import { useState, useEffect } from "react";
 import {
   Loader2,
-  Save,
   Mail,
   Phone,
   MapPin,
   Globe,
   Share2,
-  Users,
   Settings as SettingsIcon,
   ShieldCheck,
   Check,
@@ -38,10 +36,20 @@ export default function SettingsPage() {
   useEffect(() => {
     async function fetchSettings() {
       try {
-        const res = await fetch("/api/admin/settings");
+        const res = await fetch("/api/admin/settings", {
+          credentials: "same-origin",
+        });
         if (res.ok) {
           const data = await res.json();
           if (data) setFormData((s) => ({ ...s, ...data }));
+        } else {
+          const payload = await res
+            .json()
+            .catch(() => ({ error: "Unable to load settings." }));
+          console.error(
+            "Settings fetch error:",
+            payload.error || "Unable to load settings.",
+          );
         }
       } catch (err) {
         console.error("Fetch error:", err);
@@ -58,6 +66,7 @@ export default function SettingsPage() {
     try {
       const res = await fetch("/api/admin/settings", {
         method: "PATCH",
+        credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
@@ -86,45 +95,45 @@ export default function SettingsPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-700 pb-8">
       <div className="flex flex-col gap-4">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-white italic">
-              System <span className="text-primary not-italic">Settings</span>
+              System <span className="text-primary not-italic"> Settings</span>
             </h1>
             <p className="text-gray-400 mt-1 uppercase text-[10px] font-bold tracking-widest italic">
               Global Configuration & Access Control
             </p>
           </div>
+
+          {/* ── Navigation ─────────────────────────── */}
+          <div className="bg-white/5 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl border border-white/10 flex gap-1 sm:gap-2 w-full sm:w-auto lg:self-end">
+            <button
+              onClick={() => setActiveTab("general")}
+              className={`flex flex-1 sm:flex-none items-center justify-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg sm:rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+                activeTab === "general"
+                  ? "bg-primary text-black"
+                  : "text-gray-500 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <SettingsIcon size={13} />
+              <span>General</span>
+            </button>
+            <button
+              onClick={() => setActiveTab("users")}
+              className={`flex flex-1 sm:flex-none items-center justify-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg sm:rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+                activeTab === "users"
+                  ? "bg-primary text-black"
+                  : "text-gray-500 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <ShieldCheck size={13} />
+              <span>Admins</span>
+            </button>
+          </div>
         </div>
 
         {/* Top separator line */}
         <hr className="border-t border-white/5 my-2" />
-
-        {/* ── Navigation ─────────────────────────── */}
-        <div className="bg-white/5 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl border border-white/10 flex gap-1 sm:gap-2 w-full sm:w-auto sm:self-start">
-          <button
-            onClick={() => setActiveTab("general")}
-            className={`flex flex-1 sm:flex-none items-center justify-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg sm:rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
-              activeTab === "general"
-                ? "bg-primary text-black"
-                : "text-gray-500 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <SettingsIcon size={13} />
-            <span>General</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("users")}
-            className={`flex flex-1 sm:flex-none items-center justify-center gap-2 px-4 sm:px-6 py-2.5 rounded-lg sm:rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
-              activeTab === "users"
-                ? "bg-primary text-black"
-                : "text-gray-500 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <ShieldCheck size={13} />
-            <span>Admins</span>
-          </button>
-        </div>
       </div>
 
       <AnimatePresence mode="wait">
