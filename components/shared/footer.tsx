@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { companyInfo } from "@/data/company";
-import { services } from "@/data/services";
 
 const footerLinks = [
   {
@@ -152,7 +151,7 @@ export function Footer() {
           ))}
 
           {/* Contact Info */}
-          <div className="flex flex-col gap-6">
+          <div className="flex min-w-0 flex-col gap-6">
             <h4 className="font-bold text-lg uppercase tracking-wider text-accent">
               Contact Us
             </h4>
@@ -163,13 +162,13 @@ export function Footer() {
                   {companyInfo.contacts.address}
                 </p>
               </div>
-              <div className="flex items-center gap-3 text-base text-white/85">
-                <Phone className="h-5 w-5 text-accent" />
+              <div className="flex min-w-0 items-center gap-3 text-base text-white/85">
+                <Phone className="h-5 w-5 shrink-0 text-accent" />
                 <span>{companyInfo.contacts.phone}</span>
               </div>
-              <div className="flex items-center gap-3 text-base text-white/85">
-                <Mail className="h-5 w-5 text-accent" />
-                <span>{companyInfo.contacts.email}</span>
+              <div className="flex min-w-0 items-center gap-3 text-base text-white/85">
+                <Mail className="h-5 w-5 shrink-0 text-accent" />
+                <span className="min-w-0 break-all">{companyInfo.contacts.email}</span>
               </div>
             </div>
           </div>

@@ -16,10 +16,11 @@ export function CTAClient({ phone = "+220 278 5585" }: { phone?: string }) {
       >
         {/* Eyebrow label */}
         <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-4">
-          Let’s Build What’s Next.
+          Start a Conversation
         </span>
         <h2 className="w-full max-w-none text-2xl sm:text-4xl md:text-6xl font-black uppercase text-secondary mb-4 sm:mb-6 leading-tight">
-          Let’s Build What’s Next.
+          Let’s Build What’s
+          <br className="hidden md:block" /> Next.
         </h2>
         <p className="w-full text-base sm:text-lg font-medium text-muted-foreground max-w-none sm:max-w-2xl mx-auto leading-relaxed">
           Whether you are modernising infrastructure, implementing a digital

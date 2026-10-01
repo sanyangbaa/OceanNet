@@ -86,6 +86,8 @@ export function Navbar() {
               aria-label={
                 isOpen ? "Close navigation menu" : "Open navigation menu"
               }
+              aria-expanded={isOpen}
+              aria-controls="mobile-navigation"
             >
               {isOpen ? (
                 <X className="h-6 w-6" />
@@ -104,7 +106,8 @@ export function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden absolute top-full left-0 right-0 border-t bg-gradient-to-b from-white via-[#f6fbff] to-white shadow-2xl max-h-[calc(100vh-80px)] overflow-y-auto border-primary/10 text-slate-700"
+              id="mobile-navigation"
+              className="mobile-nav-panel lg:hidden absolute top-full left-0 right-0 border-t bg-gradient-to-b from-white via-[#f6fbff] to-white shadow-2xl overflow-y-auto border-primary/10 text-slate-700"
             >
               <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
                 {navItems.map((item) => {

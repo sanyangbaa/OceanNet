@@ -199,4 +199,14 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  .mobile-nav-panel {
+    max-height: calc(100vh - 5rem);
+  }
+
+  @supports (height: 100dvh) {
+    .mobile-nav-panel {
+      max-height: calc(100dvh - 5rem);
+    }
+  }
 }

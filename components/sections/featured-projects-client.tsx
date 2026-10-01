@@ -45,7 +45,7 @@ export function FeaturedProjectsClient({
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.15 }}
-            className="shrink-0 w-[84vw] max-w-full sm:w-[380px] md:w-full snap-start flex flex-col"
+            className="shrink-0 w-[94%] md:w-full snap-start flex flex-col"
           >
             <Tilt
               options={{ max: 15, scale: 1.02, speed: 450 }}
@@ -88,12 +88,17 @@ export function FeaturedProjectsClient({
                     {project.title}
                   </h3>
                   {project.shortDescription && (
-                    <p className="text-sm text-gray-600 mt-2 line-clamp-2 max-w-md">{project.shortDescription}</p>
+                    <p className="text-sm text-gray-600 mt-2 line-clamp-2 max-w-md">
+                      {project.shortDescription}
+                    </p>
                   )}
                   {ensureStringArray(project.technologies).length > 0 && (
                     <div className="flex flex-wrap gap-2 mt-auto pt-3 justify-center">
                       {ensureStringArray(project.technologies).map((tech) => (
-                        <span key={tech} className="text-[10px] uppercase font-black tracking-wide text-primary bg-primary/10 px-2 py-1 rounded-sm">
+                        <span
+                          key={tech}
+                          className="text-[10px] uppercase font-black tracking-wide text-primary bg-primary/10 px-2 py-1 rounded-sm"
+                        >
                           {tech}
                         </span>
                       ))}

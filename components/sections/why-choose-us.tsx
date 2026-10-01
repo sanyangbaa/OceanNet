@@ -89,7 +89,7 @@ export function WhyChooseUs() {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.15 }}
-                className="flex-shrink-0 w-[95%] sm:w-[450px] md:w-auto snap-center flex flex-col"
+                className="shrink-0 w-[94%] md:w-auto snap-center flex flex-col"
               >
                 <Tilt
                   options={{ max: 15, scale: 1.02, speed: 450 }}
