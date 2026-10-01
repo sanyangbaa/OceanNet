@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 
 export interface TiltOptions {
   max?: number;
@@ -25,49 +25,76 @@ export function Tilt({
   ...props
 }: TiltProps) {
   const tiltRef = useRef<HTMLDivElement>(null);
-  const [styleState, setStyleState] = useState<React.CSSProperties>({
-    transform: "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
-    transition: `all ${options.speed || 450}ms ${options.easing || "cubic-bezier(.03,.98,.52,.99)"}`,
-  });
+  const frameRef = useRef<number | null>(null);
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const rectRef = useRef<DOMRect | null>(null);
 
   const max = options.max ?? 15;
   const scale = options.scale ?? 1.02;
   const speed = options.speed ?? 450;
   const perspective = options.perspective ?? 1000;
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!tiltRef.current) return;
-    const rect = tiltRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+  const handlePointerEnter = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (
+      e.pointerType === "touch" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+    rectRef.current = tiltRef.current?.getBoundingClientRect() ?? null;
+  };
 
-    const xPercent = (x / rect.width - 0.5) * 2;
-    const yPercent = (y / rect.height - 0.5) * 2;
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const element = tiltRef.current;
+    if (
+      !element ||
+      e.pointerType === "touch" ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
 
-    const rotateX = -yPercent * (max / 2);
-    const rotateY = xPercent * (max / 2);
+    pointerRef.current = { x: e.clientX, y: e.clientY };
+    if (!rectRef.current) rectRef.current = element.getBoundingClientRect();
+    if (frameRef.current !== null) return;
 
-    setStyleState({
-      transform: `perspective(${perspective}px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(${scale}, ${scale}, ${scale})`,
-      transition: "transform 100ms ease-out",
+    frameRef.current = window.requestAnimationFrame(() => {
+      frameRef.current = null;
+      const rect = rectRef.current;
+      if (!rect) return;
+
+      const xPercent =
+        ((pointerRef.current.x - rect.left) / (rect.width || 1) - 0.5) * 2;
+      const yPercent =
+        ((pointerRef.current.y - rect.top) / (rect.height || 1) - 0.5) * 2;
+      const rotateX = -yPercent * (max / 2);
+      const rotateY = xPercent * (max / 2);
+
+      element.style.transition = "none";
+      element.style.transform = `perspective(${perspective}px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(${scale}, ${scale}, ${scale})`;
     });
   };
 
-  const handleMouseLeave = () => {
-    setStyleState({
-      transform: `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
-      transition: `transform ${speed}ms cubic-bezier(.03,.98,.52,.99)`,
-    });
+  const handlePointerLeave = () => {
+    if (frameRef.current !== null) {
+      window.cancelAnimationFrame(frameRef.current);
+      frameRef.current = null;
+    }
+
+    rectRef.current = null;
+    if (!tiltRef.current) return;
+    tiltRef.current.style.transition = `transform ${speed}ms ${options.easing || "cubic-bezier(.03,.98,.52,.99)"}`;
+    tiltRef.current.style.transform = `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
   };
 
   return (
     <div
       ref={tiltRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onPointerEnter={handlePointerEnter}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
       className={className}
       style={{
-        ...styleState,
+        transform: `perspective(${perspective}px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
+        transition: `transform ${speed}ms ${options.easing || "cubic-bezier(.03,.98,.52,.99)"}`,
         transformStyle: "preserve-3d",
         ...style,
       }}

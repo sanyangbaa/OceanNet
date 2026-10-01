@@ -30,28 +30,28 @@ export function AnimatedBubbles({
   const bubbles = useMemo<Bubble[]>(() => {
     const colors = {
       blue: [
-        "bg-primary/25 border border-primary/40 shadow-[0_0_15px_rgba(0,119,200,0.35)]",
-        "bg-[#0077C8]/30 border border-[#0096C7]/50 shadow-[0_0_20px_rgba(0,150,199,0.4)]",
+        "bg-primary/25 border border-primary/40",
+        "bg-[#0077C8]/30 border border-[#0096C7]/50",
         "bg-primary/15 border border-primary/30",
       ],
       cyan: [
-        "bg-accent/25 border border-accent/40 shadow-[0_0_15px_rgba(48,219,231,0.35)]",
-        "bg-[#30DBE7]/30 border border-[#90E0EF]/50 shadow-[0_0_20px_rgba(48,219,231,0.4)]",
+        "bg-accent/25 border border-accent/40",
+        "bg-[#30DBE7]/30 border border-[#90E0EF]/50",
         "bg-accent/15 border border-accent/30",
       ],
       mixed: [
-        "bg-accent/25 border border-accent/40 shadow-[0_0_18px_rgba(48,219,231,0.35)]",
-        "bg-primary/30 border border-primary/50 shadow-[0_0_18px_rgba(0,119,200,0.35)]",
-        "bg-white/20 border border-white/40 shadow-[0_0_12px_rgba(255,255,255,0.3)]",
-        "bg-[#00B4D8]/25 border border-[#90E0EF]/40 shadow-[0_0_15px_rgba(0,180,216,0.35)]",
+        "bg-accent/25 border border-accent/40",
+        "bg-primary/30 border border-primary/50",
+        "bg-white/20 border border-white/40",
+        "bg-[#00B4D8]/25 border border-[#90E0EF]/40",
         "bg-[#30DBE7]/20 border border-white/30",
-        "bg-accent/35 border border-accent/60 shadow-[0_0_22px_rgba(48,219,231,0.45)]",
+        "bg-accent/35 border border-accent/60",
       ],
     };
 
     const colorList = colors[variant];
 
-    return Array.from({ length: count }, (_, i) => ({
+    return Array.from({ length: Math.min(Math.max(count, 0), 8) }, (_, i) => ({
       id: i,
       size: 14 + ((i * 11) % 52), // 14px to 66px
       left: Math.floor((i * 37 + 7) % 96), // spread across 0% - 96% width
@@ -73,29 +73,17 @@ export function AnimatedBubbles({
       {bubbles.map((b) => (
         <motion.div
           key={b.id}
-          className={`absolute rounded-full backdrop-blur-[1.5px] ${b.color}`}
+          className={`absolute rounded-full ${b.color}`}
           style={{
             width: b.size,
             height: b.size,
             left: `${b.left}%`,
             top: `${b.top}%`,
-          }}
-          initial={{
-            y: 0,
-            x: 0,
-            opacity: b.opacity * 0.5,
-            scale: 0.8,
+            opacity: b.opacity,
           }}
           animate={{
             y: [-b.yDistance, b.yDistance, -b.yDistance],
             x: [-b.xOffset, b.xOffset, -b.xOffset],
-            opacity: [
-              b.opacity * 0.5,
-              b.opacity,
-              b.opacity * 0.8,
-              b.opacity * 0.5,
-            ],
-            scale: [0.85, 1.15, 0.95, 0.85],
           }}
           transition={{
             duration: b.duration,
@@ -104,8 +92,6 @@ export function AnimatedBubbles({
             ease: "easeInOut",
           }}
         >
-          {/* Glossy specular highlight reflection */}
-          <div className="absolute top-[16%] left-[20%] w-[28%] h-[28%] rounded-full bg-white/70 blur-[0.5px]" />
         </motion.div>
       ))}
     </div>
