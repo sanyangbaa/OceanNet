@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { companyInfo } from "@/data/company";
+import { CallToAction } from "@/components/sections/cta";
 
 export const metadata = {
   title: `Terms of Service | ${companyInfo.name}`,
@@ -10,7 +11,8 @@ const updated = "2 September 2026";
 
 export default function TermsPage() {
   return (
-    <article className="bg-background">
+    <>
+      <article className="bg-background">
       <div className="container mx-auto max-w-4xl px-4 py-16 md:px-6 md:py-24">
         <header className="mb-12 border-b border-border pb-8">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-primary">
@@ -130,5 +132,7 @@ export default function TermsPage() {
         </div>
       </div>
     </article>
+    <CallToAction />
+    </>
   );
 }

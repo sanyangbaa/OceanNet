@@ -2,7 +2,23 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Save, Trash2, Plus, Bold, Italic, Underline, List } from "lucide-react";
+import {
+  Loader2,
+  Save,
+  Trash2,
+  Plus,
+  Bold,
+  Italic,
+  Underline,
+  List,
+  Building,
+  Briefcase,
+  Upload,
+  ArrowLeft,
+  Star,
+  MessageSquareQuote,
+  CheckCircle2,
+} from "lucide-react";
 import Image from "next/image";
 
 interface ProjectFormProps {
@@ -13,36 +29,50 @@ interface ProjectFormProps {
 export function ProjectForm({ initialData, id }: ProjectFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [uploadingField, setUploadingField] = useState<string | null>(null);
+
   const [formData, setFormData] = useState({
+    // Main Body Content
     title: (initialData?.title as string) || "",
-    shortDescription: (initialData?.shortDescription as string) || "",
-    location: (initialData?.location as string) || "",
-    category: (initialData?.category as string) || "",
-    industry: (initialData?.industry as string) || "",
-    projectType: (initialData?.projectType as string) || "",
-    role: (initialData?.role as string) || "",
-    servicesDelivered: (initialData?.servicesDelivered as string) || "",
-    outcome: (initialData?.outcome as string) || "",
-    status: (initialData?.status as string) || "Draft",
-    publishStatus: (initialData?.publishStatus as string) || "Draft",
+    category: (initialData?.category as string) || "Commercial",
+    description: (initialData?.description as string) || "",
+    challenge: (initialData?.challenge as string) || "",
+    keyFeatures: Array.isArray(initialData?.keyFeatures)
+      ? initialData.keyFeatures
+          .filter((item): item is string => typeof item === "string")
+          .join("\n")
+      : (initialData?.keyFeatures as string) || "",
+
+    // Project Detail Card (Sidebar 1)
     client: (initialData?.client as string) || "",
-    clientLogo: (initialData?.clientLogo as string) || "",
-    clientWebsite: (initialData?.clientWebsite as string) || "",
+    projectRole:
+      (initialData?.projectRole as string) ||
+      (initialData?.role as string) ||
+      "",
+    location: (initialData?.location as string) || "",
+    projectSize: (initialData?.projectSize as string) || "",
+    status: (initialData?.status as string) || "Complete",
+    year: initialData?.year ? String(initialData.year) : "2024",
+    rating: initialData?.rating ? String(initialData.rating) : "5",
+
+    // Client Review Card (Sidebar 2)
+    reviewAuthor: (initialData?.reviewAuthor as string) || "",
+    reviewRole: (initialData?.reviewRole as string) || "",
+    reviewText: (initialData?.reviewText as string) || "",
+    reviewImage: (initialData?.reviewImage as string) || "",
+
+    // Media & Visuals
     image: (initialData?.image as string) || "",
-    youtubeUrl: (initialData?.youtubeUrl as string) || "",
     gallery: (Array.isArray(initialData?.gallery)
       ? initialData.gallery
       : []) as string[],
-    description: (initialData?.description as string) || "",
-    technologies: (Array.isArray(initialData?.technologies)
-      ? initialData.technologies
-      : []) as string[],
+
+    // Publish & Visibility
+    publishStatus: (initialData?.publishStatus as string) || "Published",
+    featured: Boolean(initialData?.featured),
   });
 
-  const [techInput, setTechInput] = useState("");
   const [useRichText, setUseRichText] = useState(false);
-
-  // Uncontrolled ref for rich text editor — prevents cursor jump on every keystroke
   const editorRef = useRef<HTMLDivElement>(null);
   const editorInitialized = useRef(false);
 
@@ -54,8 +84,7 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
     if (!useRichText) {
       editorInitialized.current = false;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [useRichText]);
+  }, [useRichText, formData.description]);
 
   const execFormat = (cmd: string, value?: string) => {
     document.execCommand(cmd, false, value);
@@ -64,17 +93,24 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
 
   const handleImageUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    field: "image" | "gallery" | "clientLogo",
+    field: "image" | "gallery" | "reviewImage",
   ) => {
     if (!e.target.files?.length) return;
 
-    setIsLoading(true);
+    setUploadingField(field);
     try {
       const files = Array.from(e.target.files);
       const newUrls: string[] = [];
       const folder = id ? `projects/${id}` : "projects";
 
       for (const file of files) {
+        if (file.size > 7 * 1024 * 1024) {
+          alert(
+            `"${file.name}" exceeds the 7MB limit (${(file.size / (1024 * 1024)).toFixed(1)}MB).`,
+          );
+          continue;
+        }
+
         const uploadFormData = new FormData();
         uploadFormData.append("file", file);
         uploadFormData.append("folder", folder);
@@ -89,111 +125,194 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
           if (urls && urls[0]) {
             newUrls.push(urls[0]);
           }
+        } else {
+          const errData = await uploadRes.json().catch(() => ({}));
+          alert(errData.error || `Failed to upload "${file.name}"`);
         }
       }
 
       if (newUrls.length > 0) {
         if (field === "image") {
-          setFormData({ ...formData, image: newUrls[0] });
-        } else if (field === "clientLogo") {
-          setFormData({ ...formData, clientLogo: newUrls[0] });
+          setFormData((prev) => ({ ...prev, image: newUrls[0] }));
+        } else if (field === "reviewImage") {
+          setFormData((prev) => ({ ...prev, reviewImage: newUrls[0] }));
         } else {
-          setFormData({
-            ...formData,
-            gallery: [...formData.gallery, ...newUrls],
-          });
+          setFormData((prev) => ({
+            ...prev,
+            gallery: [...prev.gallery, ...newUrls],
+          }));
         }
-      } else {
-        alert("Failed to upload images");
       }
     } catch (error) {
       console.error("Upload error:", error);
       alert("Error uploading images");
     } finally {
-      setIsLoading(false);
+      setUploadingField(null);
     }
   };
 
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // Sync rich text editor content before submit
     const latestDescription = useRichText
       ? (editorRef.current?.innerHTML ?? formData.description)
       : formData.description;
 
     if (
       !formData.title?.toString().trim() ||
-      !formData.shortDescription?.toString().trim() ||
       !latestDescription?.toString().trim() ||
       !formData.image?.toString().trim()
     ) {
-      alert(
-        "Please fill the required fields: Title, Short Description, Full Description, and Project Thumbnail.",
-      );
+      alert("Please provide the required fields: Title, Description, and Cover Image.");
       return;
     }
+
     setIsLoading(true);
     try {
       const url = id ? `/api/admin/projects/${id}` : "/api/admin/projects";
       const method = id ? "PATCH" : "POST";
+
+      const keyFeaturesList = formData.keyFeatures
+        .split(/\r?\n/)
+        .map((item) => item.trim())
+        .filter(Boolean);
+
       const payload: Record<string, unknown> = {
-        ...formData,
+        title: formData.title,
+        category: formData.category,
         description: latestDescription,
-        youtubeUrl: formData.youtubeUrl?.toString().trim() || null,
+        shortDescription: formData.description.slice(0, 160),
+        challenge: formData.challenge,
+        keyFeatures: keyFeaturesList,
+        client: formData.client,
+        projectRole: formData.projectRole,
+        role: formData.projectRole,
+        location: formData.location,
+        projectSize: formData.projectSize,
+        status: formData.status,
+        year: formData.year ? Number(formData.year) : null,
+        rating: formData.rating ? Number(formData.rating) : 5,
+        reviewAuthor: formData.reviewAuthor,
+        reviewRole: formData.reviewRole,
+        reviewText: formData.reviewText,
+        reviewImage: formData.reviewImage,
+        image: formData.image,
+        gallery: formData.gallery,
+        publishStatus: formData.publishStatus,
+        featured: formData.featured,
       };
+
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
       if (res.ok) {
         router.push("/admin/projects");
         router.refresh();
       } else {
-        alert("Failed to save project");
+        const err = await res.json().catch(() => ({}));
+        alert(err.error || "Failed to save project");
       }
     } catch (error) {
       console.error("Save error:", error);
-      alert("An error occurred");
+      alert("An error occurred while saving the project");
     } finally {
       setIsLoading(false);
     }
   }
 
-  const addTechnology = () => {
-    if (!techInput.trim()) return;
-    setFormData({
-      ...formData,
-      technologies: [...formData.technologies, techInput.trim()],
-    });
-    setTechInput("");
-  };
-  const removeTechnology = (index: number) => {
-    setFormData({
-      ...formData,
-      technologies: formData.technologies.filter(
-        (_: string, i: number) => i !== index,
-      ),
-    });
-  };
-
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700"
+      className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Left Column - Core Info */}
-        <div className="space-y-6">
+      {/* ── Top Action Header ── */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-6">
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors"
+        >
+          <ArrowLeft size={16} />
+          Back to Projects
+        </button>
+
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-sm">
+            <span className="text-[10px] uppercase font-bold text-gray-500">
+              Publish Status:
+            </span>
+            <select
+              value={formData.publishStatus}
+              onChange={(e) =>
+                setFormData({ ...formData, publishStatus: e.target.value })
+              }
+              className="bg-transparent text-xs font-bold text-primary focus:outline-none cursor-pointer"
+            >
+              <option value="Published" className="bg-neutral-900 text-white">
+                Published
+              </option>
+              <option value="Draft" className="bg-neutral-900 text-white">
+                Draft
+              </option>
+              <option value="Archived" className="bg-neutral-900 text-white">
+                Archived
+              </option>
+            </select>
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-primary text-black px-6 py-2 rounded-sm font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 disabled:opacity-50 cursor-pointer"
+          >
+            {isLoading ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : (
+              <Save size={16} />
+            )}
+            {id ? "Update Project" : "Publish Project"}
+          </button>
+        </div>
+      </div>
+
+      {/* Feature on homepage banner */}
+      <label className="flex items-center gap-3 bg-primary/10 border border-primary/30 px-4 py-3 rounded-sm cursor-pointer">
+        <input
+          type="checkbox"
+          checked={formData.featured}
+          onChange={(e) =>
+            setFormData({ ...formData, featured: e.target.checked })
+          }
+          className="h-4 w-4 accent-primary"
+        />
+        <span>
+          <span className="block text-xs font-black uppercase tracking-widest text-primary">
+            Feature on homepage
+          </span>
+          <span className="block text-xs text-gray-400 mt-0.5">
+            Display this project in the featured projects section on the homepage.
+          </span>
+        </span>
+      </label>
+
+      {/* ── 2-Column Layout matching Inspiration Image ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* ── Left Column: Main Content & The Challenge in Work ── */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Main Project Overview */}
           <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
-              Core Identification
-            </h3>
+            <div className="flex items-center gap-2 mb-2">
+              <Building size={16} className="text-primary" />
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary">
+                Main Project Details
+              </h3>
+            </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Project Title *
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Project Title <span className="text-primary">*</span>
               </label>
               <input
                 type="text"
@@ -202,523 +321,585 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                 onChange={(e) =>
                   setFormData({ ...formData, title: e.target.value })
                 }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
-                placeholder="e.g. School Management System"
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium text-white"
+                placeholder="e.g. Solar Power Ltd Project"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Short Description *
-              </label>
-              <textarea
-                rows={2}
-                maxLength={200}
-                value={formData.shortDescription}
-                onChange={(e) =>
-                  setFormData({ ...formData, shortDescription: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
-                placeholder="Short summary for cards (max 200 chars)"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                YouTube Video Link
-              </label>
-              <input
-                type="url"
-                value={formData.youtubeUrl}
-                onChange={(e) =>
-                  setFormData({ ...formData, youtubeUrl: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
-                placeholder="https://www.youtube.com/watch?v=..."
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                  Category
+              <div className="flex items-center justify-between">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                  Project Description <span className="text-primary">*</span>
                 </label>
-                <input
-                  list="category-options"
-                  value={formData.category}
-                  onChange={(e) =>
-                    setFormData({ ...formData, category: e.target.value })
-                  }
-                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
-                  placeholder="Select or type..."
-                />
-                <datalist id="category-options">
-                  <option value="Web Development" />
-                  <option value="Mobile Development" />
-                  <option value="UI/UX Design" />
-                  <option value="Cloud Solutions" />
-                  <option value="AI Solutions" />
-                  <option value="Cybersecurity" />
-                  <option value="DevOps" />
-                  <option value="Systems Integration" />
-                  <option value="Digital Transformation" />
-                  <option value="ICT Infrastructure" />
-                  <option value="Managed Services" />
-                </datalist>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                  Status
-                </label>
-                <select
-                  value={formData.status}
-                  onChange={(e) =>
-                    setFormData({ ...formData, status: e.target.value })
-                  }
-                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium appearance-none"
-                >
-                  <option value="Draft">Draft</option>
-                  <option value="Planning">Planning</option>
-                  <option value="In Progress">In Progress</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Ongoing Maintenance">
-                    Ongoing Maintenance
-                  </option>
-                  <option value="Archived">Archived</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                  Industry
-                </label>
-                <input
-                  list="industry-options"
-                  value={formData.industry}
-                  onChange={(e) =>
-                    setFormData({ ...formData, industry: e.target.value })
-                  }
-                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
-                  placeholder="Select or type..."
-                />
-                <datalist id="industry-options">
-                  <option value="Finance" />
-                  <option value="Healthcare" />
-                  <option value="Education" />
-                  <option value="Government" />
-                  <option value="Logistics" />
-                  <option value="E-Commerce" />
-                  <option value="Telecommunications" />
-                  <option value="Agriculture" />
-                  <option value="Development Programmes" />
-                  <option value="NGO / International Organisations" />
-                  <option value="Retail" />
-                  <option value="Energy" />
-                </datalist>
-              </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                  Project Type
-                </label>
-                <input
-                  list="project-type-options"
-                  value={formData.projectType}
-                  onChange={(e) =>
-                    setFormData({ ...formData, projectType: e.target.value })
-                  }
-                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
-                  placeholder="Select or type..."
-                />
-                <datalist id="project-type-options">
-                  <option value="Client Project" />
-                  <option value="Internal Project" />
-                  <option value="Product Development" />
-                  <option value="Open Source Project" />
-                  <option value="Government Contract" />
-                  <option value="Pilot / Proof of Concept" />
-                </datalist>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Publish Status
-              </label>
-              <select
-                value={formData.publishStatus}
-                onChange={(e) =>
-                  setFormData({ ...formData, publishStatus: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium appearance-none"
-              >
-                <option value="Draft">Draft</option>
-                <option value="Published">Published</option>
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Location
-              </label>
-              <input
-                type="text"
-                value={formData.location}
-                onChange={(e) =>
-                  setFormData({ ...formData, location: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
-                placeholder="e.g. Bijilo, The Gambia"
-              />
-            </div>
-          </div>
-
-          <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
-              Client Details
-            </h3>
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Client Name
-              </label>
-              <input
-                type="text"
-                value={formData.client}
-                onChange={(e) =>
-                  setFormData({ ...formData, client: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium"
-                placeholder="Client Name"
-              />
-              <input
-                type="text"
-                value={formData.clientWebsite}
-                onChange={(e) =>
-                  setFormData({ ...formData, clientWebsite: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium mt-2"
-                placeholder="Client Website (optional): https://example.com"
-              />
-            </div>
-          </div>
-
-          {/* Delivery Evidence — moved to left column under Client Details */}
-          <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
-              Delivery Evidence
-            </h3>
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                OceanNet&apos;s Role
-              </label>
-              <textarea
-                rows={3}
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
-                placeholder="Describe OceanNet's responsibility on this assignment"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Services Delivered
-              </label>
-              <textarea
-                rows={3}
-                value={formData.servicesDelivered}
-                onChange={(e) =>
-                  setFormData({ ...formData, servicesDelivered: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
-                placeholder="List the verified services delivered"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Outcome
-              </label>
-              <textarea
-                rows={3}
-                value={formData.outcome}
-                onChange={(e) => setFormData({ ...formData, outcome: e.target.value })}
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none"
-                placeholder="Describe the verified result or operational improvement"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Right Column - Media & Content */}
-        <div className="space-y-6">
-          <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
-              Media Assets
-            </h3>
-
-            {/* Main Image */}
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Header Image *
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageUpload(e, "image")}
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-xs file:font-black file:bg-primary file:text-black hover:file:bg-primary/90"
-              />
-              <input
-                type="text"
-                value={formData.image}
-                onChange={(e) =>
-                  setFormData({ ...formData, image: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium mt-2"
-                placeholder="Or provide direct URL: https://..."
-              />
-            </div>
-            {formData.image && (
-              <div className="mt-4 aspect-video relative rounded-sm overflow-hidden border border-white/10">
-                <Image
-                  src={formData.image}
-                  alt="Preview"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            )}
-
-            {/* Gallery Images */}
-            <div className="space-y-2 pt-6 border-t border-white/10 mt-6">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Gallery Images (Multiple)
-              </label>
-              <input
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={(e) => handleImageUpload(e, "gallery")}
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-xs file:font-black file:bg-white/20 file:text-white hover:file:bg-white/30"
-              />
-            </div>
-            {formData.gallery.length > 0 && (
-              <div className="grid grid-cols-3 gap-2 mt-4">
-                {formData.gallery.map((url, idx) => (
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <span className="text-[10px] font-bold uppercase text-gray-400">
+                    Rich Text
+                  </span>
                   <div
-                    key={idx}
-                    className="aspect-square relative rounded-sm overflow-hidden border border-white/10 group"
+                    onClick={() => setUseRichText((v) => !v)}
+                    className={`relative w-9 h-4.5 rounded-full transition-colors cursor-pointer ${
+                      useRichText ? "bg-primary" : "bg-white/20"
+                    }`}
                   >
-                    <Image
-                      src={url}
-                      alt={`Gallery ${idx}`}
-                      fill
-                      className="object-cover"
+                    <div
+                      className={`absolute top-0.5 left-0.5 w-3.5 h-3.5 rounded-full bg-white transition-transform ${
+                        useRichText ? "translate-x-4.5" : "translate-x-0"
+                      }`}
                     />
+                  </div>
+                </label>
+              </div>
+
+              {useRichText ? (
+                <div>
+                  <div className="flex gap-1 mb-2 flex-wrap">
                     <button
                       type="button"
-                      onClick={(e) => {
+                      onMouseDown={(e) => {
                         e.preventDefault();
-                        setFormData({
-                          ...formData,
-                          gallery: formData.gallery.filter((_, i) => i !== idx),
-                        });
+                        execFormat("bold");
                       }}
-                      className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                      title="Bold"
+                      className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors text-white"
                     >
-                      <Trash2 size={12} />
+                      <Bold size={13} />
+                    </button>
+                    <button
+                      type="button"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        execFormat("italic");
+                      }}
+                      title="Italic"
+                      className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors text-white"
+                    >
+                      <Italic size={13} />
+                    </button>
+                    <button
+                      type="button"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        execFormat("underline");
+                      }}
+                      title="Underline"
+                      className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors text-white"
+                    >
+                      <Underline size={13} />
+                    </button>
+                    <button
+                      type="button"
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        execFormat("insertUnorderedList");
+                      }}
+                      title="Bullet list"
+                      className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors text-white"
+                    >
+                      <List size={13} />
                     </button>
                   </div>
-                ))}
-              </div>
-            )}
-
-            <div className="space-y-2 pt-6 border-t border-white/10 mt-6">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Client Logo
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleImageUpload(e, "clientLogo")}
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-xs file:font-black file:bg-primary file:text-black hover:file:bg-primary/90"
-              />
-              <input
-                type="text"
-                value={formData.clientLogo}
-                onChange={(e) =>
-                  setFormData({ ...formData, clientLogo: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium mt-2"
-                placeholder="Or provide direct URL for client logo: https://..."
-              />
-              {formData.clientLogo && (
-                <div className="mt-4 w-24 h-24 relative rounded-sm overflow-hidden border border-white/10">
-                  <Image
-                    src={formData.clientLogo}
-                    alt="Client logo"
-                    fill
-                    className="object-contain p-2"
+                  <div
+                    ref={editorRef}
+                    contentEditable
+                    suppressContentEditableWarning
+                    className="min-h-[170px] w-full bg-black/40 border border-white/10 px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all text-white"
+                    style={{ lineHeight: "1.7" }}
                   />
                 </div>
+              ) : (
+                <textarea
+                  rows={6}
+                  required
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium text-white resize-y"
+                  placeholder="Enter the main project overview. Empty lines separate paragraphs on the frontend page."
+                />
               )}
             </div>
           </div>
 
+          {/* The Challenge in Work Section */}
           <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <CheckCircle2 size={16} className="text-primary" />
               <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary">
-                Detailed Description *
+                The Challenge in Work
               </h3>
-              <label className="flex items-center gap-2 cursor-pointer select-none">
-                <span className="text-[10px] font-bold uppercase text-gray-400">Rich Text</span>
-                <div
-                  onClick={() => setUseRichText((v) => !v)}
-                  className={`relative w-10 h-5 rounded-full transition-colors cursor-pointer ${
-                    useRichText ? "bg-primary" : "bg-white/20"
-                  }`}
-                >
-                  <div
-                    className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${
-                      useRichText ? "translate-x-5" : "translate-x-0"
-                    }`}
-                  />
-                </div>
-              </label>
             </div>
-            {useRichText ? (
-              <div>
-                <div className="flex gap-1 mb-2 flex-wrap">
-                  <button
-                    type="button"
-                    onMouseDown={(e) => { e.preventDefault(); execFormat("bold"); }}
-                    title="Bold"
-                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors"
-                  >
-                    <Bold size={13} />
-                  </button>
-                  <button
-                    type="button"
-                    onMouseDown={(e) => { e.preventDefault(); execFormat("italic"); }}
-                    title="Italic"
-                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors"
-                  >
-                    <Italic size={13} />
-                  </button>
-                  <button
-                    type="button"
-                    onMouseDown={(e) => { e.preventDefault(); execFormat("underline"); }}
-                    title="Underline"
-                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors"
-                  >
-                    <Underline size={13} />
-                  </button>
-                  <button
-                    type="button"
-                    onMouseDown={(e) => { e.preventDefault(); execFormat("insertUnorderedList"); }}
-                    title="Bullet list"
-                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm transition-colors"
-                  >
-                    <List size={13} />
-                  </button>
-                  <button
-                    type="button"
-                    onMouseDown={(e) => { e.preventDefault(); execFormat("formatBlock", "p"); }}
-                    title="New paragraph"
-                    className="px-2.5 py-1.5 bg-white/10 hover:bg-white/20 rounded-sm text-[10px] font-bold transition-colors"
-                  >
-                    ¶
-                  </button>
-                </div>
-                {/* Uncontrolled contentEditable — initialized once, no dangerouslySetInnerHTML on rerender */}
-                <div
-                  ref={editorRef}
-                  contentEditable
-                  suppressContentEditableWarning
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" && !e.shiftKey) {
-                      e.preventDefault();
-                      document.execCommand("insertParagraph");
-                    }
-                  }}
-                  className="min-h-[180px] w-full bg-black/40 border border-white/10 px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all"
-                  style={{ lineHeight: "1.7" }}
-                />
-                <p className="text-[10px] text-gray-600 mt-1">
-                  Press Enter for a new paragraph &middot; Shift+Enter for line break
-                </p>
-              </div>
-            ) : (
+
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Challenge Description (Paragraph)
+              </label>
               <textarea
-                rows={8}
-                value={formData.description}
+                rows={4}
+                value={formData.challenge}
                 onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
+                  setFormData({ ...formData, challenge: e.target.value })
                 }
-                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-y"
-                placeholder="Write a compelling project description. Each new line becomes a paragraph on the public page."
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium text-white resize-y"
+                placeholder="Describe the challenges faced and the core approach taken for this project."
               />
-            )}
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Challenge Highlights / Checklist (one item per line)
+              </label>
+              <textarea
+                rows={5}
+                value={formData.keyFeatures}
+                onChange={(e) =>
+                  setFormData({ ...formData, keyFeatures: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-xs font-mono focus:outline-none focus:border-primary/50 transition-all font-medium text-white resize-y"
+                placeholder={
+                  "Lorem ipsum dolor sit amet\nNam liber tempor cum soluta nobis option\nDuis autem vel eum iriure dolor\nLabore ipsum duo amet eos sed ipsum justo\nEt ipsum sit diam ut magna lorem vero lorem rebum"
+                }
+              />
+              <p className="text-[11px] text-gray-500">
+                Each line will be displayed on the public page with a golden checkmark icon.
+              </p>
+            </div>
           </div>
 
-          {/* Technologies — moved to right column under Detailed Description */}
-          <div className="bg-white/5 border border-white/10 p-6 rounded-sm">
-            <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary mb-4">
-              Technologies
-            </h3>
-            <div className="flex gap-2 mb-4">
+          {/* Media Slider Assets */}
+          <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Upload size={16} className="text-primary" />
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary">
+                Main Slider &amp; Gallery Images
+              </h3>
+            </div>
+
+            {/* Featured Cover Image */}
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Featured / Cover Image <span className="text-primary">*</span>
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, "image")}
+                  className="hidden"
+                  id="main-image-upload"
+                />
+                <label
+                  htmlFor="main-image-upload"
+                  className="cursor-pointer bg-primary text-black font-black uppercase tracking-widest px-4 py-2 rounded-sm text-xs flex items-center gap-2 shrink-0 hover:bg-primary/90 transition-all"
+                >
+                  <Upload size={14} />
+                  {uploadingField === "image" ? "Uploading..." : "Upload File"}
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.image}
+                  onChange={(e) =>
+                    setFormData({ ...formData, image: e.target.value })
+                  }
+                  className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs focus:outline-none font-medium text-white"
+                  placeholder="Or provide direct URL: https://..."
+                />
+              </div>
+
+              {formData.image && (
+                <div className="mt-3 aspect-video relative rounded-sm overflow-hidden border border-white/10 bg-black/40">
+                  <Image
+                    src={formData.image}
+                    alt="Preview"
+                    fill
+                    unoptimized={/^https?:\/\//i.test(formData.image)}
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className="object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, image: "" })}
+                    className="absolute top-2 right-2 bg-red-500/90 text-white p-1.5 rounded-sm hover:bg-red-600 transition-colors"
+                  >
+                    <Trash2 size={14} />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Gallery Images for Slider */}
+            <div className="space-y-2 pt-4 border-t border-white/10">
+              <div className="flex items-center justify-between">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                  Additional Slider Images ({formData.gallery.length} Images)
+                </label>
+                <label
+                  htmlFor="gallery-images-upload"
+                  className="cursor-pointer text-primary text-[10px] font-bold uppercase hover:underline flex items-center gap-1"
+                >
+                  <Plus size={12} />
+                  Add Images
+                </label>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, "gallery")}
+                  className="hidden"
+                  id="gallery-images-upload"
+                />
+              </div>
+
+              {formData.gallery.length > 0 && (
+                <div className="grid grid-cols-3 gap-2 mt-3">
+                  {formData.gallery.map((url, idx) => (
+                    <div
+                      key={idx}
+                      className="aspect-square relative rounded-sm overflow-hidden border border-white/10 group bg-black/40"
+                    >
+                      <Image
+                        src={url}
+                        alt={`Gallery ${idx + 1}`}
+                        fill
+                        unoptimized={/^https?:\/\//i.test(url)}
+                        className="object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setFormData({
+                            ...formData,
+                            gallery: formData.gallery.filter(
+                              (_, i) => i !== idx,
+                            ),
+                          })
+                        }
+                        className="absolute top-1 right-1 bg-red-600/90 text-white p-1 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Right Column: Project Detail Card & Client Review (Sidebar) ── */}
+        <div className="lg:col-span-5 space-y-6">
+          {/* Widget 1: PROJECT DETAIL CARD (Matches Sidebar 1 of Image 2) */}
+          <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Briefcase size={16} className="text-primary" />
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary">
+                Sidebar: Project Detail Card
+              </h3>
+            </div>
+
+            {/* Client */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Client <span className="text-primary">*</span>
+              </label>
               <input
                 type="text"
-                value={techInput}
-                onChange={(e) => setTechInput(e.target.value)}
-                onKeyDown={(e) =>
-                  e.key === "Enter" && (e.preventDefault(), addTechnology())
+                required
+                value={formData.client}
+                onChange={(e) =>
+                  setFormData({ ...formData, client: e.target.value })
                 }
-                className="flex-1 bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs focus:outline-none"
-                placeholder="Add a technology (e.g. React, Next.js)"
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
+                placeholder="e.g. Solar Power Ltd"
               />
-              <button
-                type="button"
-                onClick={addTechnology}
-                className="bg-white/10 hover:bg-white/20 p-2 rounded-sm transition-colors text-primary"
-              >
-                <Plus size={16} />
-              </button>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {formData.technologies.map((tech: string, idx: number) => (
-                <div
-                  key={idx}
-                  className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-sm border border-white/5"
+
+            {/* Architect */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Architect / Lead <span className="text-primary">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.projectRole}
+                onChange={(e) =>
+                  setFormData({ ...formData, projectRole: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
+                placeholder="e.g. John Doe"
+              />
+            </div>
+
+            {/* Location */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Location <span className="text-primary">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.location}
+                onChange={(e) =>
+                  setFormData({ ...formData, location: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
+                placeholder="e.g. NY, USA"
+              />
+            </div>
+
+            {/* Size */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Size <span className="text-primary">*</span>
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.projectSize}
+                onChange={(e) =>
+                  setFormData({ ...formData, projectSize: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
+                placeholder="e.g. 10000 SF"
+              />
+            </div>
+
+            {/* Status */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Status <span className="text-primary">*</span>
+              </label>
+              <select
+                required
+                value={formData.status}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50 cursor-pointer"
+              >
+                <option value="Complete" className="bg-neutral-900 text-white">
+                  Complete
+                </option>
+                <option value="In Progress" className="bg-neutral-900 text-white">
+                  In Progress
+                </option>
+                <option value="Under Construction" className="bg-neutral-900 text-white">
+                  Under Construction
+                </option>
+                <option value="In Planning" className="bg-neutral-900 text-white">
+                  In Planning
+                </option>
+              </select>
+            </div>
+
+            {/* Year Completed */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Year Completed <span className="text-primary">*</span>
+              </label>
+              <input
+                type="number"
+                min="1990"
+                max="2099"
+                required
+                value={formData.year}
+                onChange={(e) =>
+                  setFormData({ ...formData, year: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
+                placeholder="e.g. 2021"
+              />
+            </div>
+
+            {/* Category */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Category <span className="text-primary">*</span>
+              </label>
+              <input
+                list="category-options-list"
+                required
+                value={formData.category}
+                onChange={(e) =>
+                  setFormData({ ...formData, category: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
+                placeholder="e.g. Commercial"
+              />
+              <datalist id="category-options-list">
+                <option value="Commercial" />
+                <option value="Residential" />
+                <option value="Digital Solutions" />
+                <option value="Systems Integration" />
+                <option value="Digital Health" />
+                <option value="Enterprise Software" />
+                <option value="Networking" />
+                <option value="ICT Infrastructure" />
+                <option value="Cybersecurity" />
+                <option value="Cloud Solutions" />
+                <option value="GIS Solutions" />
+                <option value="AI & Analytics" />
+                <option value="Managed Services" />
+              </datalist>
+            </div>
+
+            {/* Rating */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Rating (1-5 Stars) <span className="text-primary">*</span>
+              </label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="number"
+                  min="1"
+                  max="5"
+                  step="1"
+                  required
+                  value={formData.rating}
+                  onChange={(e) =>
+                    setFormData({ ...formData, rating: e.target.value })
+                  }
+                  className="w-24 bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
+                />
+                <div className="flex items-center gap-1 text-primary">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Star
+                      key={i}
+                      size={16}
+                      fill={i < Number(formData.rating || 5) ? "currentColor" : "none"}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Widget 2: CLIENT REVIEW CARD (Matches Sidebar 2 of Image 2) */}
+          <div className="bg-white/5 border border-white/10 p-6 rounded-sm space-y-4">
+            <div className="flex items-center gap-2 mb-2">
+              <MessageSquareQuote size={16} className="text-primary" />
+              <h3 className="text-xs font-black uppercase tracking-[0.2em] text-primary">
+                Sidebar: Client Review Card
+              </h3>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Reviewer Name
+              </label>
+              <input
+                type="text"
+                value={formData.reviewAuthor}
+                onChange={(e) =>
+                  setFormData({ ...formData, reviewAuthor: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
+                placeholder="e.g. John Doe"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Reviewer Role / Company
+              </label>
+              <input
+                type="text"
+                value={formData.reviewRole}
+                onChange={(e) =>
+                  setFormData({ ...formData, reviewRole: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
+                placeholder="e.g. Solar Power Ltd"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Review Quote / Text
+              </label>
+              <textarea
+                rows={3}
+                value={formData.reviewText}
+                onChange={(e) =>
+                  setFormData({ ...formData, reviewText: e.target.value })
+                }
+                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50 resize-y"
+                placeholder="e.g. Labore kasd est lorem et est. Amet dolor at erat duo diam. Dolor amet amet ipsum erat..."
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
+                Reviewer Photo
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageUpload(e, "reviewImage")}
+                  className="hidden"
+                  id="client-review-photo-upload"
+                />
+                <label
+                  htmlFor="client-review-photo-upload"
+                  className="cursor-pointer bg-white/10 hover:bg-white/20 border border-white/10 px-3 py-2 rounded-sm text-xs font-bold text-white shrink-0 transition-colors"
                 >
-                  <span className="text-[10px] font-bold uppercase text-gray-400">
-                    {tech}
+                  {uploadingField === "reviewImage" ? "Uploading..." : "Upload Photo"}
+                </label>
+                <input
+                  type="text"
+                  value={formData.reviewImage}
+                  onChange={(e) =>
+                    setFormData({ ...formData, reviewImage: e.target.value })
+                  }
+                  className="min-w-0 flex-1 bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs text-white focus:outline-none focus:border-primary/50"
+                  placeholder="Or URL: https://..."
+                />
+              </div>
+
+              {formData.reviewImage && (
+                <div className="mt-2 flex items-center gap-3 bg-black/30 p-2 rounded-sm border border-white/10">
+                  <div className="relative w-10 h-10 overflow-hidden rounded-full border border-white/20 shrink-0">
+                    <Image
+                      src={formData.reviewImage}
+                      alt="Reviewer photo"
+                      fill
+                      unoptimized={/^https?:\/\//i.test(formData.reviewImage)}
+                      className="object-cover"
+                    />
+                  </div>
+                  <span className="text-[11px] text-gray-400 truncate flex-1">
+                    {formData.reviewImage}
                   </span>
                   <button
                     type="button"
-                    onClick={() => removeTechnology(idx)}
-                    className="text-gray-600 hover:text-red-500"
+                    onClick={() => setFormData({ ...formData, reviewImage: "" })}
+                    className="text-gray-500 hover:text-red-400 p-1"
                   >
-                    <Trash2 size={12} />
+                    <Trash2 size={13} />
                   </button>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex justify-end gap-4 border-t border-white/10 pt-8 mt-12">
+      {/* ── Bottom Save Action ── */}
+      <div className="flex justify-end gap-4 border-t border-white/10 pt-8 mt-10">
         <button
           type="button"
           onClick={() => router.back()}
-          className="px-6 py-2.5 text-xs font-black uppercase tracking-widest text-gray-500 hover:text-white transition-colors"
+          className="px-6 py-2.5 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-white transition-colors"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-primary text-black px-8 py-2.5 rounded-sm font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+          className="bg-primary text-black px-8 py-2.5 rounded-sm font-black uppercase tracking-widest text-xs flex items-center gap-2 hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 cursor-pointer"
         >
           {isLoading ? (
             <Loader2 size={16} className="animate-spin" />

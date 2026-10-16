@@ -39,14 +39,13 @@ export function WhyOceanNet() {
     useMobileCarousel(reasons.length);
 
   return (
-    <section className="bg-background py-10 sm:py-16 md:py-20">
+    <section className="bg-background py-8 sm:py-12 md:py-14">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
           subtitle="Why OceanNet"
           title="Built for Context"
           description="We bring practical local knowledge, broad engineering capability and accountable delivery to every engagement."
           //   align="left"
-          withBubbles={false}
         />
 
         <div className="relative group/carousel">

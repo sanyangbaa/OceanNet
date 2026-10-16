@@ -1,6 +1,6 @@
 import { getAdminTestimonials } from "@/lib/data";
 import DeleteButton from "@/components/admin/delete-button-client";
-import { Plus, Edit, Trash2, MessageSquareQuote } from "lucide-react";
+import { Plus, Edit, MessageSquareQuote } from "lucide-react";
 import Link from "next/link";
 import type { Testimonial } from "@/server/db";
 
@@ -15,7 +15,7 @@ export default async function AdminTestimonialsPage() {
             Testimonials
           </h1>
           <p className="text-gray-400 mt-1">
-            Manage client testimonials displayed on the homepage.
+            Manage testimonials for the Services page and choose which ones to feature on the homepage.
           </p>
         </div>
         <Link
@@ -38,23 +38,35 @@ export default async function AdminTestimonialsPage() {
               key={testimonial.id}
               className="group overflow-hidden bg-white/5 border border-white/10 rounded-sm hover:border-primary/50 transition-all duration-500 p-6 flex gap-6 flex-col"
             >
-              <div className="flex justify-between items-start">
-                <div className="flex gap-4">
-                  <div className="bg-primary/10 text-primary p-3 rounded-full self-start group-hover:bg-primary group-hover:text-black transition-all">
+              <div className="flex justify-between items-start gap-4">
+                <div className="flex gap-4 min-w-0">
+                  <div className="bg-primary/10 text-primary p-3 rounded-full shrink-0 group-hover:bg-primary group-hover:text-black transition-all">
                     <MessageSquareQuote size={20} />
                   </div>
-                  <div>
-                    <h3 className="font-bold text-white text-lg leading-tight">
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-white text-lg leading-tight truncate">
                       {testimonial.name}
                     </h3>
-                    <p className="text-gray-400 text-sm">{testimonial.role}</p>
+                    <div className="mt-1 flex flex-wrap items-center gap-2">
+                      <p
+                        className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[10px] font-black uppercase tracking-wider ${
+                          testimonial.featured
+                            ? "bg-primary/15 text-primary border border-primary/20"
+                            : "bg-white/5 text-gray-400"
+                        }`}
+                      >
+                        {testimonial.featured ? "Homepage Featured" : "Services Page"}
+                      </p>
+
+                    </div>
                   </div>
                 </div>
-                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex items-center gap-1 opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity shrink-0">
                   <Link
                     href={`/admin/testimonials/${testimonial.id}`}
                     prefetch={false}
-                    className="text-gray-400 hover:text-white transition-colors"
+                    className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                    title="Edit testimonial"
                   >
                     <Edit size={16} />
                   </Link>
@@ -66,13 +78,13 @@ export default async function AdminTestimonialsPage() {
                 </div>
               </div>
 
-              <div className="mt-2 text-yellow-400 flex text-sm">
+              <div className="text-yellow-400 flex text-sm">
                 {"★".repeat(testimonial.rating || 5)}
                 {"☆".repeat(5 - (testimonial.rating || 5))}
               </div>
 
-              <p className="text-gray-300 italic text-sm mt-2 flex-1">
-                "{testimonial.content}"
+              <p className="text-gray-300 italic text-sm mt-1 flex-1 leading-relaxed">
+                &ldquo;{testimonial.content}&rdquo;
               </p>
             </div>
           ))

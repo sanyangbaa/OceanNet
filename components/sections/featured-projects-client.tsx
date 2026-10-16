@@ -3,10 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { ensureStringArray } from "@/lib/utils";
+import { Eye, Link2 } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
-import { Tilt } from "@/components/shared/tilt";
 import { MobileCarouselControls } from "@/components/shared/mobile-carousel-controls";
 import { useMobileCarousel } from "@/components/shared/use-mobile-carousel";
 
@@ -41,72 +39,51 @@ export function FeaturedProjectsClient({
         {projects.map((project, index) => (
           <motion.div
             key={project.id}
-            variants={fadeIn("", "tween", index * 0.1, 0.4)}
+            variants={fadeIn("", "tween", index * 0.03, 0.3)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.15 }}
+            viewport={{ once: true, amount: 0.05 }}
             className="shrink-0 w-[94%] md:w-full snap-start flex flex-col"
           >
-            <Tilt
-              options={{ max: 15, scale: 1.02, speed: 450 }}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col border border-gray-100 hover:border-primary/30 h-full"
+            <Link
+              href={`/projects/${project.slug || project.id}`}
+              className="group flex flex-col overflow-hidden"
             >
-              <Link
-                href={`/projects/${project.slug || project.id}`}
-                className="group flex flex-col h-full"
-              >
-                <div className="relative aspect-3/2 overflow-hidden">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                  />
+              {/* Image Container */}
+              <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
 
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="bg-white/90 backdrop-blur-sm text-black text-[10px] font-black uppercase px-3 py-1.5 rounded-full shadow-sm border border-gray-100">
-                      {project.status}
-                    </span>
-                  </div>
-
-                  <div className="absolute inset-0 bg-secondary/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="bg-primary text-white p-3 rounded-sm scale-75 group-hover:scale-100 transition-transform duration-500 shadow-xl">
-                      <ArrowRight className="h-5 w-5" />
-                    </div>
-                  </div>
+                {/* Dark overlay on hover with two icon buttons */}
+                <div className="absolute inset-0 bg-secondary opacity-0 group-hover:opacity-90 transition-opacity duration-400 flex items-center justify-center gap-4 z-10">
+                  <span className="w-12 h-12 bg-primary flex items-center justify-center rounded-sm shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-500">
+                    <Eye className="w-5 h-5 text-white" />
+                  </span>
+                  <span className="w-12 h-12 bg-primary flex items-center justify-center rounded-sm shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-500 delay-75">
+                    <Link2 className="w-5 h-5 text-white" />
+                  </span>
                 </div>
 
-                <div className="p-5 flex flex-col items-center text-center grow">
-                  <div className="flex flex-col items-center gap-2 mb-2">
-                    <span className="text-primary text-[10px] font-black uppercase tracking-[0.3em]">
-                      {project.category}
-                    </span>
-                    <div className="h-1 w-8 bg-primary/30 group-hover:w-16 transition-all duration-500" />
-                  </div>
-                  <h3 className="text-xl font-black uppercase text-secondary tracking-tighter leading-[1.1] transition-colors group-hover:text-primary line-clamp-1">
-                    {project.title}
-                  </h3>
-                  {project.shortDescription && (
-                    <p className="text-sm text-gray-600 mt-2 line-clamp-2 max-w-md">
-                      {project.shortDescription}
-                    </p>
-                  )}
-                  {ensureStringArray(project.technologies).length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-auto pt-3 justify-center">
-                      {ensureStringArray(project.technologies).map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-[10px] uppercase font-black tracking-wide text-primary bg-primary/10 px-2 py-1 rounded-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+                {/* Category badge — auto-width, top-left of image */}
+                <div className="absolute top-0 left-0 z-20 px-3 py-2 bg-primary">
+                  <span className="text-white text-[9px] font-black uppercase tracking-[0.25em] whitespace-nowrap">
+                    {project.category}
+                  </span>
                 </div>
-              </Link>
-            </Tilt>
+              </div>
+
+              {/* Title area — primary bg */}
+              <div className="bg-secondary px-4 py-3">
+                <h3 className="text-[0.95rem] font-black uppercase text-white tracking-tight leading-tight line-clamp-1">
+                  {project.title}
+                </h3>
+              </div>
+            </Link>
           </motion.div>
         ))}
       </div>

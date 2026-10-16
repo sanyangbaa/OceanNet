@@ -30,92 +30,7 @@ function formatName(name: string) {
     .join(" ");
 }
 
-const HOW_WE_WORK = [
-  {
-    step: "01",
-    title: "Understand First",
-    description:
-      "We begin with business, operational and user requirements before selecting technology.",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-      >
-        <circle cx="11" cy="11" r="8" />
-        <path d="m21 21-4.35-4.35" />
-      </svg>
-    ),
-  },
-  {
-    step: "02",
-    title: "Design for the Environment",
-    description:
-      "Solutions are shaped around local infrastructure, security, skills and support realities.",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-      >
-        <path d="M12 20h9" />
-        <path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
-      </svg>
-    ),
-  },
-  {
-    step: "03",
-    title: "Deliver End-to-End",
-    description:
-      "We combine planning, implementation, integration, training and operational support.",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-      >
-        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-      </svg>
-    ),
-  },
-  {
-    step: "04",
-    title: "Build Sustainable Capability",
-    description:
-      "Knowledge transfer and maintainability are treated as part of implementation, not afterthoughts.",
-    icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className="h-7 w-7"
-      >
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-  },
-];
-
 export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
-  const approachCarousel = useMobileCarousel(HOW_WE_WORK.length, "start");
   const teamCarousel = useMobileCarousel(teamMembers.length, "start");
 
   return (
@@ -127,12 +42,11 @@ export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
         description="Gambian technology partner delivering secure digital solutions, enterprise systems, cloud and ICT infrastructure."
         backgroundImage="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070"
         withBackground
-        withBubbles
       />
 
-      <section className="container mx-auto px-4 md:px-6">
+      <section className="container mx-auto px-4 md:px-6 py-8 sm:py-12 mb-12">
         <motion.div
-          variants={staggerContainer(0.2, 0.1)}
+          variants={staggerContainer(0.02, 0)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.01 }}
@@ -140,7 +54,7 @@ export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
         >
           {/* ── LEFT COLUMN (sticky) ── */}
           <motion.div
-            variants={slideIn("left", "tween", 0.2, 1)}
+            variants={slideIn("left", "tween", 0, 0.25)}
             className="flex flex-col gap-8 w-full"
           >
             {/* Headline + body text */}
@@ -277,7 +191,7 @@ export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
 
           {/* ── RIGHT COLUMN ── */}
           <motion.div
-            variants={slideIn("right", "tween", 0.2, 1)}
+            variants={slideIn("right", "tween", 0, 0.25)}
             className="flex flex-col gap-8 w-full"
           >
             {/* Large image */}
@@ -328,73 +242,7 @@ export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
         </motion.div>
       </section>
 
-      {/* ── HOW WE WORK ── */}
-      <section className="bg-gray-50 py-16 md:py-20">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            variants={textVariant(0.1)}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="text-center mb-8 md:mb-14"
-          >
-            <span className="inline-block text-xs font-bold uppercase tracking-[0.3em] text-primary mb-3">
-              Our Approach
-            </span>
-            <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight text-secondary mb-4">
-              How We Work
-            </h2>
-            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-              A structured, practical approach — from understanding requirements
-              to building lasting digital capability.
-            </p>
-          </motion.div>
 
-          <div
-            ref={approachCarousel.scrollContainerRef}
-            onScroll={approachCarousel.handleScroll}
-            className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0"
-          >
-            {HOW_WE_WORK.map((item, idx) => (
-              <motion.div
-                key={item.step}
-                variants={fadeIn("", "tween", idx * 0.1, 0.4)}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.2 }}
-                className="flex-shrink-0 w-[95%] sm:w-[450px] md:w-auto snap-center flex flex-col"
-              >
-                <Tilt
-                  options={{ max: 15, scale: 1.02, speed: 450 }}
-                  className="bg-white rounded-2xl p-6 shadow-md border border-gray-100 hover:shadow-xl transition-all duration-300 h-full flex flex-col"
-                >
-                  <div className="flex items-start justify-between mb-5">
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                      {item.icon}
-                    </div>
-                    <span className="text-5xl font-black text-gray-100 leading-none select-none">
-                      {item.step}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-black uppercase tracking-tight text-secondary mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed flex-1">
-                    {item.description}
-                  </p>
-                </Tilt>
-              </motion.div>
-            ))}
-          </div>
-
-          <MobileCarouselControls
-            activeIndex={approachCarousel.activeIndex}
-            count={HOW_WE_WORK.length}
-            itemLabel="approach step"
-            onSelect={approachCarousel.scrollTo}
-          />
-        </div>
-      </section>
 
       {/* ── OUR TEAM ── */}
       <section className="container mx-auto px-4 md:px-6 py-8 mb-10">
@@ -407,48 +255,47 @@ export function AboutClient({ companyInfo, teamMembers }: AboutClientProps) {
         <div
           ref={teamCarousel.scrollContainerRef}
           onScroll={teamCarousel.handleScroll}
-          className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0 mt-8 md:mt-12"
+          className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-6 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0 mt-6 md:mt-8"
         >
           {teamMembers.map((member, idx) => (
             <motion.div
               key={member.id}
-              variants={fadeIn("", "tween", idx * 0.1, 0.4)}
+              variants={fadeIn("", "tween", idx * 0.02, 0.25)}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.15 }}
-              className="flex-shrink-0 w-[95%] sm:w-[450px] md:w-auto snap-center flex flex-col"
+              viewport={{ once: true, amount: 0.01 }}
+              className="flex-shrink-0 w-[85%] sm:w-[320px] md:w-auto snap-center flex flex-col"
             >
-              <Tilt
-                options={{ max: 15, scale: 1.02, speed: 450 }}
-                className="group bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col h-full"
-              >
-                <div className="relative h-96 overflow-hidden bg-slate-100">
+              {/* Card Container with dark navy base border and inner padding */}
+              <div className="group relative flex flex-col bg-white p-2 sm:p-2.5 border border-secondary/70 shadow-sm hover:shadow-md transition-shadow duration-300">
+                
+                {/* L-shaped primary accent — Top-Left: spans 50% width and 50% height */}
+                <span className="pointer-events-none absolute -top-[1px] -left-[1px] w-1/2 h-1/2 border-t-[3px] border-l-[3px] border-b-0 border-r-0 border-primary z-20" />
+
+                {/* L-shaped primary accent — Bottom-Right: spans 50% width and 50% height */}
+                <span className="pointer-events-none absolute -bottom-[1px] -right-[1px] w-1/2 h-1/2 border-b-[3px] border-r-[3px] border-t-0 border-l-0 border-primary z-20" />
+
+                {/* Portrait image with subtle hover zoom */}
+                <div className="relative overflow-hidden w-full bg-slate-100" style={{ aspectRatio: "4/5" }}>
                   <Image
                     src={member.image}
                     alt={member.name}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 25vw, 20vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-                  <div className="absolute bottom-0 left-0 w-full p-6">
-                    <h4 className="text-2xl font-black text-white leading-tight">
-                      {formatName(member.name)}
-                    </h4>
-                    <p className="mt-2 text-sm text-accent uppercase tracking-wider font-semibold">
-                      {member.role}
-                    </p>
-                  </div>
                 </div>
 
-                {member.bio && (
-                  <div className="p-6 border-t border-slate-100 bg-white grow">
-                    <p className="text-sm leading-relaxed text-slate-600">
-                      {member.bio}
-                    </p>
-                  </div>
-                )}
-              </Tilt>
+                {/* Centered Name & Role — Title Case, serif name, clean sans role */}
+                <div className="pt-3.5 pb-2.5 px-2 text-center bg-white">
+                  <h4 className="text-[1.125rem] md:text-[1.2rem] font-serif font-bold text-secondary leading-snug tracking-tight">
+                    {formatName(member.name)}
+                  </h4>
+                  <p className="mt-1 text-xs md:text-sm text-muted-foreground font-normal line-clamp-1">
+                    {member.role}
+                  </p>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

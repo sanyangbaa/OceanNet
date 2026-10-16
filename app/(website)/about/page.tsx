@@ -1,6 +1,7 @@
 import { getTeamMembers } from "@/lib/data";
 import { companyInfo as staticCompanyInfo } from "@/data/company";
 import { AboutClient } from "@/components/sections/about-client";
+import { CallToAction } from "@/components/sections/cta";
 
 export const dynamic = "force-dynamic";
 
@@ -18,8 +19,9 @@ export default async function AboutPage() {
   const teamMembers = await getTeamMembers();
 
   return (
-    <div className="pt-10 pb-10">
+    <div className="pt-10 pb-0">
       <AboutClient companyInfo={staticCompanyInfo} teamMembers={teamMembers} />
+      <CallToAction />
     </div>
   );
 }

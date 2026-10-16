@@ -109,6 +109,21 @@ export const getTestimonials = cache(async () => {
   return normalizeResult<Testimonial[]>(rows, "Testimonial");
 });
 
+export const getFeaturedTestimonials = cache(async () => {
+  const p = getPool();
+  if (!p) return [];
+  try {
+    const [rows] = await p.query(
+      `SELECT * FROM "Testimonial" WHERE "featured" = 1 ORDER BY "order" ASC`,
+    );
+    return normalizeResult<Testimonial[]>(rows, "Testimonial");
+  } catch {
+    // If column doesn't exist yet, return empty
+    return [];
+  }
+});
+
+
 export const getPartners = cache(async () => {
   const p = getPool();
   if (!p) return [];

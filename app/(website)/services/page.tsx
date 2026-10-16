@@ -2,6 +2,11 @@ import { services } from "@/data/services";
 import { SectionHeader } from "@/components/shared/section-header";
 import { ServiceCardClient } from "@/components/sections/service-card-client";
 import { companyInfo as staticCompanyInfo } from "@/data/company";
+import { Testimonials } from "@/components/sections/testimonials";
+import { ServiceQuoteSection } from "@/components/sections/service-quote-section";
+import { CallToAction } from "@/components/sections/cta";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
   return {
@@ -25,7 +30,7 @@ export default async function ServicesPage() {
   ] as const;
 
   return (
-    <div className="pt-14 pb-12">
+    <div className="pt-14 pb-0">
       {/* Hero Header */}
       <SectionHeader
         subtitle="What We Offer"
@@ -36,8 +41,8 @@ export default async function ServicesPage() {
       />
 
       {/* Services List */}
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="space-y-16 pt-6 md:pt-10">
+      <div className="container mx-auto px-4 md:px-6 mb-10 md:mb-14">
+        <div className="space-y-10 md:space-y-12 pt-2 md:pt-4">
           {categories.map((category) => {
             const categoryServices = servicesData.filter(
               (service) => service.category === category,
@@ -45,7 +50,7 @@ export default async function ServicesPage() {
 
             return (
               <section key={category} aria-labelledby={`${category}-heading`}>
-                <div className="mb-8 border-l-4 border-primary pl-4">
+                <div className="mb-5 md:mb-6 border-l-4 border-primary pl-3.5 md:pl-4">
                   <h2
                     id={`${category}-heading`}
                     className="text-2xl md:text-3xl font-black text-secondary"
@@ -53,7 +58,7 @@ export default async function ServicesPage() {
                     {category}
                   </h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 items-stretch">
                   {categoryServices.map((service, idx) => (
                     <ServiceCardClient
                       key={service.id}
@@ -67,6 +72,15 @@ export default async function ServicesPage() {
           })}
         </div>
       </div>
+
+      {/* Testimonials — Main destination for all client testimonials */}
+      <Testimonials />
+
+      {/* Quote Section following Testimonials */}
+      <ServiceQuoteSection />
+
+      {/* CTA Section */}
+      <CallToAction />
     </div>
   );
 }

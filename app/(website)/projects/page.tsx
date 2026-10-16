@@ -3,6 +3,7 @@ import { Project } from "@/server/db";
 import { SectionHeader } from "@/components/shared/section-header";
 import { ProjectsClient } from "@/components/sections/projects-client";
 import { companyInfo as staticCompanyInfo } from "@/data/company";
+import { CallToAction } from "@/components/sections/cta";
 
 export const dynamic = "force-dynamic";
 
@@ -30,7 +31,7 @@ export default async function ProjectsPage() {
   const shortName = companyInfo?.name?.split(" ")[0] || "ONT";
 
   return (
-    <div className="pt-14 pb-12 min-h-screen bg-gray-50">
+    <div className="pt-10 pb-0 min-h-screen bg-gray-50">
       {/* Hero Header */}
       <SectionHeader
         subtitle="Our Portfolio"
@@ -41,6 +42,7 @@ export default async function ProjectsPage() {
       />
 
       <ProjectsClient initialProjects={projects} />
+      <CallToAction />
     </div>
   );
 }

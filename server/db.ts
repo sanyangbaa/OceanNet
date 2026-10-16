@@ -44,6 +44,14 @@ export interface Project {
   industry?: string | null;
   projectType?: string | null;
   role?: string | null;
+  projectRole?: string | null;
+  challenge?: string | null;
+  projectSize?: string | null;
+  rating?: number | null;
+  reviewText?: string | null;
+  reviewAuthor?: string | null;
+  reviewRole?: string | null;
+  reviewImage?: string | null;
   servicesDelivered?: string | null;
   outcome?: string | null;
   clientLogo?: string | null;
@@ -280,8 +288,8 @@ export function getPool(): AnyPool | null {
             ) as (string | number | boolean | null)[];
             const [rows] = await my.query(normalized, cleanParams);
             return [rows as Record<string, unknown>[], null];
-          } catch {
-            console.error("DB Query Error (MySQL):");
+          } catch (err) {
+            console.error("DB Query Error (MySQL):", (err as Error)?.message, "| SQL:", sql);
             throw new Error("Query failed");
           }
         },
@@ -352,9 +360,10 @@ export function parseJsonField(val: unknown) {
 export interface Testimonial {
   id: string;
   name: string;
-  role: string;
+  role?: string | null;
   content: string;
   rating: number;
+  featured?: boolean | null;
   image?: string | null;
   order: number;
   createdAt: Date;
@@ -386,6 +395,7 @@ export function normalizeResult<T>(
     res.scope = parseJsonField(res.scope);
     res.gallery = parseJsonField(res.gallery);
     res.keyFeatures = parseJsonField(res.keyFeatures);
+    res.technologies = parseJsonField(res.technologies);
   } else if (type === "Service") {
     res.features = parseJsonField(res.features);
     res.tools = parseJsonField(res.tools);
@@ -589,6 +599,14 @@ export async function initDb() {
       () => {},
     );
     await addColumn("Project", "youtubeUrl", TEXT_TYPE).catch(() => {});
+    await addColumn("Project", "projectRole", TEXT_TYPE).catch(() => {});
+    await addColumn("Project", "challenge", TEXT_TYPE).catch(() => {});
+    await addColumn("Project", "projectSize", "VARCHAR(255)").catch(() => {});
+    await addColumn("Project", "rating", "INTEGER").catch(() => {});
+    await addColumn("Project", "reviewText", TEXT_TYPE).catch(() => {});
+    await addColumn("Project", "reviewAuthor", TEXT_TYPE).catch(() => {});
+    await addColumn("Project", "reviewRole", TEXT_TYPE).catch(() => {});
+    await addColumn("Project", "reviewImage", TEXT_TYPE).catch(() => {});
 
     // Service Table
     await p.execute(`CREATE TABLE IF NOT EXISTS "Service" (
@@ -713,9 +731,22 @@ export async function initDb() {
       "rating" INTEGER DEFAULT 5,
       "image" ${TEXT_TYPE},
       "order" INTEGER DEFAULT 0,
+      "featured" BOOLEAN DEFAULT false,
       "createdAt" ${TIMESTAMP} NOT NULL DEFAULT ${NOW},
       "updatedAt" ${TIMESTAMP} NOT NULL DEFAULT ${NOW}
     )`);
+
+    await addColumn(
+      "Testimonial",
+      "featured",
+      "BOOLEAN",
+      "DEFAULT false",
+    ).catch(() => {});
+
+    // Allow role to be nullable for existing rows
+    await p
+      .execute(`ALTER TABLE "Testimonial" MODIFY COLUMN "role" TEXT NULL`)
+      .catch(() => {});
 
     await p
       .execute(`UPDATE "TeamMember" SET "role" = ? WHERE "id" = ?`, [

@@ -6,7 +6,6 @@ import ApplyFormClient from "@/components/careers/apply-form-client";
 import { ArrowLeft, Calendar, Clock, MessageSquare } from "lucide-react";
 import { textVariant, fadeIn } from "@/lib/motion";
 import { Tilt } from "@/components/shared/tilt";
-import { AnimatedBubbles } from "@/components/shared/animated-bubbles";
 
 interface JobDetailClientProps {
   job: any;
@@ -73,10 +72,9 @@ export function JobDetailClient({
 
   return (
     <div className="relative min-h-screen pt-32 pb-24 overflow-hidden bg-secondary text-gray-100">
-      {/* Background Decorative Glows and Animated Bubbles */}
+      {/* Background Decorative Glows */}
       <div className="absolute top-1/4 left-1/10 w-96 h-96 bg-primary/20 rounded-full blur-3xl -z-10" />
       <div className="absolute bottom-1/4 right-1/10 w-96 h-96 bg-accent/10 rounded-full blur-3xl -z-10" />
-      <AnimatedBubbles count={18} variant="mixed" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         {/* Back Link */}
@@ -94,10 +92,10 @@ export function JobDetailClient({
         <article className="max-w-4xl mx-auto bg-white/10 backdrop-blur-md border border-white/15 rounded-3xl p-6 md:p-12 shadow-2xl">
           {/* Header */}
           <motion.div
-            variants={textVariant(0.1)}
+            variants={textVariant(0)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.01 }}
             className="space-y-6"
           >
             <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white leading-tight">

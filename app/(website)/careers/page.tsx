@@ -2,6 +2,7 @@ import { getAllJobs } from "@/lib/careers";
 import { companyInfo } from "@/data/company";
 import { CareersClient } from "@/components/careers/careers-client";
 import { companyInfo as staticCompanyInfo } from "@/data/company";
+import { CallToAction } from "@/components/sections/cta";
 
 export async function generateMetadata() {
   return {
@@ -17,9 +18,12 @@ export default async function CareersPage() {
   const activeJobs = await getAllJobs({ activeOnly: true });
 
   return (
-    <CareersClient
-      activeJobs={activeJobs}
-      companyInfo={companyInfo}
-    />
+    <>
+      <CareersClient
+        activeJobs={activeJobs}
+        companyInfo={companyInfo}
+      />
+      <CallToAction />
+    </>
   );
 }

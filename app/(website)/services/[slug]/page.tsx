@@ -2,6 +2,7 @@ import { services } from "@/data/services";
 import { notFound } from "next/navigation";
 import { ServiceDetailClient } from "@/components/services/service-detail-client";
 import { companyInfo } from "@/data/company";
+import { CallToAction } from "@/components/sections/cta";
 import type { Metadata } from "next";
 
 interface ServicePageProps {
@@ -39,5 +40,10 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
     notFound();
   }
 
-  return <ServiceDetailClient service={service} />;
+  return (
+    <>
+      <ServiceDetailClient service={service} allServices={services} />
+      <CallToAction />
+    </>
+  );
 }

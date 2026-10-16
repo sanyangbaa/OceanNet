@@ -43,6 +43,18 @@ export async function PATCH(
       industry: data.industry,
       projectType: data.projectType,
       role: data.role,
+      projectRole: data.projectRole !== undefined ? data.projectRole : data.role,
+      challenge: data.challenge,
+      projectSize: data.projectSize,
+      year: data.year !== undefined ? (data.year ? Number(data.year) : null) : undefined,
+      duration: data.duration,
+      value: data.value,
+      rating: data.rating !== undefined ? (data.rating ? Number(data.rating) : null) : undefined,
+      reviewText: data.reviewText,
+      reviewAuthor: data.reviewAuthor,
+      reviewRole: data.reviewRole,
+      reviewImage: data.reviewImage,
+      featured: data.featured !== undefined ? Boolean(data.featured) : undefined,
       servicesDelivered: data.servicesDelivered,
       outcome: data.outcome,
       clientLogo: data.clientLogo,
@@ -54,8 +66,9 @@ export async function PATCH(
       location: data.location,
       gallery: data.gallery,
       scope: data.scope,
-      youtubeUrl: data.youtubeUrl ?? null,
-      slug: data.title ? data.title.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "") : undefined
+      keyFeatures: data.keyFeatures,
+      youtubeUrl: data.youtubeUrl !== undefined ? (data.youtubeUrl ?? null) : undefined,
+      slug: data.title ? data.title.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]+/g, "") : undefined,
     };
     
     // Remove undefined fields

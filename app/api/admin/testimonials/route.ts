@@ -1,6 +1,24 @@
 import { NextResponse } from "next/server";
-import { db } from "@/server/db";
+import { db, getPool } from "@/server/db";
 import { getSession } from "@/lib/auth";
+
+/** Ensure the featured column exists (idempotent – safe to call every request) */
+async function ensureFeaturedColumn() {
+  const p = getPool();
+  if (!p) return;
+  try {
+    const [rows] = await p.query(
+      `SHOW COLUMNS FROM \`Testimonial\` LIKE 'featured'`,
+    );
+    if (Array.isArray(rows) && rows.length === 0) {
+      await p.execute(
+        `ALTER TABLE \`Testimonial\` ADD COLUMN \`featured\` BOOLEAN DEFAULT false`,
+      );
+    }
+  } catch {
+    // ignore – Postgres handled elsewhere
+  }
+}
 
 export async function GET() {
   try {
@@ -26,7 +44,14 @@ export async function POST(request: Request) {
     if (!session)
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    const data = await request.json();
+    const raw = await request.json();
+
+    // Ensure DB column exists before writing
+    await ensureFeaturedColumn();
+
+    // Strip legacy role field
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { role: _role, ...data } = raw;
 
     // Auto-increment order
     const lastTestimonial = await db.testimonial.findFirst({
@@ -50,3 +75,4 @@ export async function POST(request: Request) {
     );
   }
 }
+

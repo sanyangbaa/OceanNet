@@ -113,7 +113,7 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
   }
 
   return (
-    <div className="pt-14 pb-12 min-h-screen bg-white overflow-x-hidden">
+    <div className="pt-10 pb-10 min-h-screen bg-white overflow-x-hidden">
       {/* Hero Header with Animated Bubbles */}
       <SectionHeader
         subtitle="Get In Touch"
@@ -121,12 +121,11 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
         description="Connect with our team to discuss innovative technology solutions that support your organization's digital transformation journey."
         backgroundImage="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?q=80&w=2074"
         withBackground
-        withBubbles
       />
 
-      <section className="container mx-auto px-4 md:px-6">
+      <section className="container mx-auto px-4 md:px-6 py-8 sm:py-12">
         <motion.div
-          variants={staggerContainer(0.2, 0.1)}
+          variants={staggerContainer(0.02, 0)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.01 }}
@@ -134,12 +133,12 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
         >
           {/* Left Part: Contact Information with slideIn left */}
           <motion.div
-            variants={slideIn("left", "tween", 0.2, 1)}
+            variants={slideIn("left", "tween", 0, 0.25)}
             className="flex flex-col gap-10"
           >
             <div>
               <motion.h3
-                variants={textVariant(0.1)}
+                variants={textVariant(0)}
                 className="text-3xl font-black uppercase mb-4 tracking-tight text-secondary"
               >
                 Let’s Build Together
@@ -213,11 +212,11 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
 
           {/* Right Part: Contact Form with slideIn right */}
           <motion.div
-            variants={slideIn("right", "tween", 0.2, 1)}
+            variants={slideIn("right", "tween", 0, 0.25)}
             className="bg-white -mx-4 px-4 py-8 rounded-none border-x-0 border-t border-gray-100 shadow-[0_-4px_24px_rgba(0,0,0,0.07)] relative md:mx-0 md:rounded-3xl md:border md:p-10 md:shadow-lg"
           >
             <motion.h3
-              variants={textVariant(0.1)}
+              variants={textVariant(0)}
               className="text-2xl font-black uppercase mb-6 tracking-tight text-secondary"
             >
               Send a Message

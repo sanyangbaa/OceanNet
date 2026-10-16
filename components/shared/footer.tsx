@@ -2,59 +2,71 @@ import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { companyInfo } from "@/data/company";
+import { services } from "@/data/services";
+import { FooterSections } from "@/components/shared/footer-sections";
+
+const footerServiceLinks = services.slice(0, 5).map((service) => ({
+  name: service.title,
+  href: service.slug ? `/services/${service.slug}` : `/services#${service.id}`,
+}));
 
 const footerLinks = [
   {
-    title: "Company",
+    title: "Useful Pages",
     links: [
       { name: "About Us", href: "/about" },
       { name: "Our Projects", href: "/projects" },
+      { name: "Services", href: "/services" },
       { name: "Careers", href: "/careers" },
       { name: "Contact", href: "/contact" },
     ],
   },
   {
-    title: "Services",
-    links: [
-      { name: "Digital Solutions", href: "/services/digital-solutions" },
-      { name: "Systems Integration", href: "/services/systems-integration" },
-      { name: "Digital Health", href: "/services/digital-health-solutions" },
-      {
-        name: "Enterprise Software",
-        href: "/services/enterprise-software-solutions",
-      },
-      { name: "View All Services →", href: "/services" },
-    ],
+    title: "Service Areas",
+    links: footerServiceLinks,
   },
 ];
 
 export function Footer() {
   return (
-    <footer className="bg-secondary text-white pt-10 pb-5">
+    <footer className="relative isolate overflow-hidden bg-[#07142f] pt-8 pb-4 text-white sm:pt-10">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-35"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(148,163,184,.35) 1px, transparent 1.2px), radial-gradient(ellipse at 52% 42%, rgba(56,189,248,.12), transparent 68%)",
+          backgroundSize: "8px 8px, 100% 100%",
+          maskImage:
+            "radial-gradient(ellipse at 52% 42%, black 0%, transparent 72%)",
+        }}
+      />
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-6 border-b border-white/20 pb-6">
+        <FooterSections className="mb-5 grid grid-cols-1 items-start gap-7 border-b border-white/10 pb-7 sm:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_1.15fr] lg:gap-8 lg:pb-8">
           {/* Brand Column */}
-          <div className="flex flex-col gap-6">
-            <Link href="/" className="flex items-center group">
-              <div className="relative flex items-center justify-center w-52 md:w-56 h-20 rounded-xl border-[3px] border-accent/80 bg-white py-1 pl-1 shadow-[0_6px_18px_rgba(0,119,200,0.12)] ring-2 ring-primary/25">
-                <div className="relative w-full h-full">
+          <div className="flex flex-col items-start gap-3">
+            <Link href="/" className="group flex items-center">
+              <div className="relative inline-flex items-center justify-center rounded-xl bg-white/95 px-3.5 py-2 shadow-sm ring-1 ring-white/20 transition-transform duration-300 group-hover:scale-105">
+                <div className="relative h-11 w-44 sm:h-12 sm:w-38">
                   <Image
                     src="/logo/official_logo.png"
                     alt="OceanNet Technologies"
                     fill
-                    sizes="(max-width: 768px) 208px, 224px"
-                    className="object-contain object-left group-hover:scale-105 transition-transform duration-300"
+                    sizes="200px"
+                    className="object-contain object-left"
                   />
                 </div>
               </div>
             </Link>
-            <p className="text-sm text-white/85 leading-6 max-w-xs">
+            <p className="max-w-xs text-sm leading-relaxed text-slate-300">
               {companyInfo.footerDescription}
             </p>
-            <div className="flex items-center gap-4">
+
+            <div className="mt-1 flex items-center gap-2">
               <a
                 href={companyInfo.socials.facebook}
-                className="bg-primary p-2 rounded-full hover:bg-accent hover:text-secondary transition-colors flex items-center justify-center h-8 w-8"
+                aria-label="OceanNet on Facebook"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 p-2 transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -68,7 +80,8 @@ export function Footer() {
               </a>
               <a
                 href={companyInfo.socials.instagram}
-                className="bg-primary p-2 rounded-full hover:bg-accent hover:text-secondary transition-colors flex items-center justify-center h-8 w-8"
+                aria-label="OceanNet on Instagram"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 p-2 transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -85,8 +98,9 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href={companyInfo.socials.tiktok}
-                className="bg-primary p-2 rounded-full hover:bg-accent hover:text-secondary transition-colors flex items-center justify-center h-8 w-8"
+                href={companyInfo.socials.linkedin}
+                aria-label="OceanNet on LinkedIn"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 p-2 transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -95,12 +109,13 @@ export function Footer() {
                   viewBox="0 0 24 24"
                   className="h-4 w-4"
                 >
-                  <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.74.02 1.48-.04 2.94-.04 4.42-.57-.17-1.14-.3-1.73-.35-.81-.07-1.64.08-2.37.47-.78.41-1.46 1.07-1.73 1.93-.32.97-.11 2.05.31 2.93.39.83 1.05 1.47 1.91 1.78.32.13.65.21.99.23.11.02.22.03.33.03.81 0 1.59-.24 2.26-.67.65-.42 1.15-1.07 1.34-1.81.04-.23.05-.47.05-.71.01-4.06.01-8.12.01-12.18z"></path>
+                  <path d="M20.447 20.452H16.89v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.346V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.604 0 4.269 2.372 4.269 5.455v6.286zM5.337 7.433a2.063 2.063 0 110-4.126 2.063 2.063 0 010 4.126zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
                 </svg>
               </a>
               <a
                 href={companyInfo.socials.twitter}
-                className="bg-primary p-2 rounded-full hover:bg-accent hover:text-secondary transition-colors flex items-center justify-center h-8 w-8"
+                aria-label="OceanNet on X"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 p-2 transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -113,8 +128,9 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href={companyInfo.socials.linkedin}
-                className="bg-primary p-2 rounded-full hover:bg-accent hover:text-secondary transition-colors flex items-center justify-center h-8 w-8"
+                href={companyInfo.socials.tiktok}
+                aria-label="OceanNet on TikTok"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/5 p-2 transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -123,26 +139,35 @@ export function Footer() {
                   viewBox="0 0 24 24"
                   className="h-4 w-4"
                 >
-                  <path d="M20.447 20.452H16.89v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.346V9h3.414v1.561h.049c.476-.9 1.637-1.85 3.37-1.85 3.604 0 4.269 2.372 4.269 5.455v6.286zM5.337 7.433a2.063 2.063 0 110-4.126 2.063 2.063 0 010 4.126zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
+                  <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.74.02 1.48-.04 2.94-.04 4.42-.57-.17-1.14-.3-1.73-.35-.81-.07-1.64.08-2.37.47-.78.41-1.46 1.07-1.73 1.93-.32.97-.11 2.05.31 2.93.39.83 1.05 1.47 1.91 1.78.32.13.65.21.99.23.11.02.22.03.33.03.81 0 1.59-.24 2.26-.67.65-.42 1.15-1.07 1.34-1.81.04-.23.05-.47.05-.71.01-4.06.01-8.12.01-12.18z"></path>
                 </svg>
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
-          {footerLinks.map((section) => (
+          {footerLinks.slice().reverse().map((section) => (
             <div key={section.title} className="flex flex-col gap-6">
-              <h4 className="font-bold text-lg uppercase text-accent">
+              <h4 className="flex items-center gap-3 text-base font-extrabold uppercase tracking-wide text-primary">
                 {section.title}
+                <span className="h-px w-10 bg-primary/80" aria-hidden="true" />
               </h4>
-              <ul className="flex flex-col gap-4">
+              <ul className="flex flex-col gap-2.5">
                 {section.links.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-base text-white/85 leading-4 hover:text-accent transition-colors"
+                      className="group flex items-center gap-2 text-sm leading-snug text-slate-300 transition-colors duration-200 hover:text-primary"
                     >
-                      {link.name}
+                      <span
+                        className="text-primary transition-transform duration-200 ease-out group-hover:translate-x-1"
+                        aria-hidden="true"
+                      >
+                        ›
+                      </span>
+                      <span className="transition-transform duration-200 ease-out group-hover:translate-x-1">
+                        {link.name}
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -151,51 +176,75 @@ export function Footer() {
           ))}
 
           {/* Contact Info */}
-          <div className="flex min-w-0 flex-col gap-6">
-            <h4 className="font-bold text-lg uppercase tracking-wider text-accent">
-              Contact Us
+          <div className="flex flex-col gap-6">
+            <h4 className="flex items-center gap-3 text-base font-extrabold uppercase tracking-wide text-primary">
+              Office &amp; Contact
+              <span className="h-px w-10 bg-primary/80" aria-hidden="true" />
             </h4>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               <div className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-accent shrink-0" />
-                <p className="text-sm text-white/85 leading-relaxed">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <p className="text-sm leading-relaxed text-slate-300">
                   {companyInfo.contacts.address}
                 </p>
               </div>
-              <div className="flex min-w-0 items-center gap-3 text-base text-white/85">
-                <Phone className="h-5 w-5 shrink-0 text-accent" />
-                <span>{companyInfo.contacts.phone}</span>
+              <div className="flex items-center gap-3 text-sm text-slate-300">
+                <Phone className="h-4 w-4 shrink-0 text-primary" />
+                <a
+                  href={`tel:${companyInfo.contacts.phone.replace(/[^\d+]/g, "")}`}
+                  className="transition-colors hover:text-primary"
+                >
+                  {companyInfo.contacts.phone}
+                </a>
               </div>
-              <div className="flex min-w-0 items-center gap-3 text-base text-white/85">
-                <Mail className="h-5 w-5 shrink-0 text-accent" />
-                <span className="min-w-0 break-all">{companyInfo.contacts.email}</span>
+              <div className="flex items-center gap-3 text-sm text-slate-300">
+                <Mail className="h-4 w-4 shrink-0 text-primary" />
+                <a
+                  href={`mailto:${companyInfo.contacts.email}`}
+                  className="break-all transition-colors hover:text-primary"
+                >
+                  {companyInfo.contacts.email}
+                </a>
               </div>
             </div>
           </div>
+        </FooterSections>
+
+        <div className="mb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-b border-white/10 pb-4 text-sm text-slate-300 sm:gap-x-5">
+          <Link href="/terms" className="transition-colors hover:text-primary">
+            Terms of Use
+          </Link>
+          <span className="h-4 w-px bg-white/15" aria-hidden="true" />
+          <Link href="/privacy" className="transition-colors hover:text-primary">
+            Privacy Policy
+          </Link>
+          <span className="h-4 w-px bg-white/15" aria-hidden="true" />
+          <Link
+            href="/privacy#cookies"
+            className="transition-colors hover:text-primary"
+          >
+            Cookies
+          </Link>
+          <span className="h-4 w-px bg-white/15" aria-hidden="true" />
+          <Link href="/contact" className="transition-colors hover:text-primary">
+            Help
+          </Link>
         </div>
 
-        {/* Copyright */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/75 font-medium">
-          <p suppressHydrationWarning>
-            © {new Date().getFullYear()} {companyInfo.name}. All Rights
-            Reserved.
+        {/* Copyright and design attribution */}
+        <div className="flex flex-col items-center justify-between gap-2 text-center text-sm font-medium text-slate-300 sm:flex-row sm:text-left">
+          <p>
+            © {new Date().getFullYear()} {companyInfo.name}. All Rights Reserved.
           </p>
-          <div className="flex gap-8">
-            <Link
-              href="/terms"
-              className="hover:text-primary transition-colors"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              href="/privacy"
-              className="hover:text-primary transition-colors"
-            >
-              Privacy Policy
-            </Link>
-          </div>
+          <p>
+            Designed by{" "}
+            <span className="font-semibold text-primary">
+              OceanNet Technologies
+            </span>
+          </p>
         </div>
       </div>
     </footer>
   );
 }
+

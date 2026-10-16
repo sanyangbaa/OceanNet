@@ -125,18 +125,17 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
         title="Careers"
         description="We are building a multidisciplinary team that works across software, systems integration, cloud, infrastructure and digital transformation."
         withBackground
-        withBubbles
         backgroundImage="/images/ont_about.jpg"
       />
 
-      <div className="container mx-auto px-4 md:px-6 space-y-24">
+      <div className="container mx-auto px-4 md:px-6 space-y-10 sm:space-y-14">
         {/* Why Build Your Career at OceanNet */}
         <section className="space-y-8">
           <motion.div
-            variants={textVariant(0.1)}
+            variants={textVariant(0)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.01 }}
             className="text-center max-w-2xl mx-auto space-y-3"
           >
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary block">
@@ -156,10 +155,10 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
             {whyOceanNet.map((item, idx) => (
               <motion.div
                 key={item.title}
-                variants={fadeIn("up", "spring", idx * 0.1, 0.75)}
+                variants={fadeIn("up", "tween", idx * 0.02, 0.25)}
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.01 }}
                 className="flex flex-col h-full"
               >
                 <Tilt
@@ -238,10 +237,10 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
         {/* Open Positions Section */}
         <section id="positions" className="space-y-8 scroll-mt-24">
           <motion.div
-            variants={textVariant(0.1)}
+            variants={textVariant(0)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.01 }}
             className="text-center max-w-2xl mx-auto space-y-2"
           >
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary block">
@@ -295,10 +294,10 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
                 return (
                   <motion.div
                     key={job.id}
-                    variants={fadeIn("up", "spring", index * 0.08, 0.75)}
+                    variants={fadeIn("up", "tween", index * 0.02, 0.25)}
                     initial="hidden"
                     whileInView="show"
-                    viewport={{ once: true, amount: 0.15 }}
+                    viewport={{ once: true, amount: 0.01 }}
                     className="flex flex-col h-full"
                   >
                     <Tilt
@@ -381,10 +380,10 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
         {/* Talent & Hiring Philosophy */}
         <section className="space-y-8">
           <motion.div
-            variants={textVariant(0.1)}
+            variants={textVariant(0)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.01 }}
             className="text-center max-w-2xl mx-auto space-y-3"
           >
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary block">
@@ -403,10 +402,10 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
             {hiringSteps.map((item, idx) => (
               <motion.div
                 key={item.step}
-                variants={fadeIn("up", "spring", idx * 0.1, 0.75)}
+                variants={fadeIn("up", "tween", idx * 0.02, 0.25)}
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.01 }}
               >
                 <div className="bg-white p-7 rounded-3xl border border-border shadow-sm h-full flex flex-col justify-between space-y-4">
                   <div>
@@ -429,10 +428,10 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
         {/* FAQ Section */}
         <section className="space-y-8 max-w-4xl mx-auto">
           <motion.div
-            variants={textVariant(0.1)}
+            variants={textVariant(0)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.01 }}
             className="text-center space-y-3"
           >
             <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary block">

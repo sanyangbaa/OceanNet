@@ -6,6 +6,7 @@ import {
 } from "@/lib/data";
 import { ProjectDetailClient } from "@/components/projects/project-detail-client";
 import { companyInfo } from "@/data/company";
+import { CallToAction } from "@/components/sections/cta";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -57,6 +58,9 @@ export default async function ProjectDetailPage({
   );
 
   return (
-    <ProjectDetailClient project={project} relatedProjects={relatedProjects} />
+    <>
+      <ProjectDetailClient project={project} relatedProjects={relatedProjects} />
+      <CallToAction />
+    </>
   );
 }

@@ -8,6 +8,7 @@ import {
   MessageSquareQuote,
   User,
   Link as LinkIcon,
+  Star,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -21,8 +22,8 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: (initialData?.name as string) || "",
-    role: (initialData?.role as string) || "",
     content: (initialData?.content as string) || "",
+    featured: Boolean(initialData?.featured),
     rating: (initialData?.rating as number) || 5,
     image: (initialData?.image as string) || "",
     order: (initialData?.order as number) || 0,
@@ -49,7 +50,7 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
       if (uploadRes.ok) {
         const { urls } = await uploadRes.json();
         if (urls && urls[0]) {
-          setFormData({ ...formData, image: urls[0] });
+          setFormData((prev) => ({ ...prev, image: urls[0] }));
         }
       } else {
         alert("Failed to upload image");
@@ -101,7 +102,7 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
         {/* Left - Main Info */}
         <div className="md:col-span-2 space-y-6">
           <div className="bg-white/5 border border-white/10 p-8 rounded-sm space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
                   Client Name
@@ -117,22 +118,28 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
                   placeholder="e.g. John Doe"
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                  Role / Company
-                </label>
+              <label className="flex cursor-pointer items-start gap-3 border border-primary/20 bg-primary/5 p-4 rounded-sm">
                 <input
-                  type="text"
-                  required
-                  value={formData.role}
+                  type="checkbox"
+                  checked={formData.featured}
                   onChange={(e) =>
-                    setFormData({ ...formData, role: e.target.value })
+                    setFormData({ ...formData, featured: e.target.checked })
                   }
-                  className="w-full bg-black/40 border border-white/10 px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium text-white placeholder:text-gray-800"
-                  placeholder="e.g. CEO, Example Corp"
+                  className="mt-0.5 h-4 w-4 accent-primary"
                 />
-              </div>
+                <span>
+                  <span className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wide text-primary">
+                    <Star size={13} fill="currentColor" />
+                    Feature on Homepage
+                  </span>
+                  <span className="mt-1 block text-[10px] leading-relaxed text-gray-400">
+                    Show this testimonial on the homepage. All testimonials appear on the Services page.
+                  </span>
+                </span>
+              </label>
             </div>
+
+
 
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">

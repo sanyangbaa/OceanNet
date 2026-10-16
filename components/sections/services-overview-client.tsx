@@ -1,52 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  ClipboardList,
-  BarChart3,
-  Code2,
-  Shield,
-  Building2,
-  Laptop,
-  Layout,
-  Calculator,
-  Map,
-  HardHat,
-  Hammer,
-  Leaf,
-  Wrench,
-  DoorOpen,
-  Table,
-  Layers,
-  Truck,
-  Package,
-} from "lucide-react";
 import { fadeIn } from "@/lib/motion";
-import { Tilt } from "@/components/shared/tilt";
 import { MobileCarouselControls } from "@/components/shared/mobile-carousel-controls";
 import { useMobileCarousel } from "@/components/shared/use-mobile-carousel";
-
-type IconComponent = React.ComponentType<React.SVGProps<SVGSVGElement>>;
-const iconMap: Record<string, IconComponent> = {
-  ClipboardList,
-  BarChart3,
-  Code2,
-  Shield,
-  Building2,
-  Laptop,
-  Layout,
-  Calculator,
-  Map,
-  HardHat,
-  Hammer,
-  Leaf,
-  Wrench,
-  DoorOpen,
-  Table,
-  Layers,
-  Truck,
-  Package,
-};
+import { SteppedServiceCard } from "@/components/sections/stepped-service-card";
 
 interface Service {
   id: string;
@@ -65,43 +23,20 @@ export function ServicesOverviewClient({ services }: { services: Service[] }) {
       <div
         ref={scrollContainerRef}
         onScroll={handleScroll}
-        className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0"
+        className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory scrollbar-hide pb-8 md:pb-0 px-4 -mx-4 md:px-0 md:mx-0"
       >
-        {services.map((service, index) => {
-          const IconComponent = iconMap[service.icon] || Code2;
-          return (
-            <motion.div
-              key={service.id}
-              variants={fadeIn("", "tween", index * 0.1, 0.4)}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.15 }}
-              className="shrink-0 w-[94%] md:w-auto snap-center flex flex-col"
-            >
-              <Tilt
-                options={{ max: 15, scale: 1.02, speed: 450 }}
-                className="bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-border flex flex-col justify-between items-start h-full"
-              >
-                <div className="w-full">
-                  {/* Icon Container */}
-                  <div className="bg-primary/10 p-3 rounded-lg inline-flex items-center justify-center mb-4 ring-1 ring-primary/20">
-                    <IconComponent className="h-5 w-5 text-primary flex-shrink-0" />
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-lg md:text-xl font-semibold text-secondary mb-2 leading-snug tracking-tight group-hover:text-primary transition-colors">
-                    {service.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-muted-foreground text-base leading-relaxed mb-4 line-clamp-3">
-                    {service.description}
-                  </p>
-                </div>
-              </Tilt>
-            </motion.div>
-          );
-        })}
+        {services.map((service, index) => (
+          <motion.div
+            key={service.id}
+            variants={fadeIn("up", "tween", index * 0.03, 0.3)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.05 }}
+            className="shrink-0 w-[88%] md:w-auto snap-center flex flex-col"
+          >
+            <SteppedServiceCard service={service} />
+          </motion.div>
+        ))}
       </div>
 
       <MobileCarouselControls

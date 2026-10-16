@@ -4,7 +4,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { textVariant } from "@/lib/motion";
-import { AnimatedBubbles } from "./animated-bubbles";
 
 interface SectionHeaderProps {
   title: string;
@@ -15,7 +14,6 @@ interface SectionHeaderProps {
   dark?: boolean;
   withBackground?: boolean;
   backgroundImage?: string;
-  withBubbles?: boolean;
 }
 
 export function SectionHeader({
@@ -27,7 +25,6 @@ export function SectionHeader({
   dark = false,
   withBackground = false,
   backgroundImage = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070",
-  withBubbles = true,
 }: SectionHeaderProps) {
   const isDarkOrBg = dark || withBackground;
 
@@ -35,7 +32,7 @@ export function SectionHeader({
     <div
       className={cn(
         "relative w-full overflow-hidden",
-        withBackground ? "py-14 md:py-16 mb-10" : "py-8",
+        withBackground ? "py-10 sm:py-12 md:py-14 mb-6 md:mb-8" : "pt-0 pb-6 sm:pb-8",
         className,
       )}
     >
@@ -53,30 +50,21 @@ export function SectionHeader({
         </div>
       )}
 
-      {/* Full-coverage Animated Bubbles across the whole Section Header */}
-      {withBubbles && (
-        <AnimatedBubbles
-          count={30}
-          variant="mixed"
-          className={isDarkOrBg ? "z-10" : "z-0 opacity-40"}
-        />
-      )}
-
       {/* Centered Content Container Animated with textVariant */}
       <motion.div
-        variants={textVariant(0.1)}
+        variants={textVariant(0)}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.25 }}
+        viewport={{ once: true, amount: 0.01 }}
         className={cn(
-          "relative z-20 mx-auto w-full max-w-4xl px-0 sm:px-4 md:px-6 flex flex-col gap-3 sm:gap-4",
+          "relative z-20 mx-auto w-full max-w-4xl px-0 sm:px-4 md:px-6 flex flex-col gap-2 sm:gap-2.5",
           align === "center" ? "text-center" : "text-left",
         )}
       >
         {subtitle && (
           <span
             className={cn(
-              "text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1 sm:mb-2",
+              "text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-0.5",
               isDarkOrBg ? "text-accent" : "text-primary",
             )}
           >
@@ -95,7 +83,7 @@ export function SectionHeader({
         {description && (
           <p
             className={cn(
-              "w-full max-w-none md:max-w-2xl text-base sm:text-lg leading-relaxed",
+              "w-full max-w-none md:max-w-2xl text-sm sm:text-base leading-relaxed",
               align === "center" ? "mx-auto" : "",
               isDarkOrBg ? "text-white/85" : "text-muted-foreground",
             )}
@@ -106,7 +94,7 @@ export function SectionHeader({
         {/* Decorative accent bar */}
         <div
           className={cn(
-            "h-1.5 w-24 rounded-full mt-4",
+            "h-1.5 w-20 rounded-full mt-2.5",
             align === "center" ? "mx-auto" : "",
             isDarkOrBg ? "bg-accent" : "bg-primary",
           )}

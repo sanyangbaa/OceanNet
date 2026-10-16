@@ -1,6 +1,7 @@
 import { getJobById } from "@/lib/careers";
 import { notFound } from "next/navigation";
 import { JobDetailClient } from "@/components/careers/job-detail-client";
+import { CallToAction } from "@/components/sections/cta";
 
 export async function generateMetadata({
   params,
@@ -29,10 +30,13 @@ export default async function JobDetailPage({
   const shareTitle = `Apply for ${job.title} at OceanNet Technologies`;
 
   return (
-    <JobDetailClient
-      job={job}
-      shareUrl={shareUrl}
-      shareTitle={shareTitle}
-    />
+    <>
+      <JobDetailClient
+        job={job}
+        shareUrl={shareUrl}
+        shareTitle={shareTitle}
+      />
+      <CallToAction />
+    </>
   );
 }
