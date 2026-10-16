@@ -22,7 +22,7 @@ export interface Service {
 }
 
 export const services: Service[] = [
-  // ─── CORE DIGITAL CAPABILITIES ───────────────────────────────────────────
+  // ─── CORE DIGITAL CAPABILITIES  ───────────────────────────────────────────
   {
     id: "digital-solutions",
     title: "Digital Solutions",
