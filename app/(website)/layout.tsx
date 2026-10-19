@@ -4,6 +4,10 @@ import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { ScrollToTop } from "@/components/shared/scroll-to-top";
 import { getMergedCompanyInfo } from "@/lib/data";
 
+// Cache layout data (navbar + footer) for 60s — revalidates in background
+export const revalidate = 60;
+
+
 export default async function WebsiteLayout({
   children,
 }: {
