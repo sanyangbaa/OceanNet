@@ -425,9 +425,16 @@ export function normalizeResult<T>(
           : new Date(String(v));
     res.submittedAt = toDate(res.submittedAt);
     res.updatedAt = toDate(res.updatedAt);
+  } else if (type === "Testimonial") {
+    // MySQL returns BOOLEAN columns as TINYINT (0/1) or Buffer — coerce to true boolean
+    if (res.featured !== undefined && res.featured !== null) {
+      res.featured = res.featured === 1 || res.featured === true ||
+        (Buffer.isBuffer(res.featured) && res.featured[0] === 1);
+    }
   }
   return res as T;
 }
+
 
 export async function findAdminByUsername(
   username: string,

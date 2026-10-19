@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db, getPool } from "@/server/db";
 import { getSession } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 /** Ensure the featured column exists (idempotent – safe to call every request) */
 async function ensureFeaturedColumn() {
@@ -53,6 +54,11 @@ export async function POST(request: Request) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { role: _role, ...data } = raw;
 
+    // Explicitly coerce featured to boolean
+    if (data.featured !== undefined) {
+      data.featured = Boolean(data.featured);
+    }
+
     // Auto-increment order
     const lastTestimonial = await db.testimonial.findFirst({
       orderBy: { order: "desc" },
@@ -67,6 +73,10 @@ export async function POST(request: Request) {
       },
     });
 
+    // Bust homepage cache so new testimonial appears immediately
+    revalidatePath("/");
+    revalidatePath("/testimonials");
+
     return NextResponse.json(testimonial);
   } catch {
     return NextResponse.json(
@@ -75,4 +85,3 @@ export async function POST(request: Request) {
     );
   }
 }
-

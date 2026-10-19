@@ -209,19 +209,23 @@ export const getTestimonials = cache(async () => {
   return normalizeResult<Testimonial[]>(rows, "Testimonial");
 });
 
-export const getFeaturedTestimonials = cache(async () => {
+export const getFeaturedTestimonials = async () => {
   const p = getPool();
   if (!p) return [];
   try {
+    // MySQL stores BOOLEAN as TINYINT(1), so we query for both `1` and `true`
     const [rows] = await p.query(
-      `SELECT * FROM "Testimonial" WHERE "featured" = 1 ORDER BY "order" ASC`,
+      `SELECT * FROM "Testimonial" WHERE "featured" IN (1, true) ORDER BY "order" ASC`,
     );
-    return normalizeResult<Testimonial[]>(rows, "Testimonial");
+    const results = normalizeResult<Testimonial[]>(rows, "Testimonial");
+    // Double-safety: filter in JS in case DB returns unexpected falsy values
+    return results.filter((t) => t.featured === true);
   } catch {
     // If column doesn't exist yet, return empty
     return [];
   }
-});
+};
+
 
 
 export const getPartners = cache(async () => {

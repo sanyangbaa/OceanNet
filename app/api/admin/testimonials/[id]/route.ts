@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { db, getPool } from "@/server/db";
 import { getSession } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 /** Ensure the featured column exists (idempotent – safe to call every request) */
 async function ensureFeaturedColumn() {
@@ -38,10 +39,19 @@ export async function PUT(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { role: _role, ...data } = raw;
 
+    // Explicitly coerce featured to a real boolean so MySQL stores 0/1 correctly
+    if (data.featured !== undefined) {
+      data.featured = Boolean(data.featured);
+    }
+
     const testimonial = await db.testimonial.update({
       where: { id },
       data,
     });
+
+    // Bust the homepage ISR cache so featured testimonials appear immediately
+    revalidatePath("/");
+    revalidatePath("/testimonials");
 
     return NextResponse.json(testimonial);
   } catch {
@@ -63,6 +73,10 @@ export async function DELETE(
     await db.testimonial.delete({
       where: { id },
     });
+
+    // Bust the cache on deletion too
+    revalidatePath("/");
+    revalidatePath("/testimonials");
 
     return NextResponse.json({ success: true });
   } catch {
