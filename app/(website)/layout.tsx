@@ -2,19 +2,20 @@ import { Footer } from "@/components/shared/footer";
 import { Navbar } from "@/components/shared/navbar";
 import { WhatsAppButton } from "@/components/shared/whatsapp-button";
 import { ScrollToTop } from "@/components/shared/scroll-to-top";
+import { getMergedCompanyInfo } from "@/lib/data";
 
-const navItems = [{ name: "Careers", href: "/careers" }];
-
-export default function WebsiteLayout({
+export default async function WebsiteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const companyInfo = await getMergedCompanyInfo();
+
   return (
     <>
-      <Navbar />
+      <Navbar companyInfo={companyInfo} />
       <main className="flex-grow">{children}</main>
-      <Footer />
+      <Footer companyInfo={companyInfo} />
       {/* <WhatsAppButton /> */}
       <ScrollToTop />
     </>

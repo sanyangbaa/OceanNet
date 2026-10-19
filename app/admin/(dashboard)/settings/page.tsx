@@ -21,6 +21,7 @@ export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<Tab>("general");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [currentRole, setCurrentRole] = useState<
     "super_admin" | "admin" | "editor" | null
   >(null);
@@ -34,6 +35,7 @@ export default function SettingsPage() {
     instagram: "",
     twitter: "",
     linkedin: "",
+    tiktok: "",
   });
 
   useEffect(() => {
@@ -57,7 +59,24 @@ export default function SettingsPage() {
         });
         if (res.ok) {
           const data = await res.json();
-          if (data) setFormData((s) => ({ ...s, ...data }));
+          if (data) {
+            const socials =
+              data.socialLinks && typeof data.socialLinks === "object"
+                ? data.socialLinks
+                : {};
+            setFormData({
+              name: data.name || "OceanNet Technologies",
+              email: data.email || "",
+              phone: data.phone || "",
+              address: data.address || "",
+              website: data.website || socials.website || "",
+              facebook: data.facebook || socials.facebook || "",
+              instagram: data.instagram || socials.instagram || "",
+              twitter: data.twitter || socials.twitter || socials.x || "",
+              linkedin: data.linkedin || socials.linkedin || "",
+              tiktok: data.tiktok || socials.tiktok || "",
+            });
+          }
         } else {
           const payload = await res
             .json()
@@ -82,16 +101,32 @@ export default function SettingsPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setIsSaving(true);
+    setSaveSuccess(false);
     try {
+      const payload = {
+        ...formData,
+        socialLinks: {
+          facebook: formData.facebook,
+          instagram: formData.instagram,
+          twitter: formData.twitter,
+          linkedin: formData.linkedin,
+          tiktok: formData.tiktok,
+          website: formData.website,
+        },
+      };
+
       const res = await fetch("/api/admin/settings", {
         method: "PATCH",
         credentials: "same-origin",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
-      if (!res.ok) alert("Failed to save settings");
-      else {
-        // Success toast simulation
+
+      if (!res.ok) {
+        alert("Failed to save settings");
+      } else {
+        setSaveSuccess(true);
+        setTimeout(() => setSaveSuccess(false), 4000);
       }
     } catch {
       alert("Error saving settings");
@@ -99,6 +134,7 @@ export default function SettingsPage() {
       setIsSaving(false);
     }
   }
+
 
   if (isLoading) {
     return (
@@ -335,9 +371,55 @@ export default function SettingsPage() {
                         placeholder="https://linkedin.com/in/..."
                       />
                     </div>
+
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 block">
+                        Twitter / X Profile
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.twitter || ""}
+                        onChange={(e) =>
+                          setFormData({ ...formData, twitter: e.target.value })
+                        }
+                        className="w-full bg-black/40 border border-white/5 px-4 py-3.5 rounded-xl text-sm focus:outline-none focus:border-primary/50 transition-all"
+                        placeholder="https://x.com/..."
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 block">
+                        TikTok Profile
+                      </label>
+                      <input
+                        type="text"
+                        value={formData.tiktok || ""}
+                        onChange={(e) =>
+                          setFormData({ ...formData, tiktok: e.target.value })
+                        }
+                        className="w-full bg-black/40 border border-white/5 px-4 py-3.5 rounded-xl text-sm focus:outline-none focus:border-primary/50 transition-all"
+                        placeholder="https://tiktok.com/@..."
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {saveSuccess && (
+                <div className="bg-primary/10 border border-primary/30 p-4 rounded-2xl flex items-center gap-3 text-white">
+                  <div className="w-8 h-8 rounded-xl bg-primary text-black flex items-center justify-center shrink-0 font-black">
+                    <Check size={16} strokeWidth={3} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-wider text-primary">
+                      Configuration Saved Successfully
+                    </p>
+                    <p className="text-[11px] text-gray-400">
+                      Website contact details and digital presence are now synchronized with the database.
+                    </p>
+                  </div>
+                </div>
+              )}
 
               <div className="flex justify-end pt-8">
                 <button

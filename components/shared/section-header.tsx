@@ -57,48 +57,75 @@ export function SectionHeader({
         whileInView="show"
         viewport={{ once: true, amount: 0.01 }}
         className={cn(
-          "relative z-20 mx-auto w-full max-w-4xl px-0 sm:px-4 md:px-6 flex flex-col gap-2 sm:gap-2.5",
-          align === "center" ? "text-center" : "text-left",
+          "relative z-20 mx-auto w-full max-w-4xl px-0 sm:px-4 md:px-6 flex flex-col",
+          align === "center" ? "text-center items-center" : "text-left items-start",
         )}
       >
-        {subtitle && (
-          <span
-            className={cn(
-              "text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-0.5",
-              isDarkOrBg ? "text-accent" : "text-primary",
+        {withBackground ? (
+          <>
+            {subtitle && (
+              <span className="text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1.5 text-accent">
+                {subtitle}
+              </span>
             )}
-          >
-            {subtitle}
-          </span>
-        )}
-        <h2
-          className={cn(
-            "w-full text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tight",
-            isDarkOrBg ? "text-white" : "text-secondary",
-          )}
-        >
-          {title}
-          <span className={isDarkOrBg ? "text-accent" : "text-primary"}>.</span>
-        </h2>
-        {description && (
-          <p
-            className={cn(
-              "w-full max-w-none md:max-w-2xl text-sm sm:text-base leading-relaxed",
-              align === "center" ? "mx-auto" : "",
-              isDarkOrBg ? "text-white/85" : "text-muted-foreground",
+            <h2 className="w-full text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tight text-white">
+              {title}
+              <span className="text-accent">.</span>
+            </h2>
+            {description && (
+              <p
+                className={cn(
+                  "mt-3 w-full max-w-none md:max-w-2xl text-sm sm:text-base leading-relaxed text-white/85",
+                  align === "center" ? "mx-auto" : "",
+                )}
+              >
+                {description}
+              </p>
             )}
-          >
-            {description}
-          </p>
+            <div
+              className={cn(
+                "h-1.5 w-20 rounded-full mt-3 bg-accent",
+                align === "center" ? "mx-auto" : "",
+              )}
+            />
+          </>
+        ) : (
+          <>
+            {subtitle && (
+              <div
+                className={cn(
+                  "mb-2 flex items-center gap-2",
+                  align === "center" ? "justify-center" : "justify-start",
+                )}
+              >
+                <span className="h-px w-8 bg-primary" />
+                <span className="text-xs font-bold uppercase tracking-wide text-primary">
+                  {subtitle}
+                </span>
+                <span className="h-px w-8 bg-primary" />
+              </div>
+            )}
+            <h2
+              className={cn(
+                "text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl",
+                isDarkOrBg ? "text-white" : "text-secondary",
+              )}
+            >
+              {title}
+            </h2>
+            {description && (
+              <p
+                className={cn(
+                  "mt-3 text-sm sm:text-base md:text-lg leading-relaxed",
+                  align === "center" ? "max-w-2xl mx-auto" : "max-w-2xl",
+                  isDarkOrBg ? "text-slate-300" : "text-slate-600",
+                )}
+              >
+                {description}
+              </p>
+            )}
+          </>
         )}
-        {/* Decorative accent bar */}
-        <div
-          className={cn(
-            "h-1.5 w-20 rounded-full mt-2.5",
-            align === "center" ? "mx-auto" : "",
-            isDarkOrBg ? "bg-accent" : "bg-primary",
-          )}
-        />
       </motion.div>
     </div>
   );

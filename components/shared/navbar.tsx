@@ -19,7 +19,8 @@ import {
   MessageSquare,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { companyInfo } from "@/data/company";
+import { companyInfo as staticCompanyInfo } from "@/data/company";
+import type { MergedCompanyInfo } from "@/lib/data";
 
 const navItems = [
   { name: "Home", href: "/", icon: Home },
@@ -36,10 +37,12 @@ function MobileMenuDrawer({
   isOpen,
   pathname,
   onClose,
+  companyInfo = staticCompanyInfo,
 }: {
   isOpen: boolean;
   pathname: string;
   onClose: () => void;
+  companyInfo?: MergedCompanyInfo | typeof staticCompanyInfo;
 }) {
   return (
     <AnimatePresence>
@@ -205,7 +208,11 @@ function MobileMenuDrawer({
   );
 }
 
-export function Navbar() {
+export function Navbar({
+  companyInfo,
+}: {
+  companyInfo?: MergedCompanyInfo;
+} = {}) {
   const [isOpen, setIsOpen] = React.useState(false);
   const pathname = usePathname();
 
@@ -303,6 +310,7 @@ export function Navbar() {
         isOpen={isOpen}
         pathname={pathname}
         onClose={() => setIsOpen(false)}
+        companyInfo={companyInfo}
       />
     </>
   );

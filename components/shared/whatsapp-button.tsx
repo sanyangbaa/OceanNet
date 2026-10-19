@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { companyInfo } from "@/data/company";
 import { X, Send } from "lucide-react";
 
-export function WhatsAppButton() {
+export function WhatsAppButton({ phone }: { phone?: string } = {}) {
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,7 +23,9 @@ export function WhatsAppButton() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const whatsappNumber = companyInfo.contacts.whatsapp.replace(/[^\d+]/g, "");
+  const rawNumber = phone || companyInfo.contacts.whatsapp;
+  const whatsappNumber = rawNumber.replace(/[^\d+]/g, "");
+
   const message = encodeURIComponent(
     "Hello! I am contacting you from your website. I would like to make an inquiry.",
   );

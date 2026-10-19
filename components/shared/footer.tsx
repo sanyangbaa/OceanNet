@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { companyInfo } from "@/data/company";
+import { companyInfo as staticCompanyInfo } from "@/data/company";
+import type { MergedCompanyInfo } from "@/lib/data";
 import { services } from "@/data/services";
 import { FooterSections } from "@/components/shared/footer-sections";
 
@@ -27,7 +28,13 @@ const footerLinks = [
   },
 ];
 
-export function Footer() {
+export function Footer({
+  companyInfo: passedInfo,
+}: {
+  companyInfo?: MergedCompanyInfo;
+} = {}) {
+  const companyInfo = passedInfo || staticCompanyInfo;
+
   return (
     <footer className="relative isolate overflow-hidden bg-[#07142f] pt-8 pb-4 text-white sm:pt-10">
       <div

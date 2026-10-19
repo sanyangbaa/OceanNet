@@ -13,7 +13,7 @@ export async function FeaturedProjects() {
     <section className="py-8 sm:py-12 md:py-14 overflow-hidden bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
-          subtitle="Our Work"
+          subtitle="Our Projects"
           title="Featured Projects"
           description="Explore some of our innovative technology projects delivering digital transformation across diverse industries."
         />

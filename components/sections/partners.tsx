@@ -38,10 +38,11 @@ export function Partners() {
   }
 
   return (
-    <section className="relative z-20 -mt-12 md:-mt-10">
+    <section className="relative z-20 -mt-12 sm:-mt-12 md:-mt-10">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="bg-white shadow-lg rounded-sm py-2 md:py-6 px-6 flex flex-col md:flex-row items-center gap-2 md:gap-6 overflow-hidden">
+        <div className="bg-white shadow-xl rounded-xl sm:rounded-2xl py-3 sm:py-4 md:py-6 px-4 sm:px-6 flex flex-col md:flex-row items-center gap-2 md:gap-6 overflow-hidden border border-gray-100">
           {/* Label */}
+
           <div className="shrink-0">
             <h4 className="text-sm font-bold uppercase tracking-widest text-secondary whitespace-nowrap">
               Technology <br className="hidden md:block" /> Partners:

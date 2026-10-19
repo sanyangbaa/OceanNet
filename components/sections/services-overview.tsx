@@ -9,7 +9,7 @@ export async function ServicesOverview() {
     <section className="py-8 sm:py-12 md:py-14 overflow-hidden bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <SectionHeader
-          subtitle="Our Expertise"
+          subtitle="Our Services"
           title="What We Do"
           description="Delivering end-to-end technology solutions that modernize operations, improve efficiency, and accelerate digital transformation."
         />

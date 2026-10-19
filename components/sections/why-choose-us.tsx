@@ -129,7 +129,7 @@ const whyChooseItems = [
 
 export function WhyChooseUs() {
   return (
-    <section className="relative py-10 sm:py-12 md:py-16 bg-[#07142f] text-white overflow-hidden">
+    <section className="relative pt-10 sm:pt-14 md:pt-16 pb-36 sm:pb-28 md:pb-32 bg-[#07142f] text-white overflow-hidden">
       {/* Subtle background ambient mesh matching the footer styling */}
       <div
         aria-hidden="true"
@@ -142,18 +142,22 @@ export function WhyChooseUs() {
       />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        {/* Section Header */}
+        {/* Section Header (matching Testimonial style) */}
         <motion.div
           variants={textVariant(0)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.01 }}
-          className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10"
+          className="mb-8 text-center sm:mb-10 md:mb-12 max-w-3xl mx-auto"
         >
-          <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary block mb-2">
-            Why Choose Us
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight leading-tight">
+          <div className="mb-2 flex items-center justify-center gap-2">
+            <span className="h-px w-8 bg-primary" />
+            <span className="text-xs font-bold uppercase tracking-wide text-primary">
+              Why Choose Us
+            </span>
+            <span className="h-px w-8 bg-primary" />
+          </div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
             Why Organisations Choose OceanNet
           </h2>
         </motion.div>

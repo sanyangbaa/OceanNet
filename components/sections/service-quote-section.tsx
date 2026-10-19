@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Phone, Loader2, CheckCircle2 } from "lucide-react";
 import { companyInfo } from "@/data/company";
 
-export function ServiceQuoteSection() {
+export function ServiceQuoteSection({ phone }: { phone?: string } = {}) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,7 +16,7 @@ export function ServiceQuoteSection() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const phoneDisplay = companyInfo.contacts.phone || "+220 2785585";
+  const phoneDisplay = phone || companyInfo.contacts.phone || "+220 87 278 5585";
   const phoneClean = phoneDisplay.replace(/\s+/g, "");
 
   const servicesList = [

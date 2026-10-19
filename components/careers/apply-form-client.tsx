@@ -120,7 +120,7 @@ export default function ApplyFormClient({ jobId }: { jobId: string }) {
             name="phone"
             value={form.phone}
             onChange={onChange}
-            placeholder="+220 278 5585"
+            placeholder="+220 87 278 5585"
             className="w-full p-3 rounded-xl bg-white/10 border border-white/15 text-white placeholder-white/40 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all text-sm"
           />
         </div>

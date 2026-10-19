@@ -19,8 +19,8 @@ export const companyInfo = {
       "2nd Floor, Jula Finance Complex, Opposite The Gambia Tourism and Hospitality Institute, Kanifing South, Kanifing Municipality, The Gambia.",
     productionCenter: "Kanifing Municipality, The Gambia.",
     email: "info@oceannettechnologies.com",
-    phone: "+220 278 5585",
-    whatsapp: "+220 278 5585",
+    phone: "+220 87 278 5585",
+    whatsapp: "+220 87 278 5585",
   },
   socials: {
     facebook: "https://facebook.com/ontgambia",

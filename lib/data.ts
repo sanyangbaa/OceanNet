@@ -8,7 +8,35 @@ import {
   type Testimonial,
 } from "@/server/db";
 import type { Service } from "@/data/services";
+import { companyInfo as staticCompanyInfo } from "@/data/company";
 import { cache } from "react";
+
+export interface MergedCompanyInfo {
+  name: string;
+  shortName: string;
+  tagline: string;
+  description: string;
+  footerDescription: string;
+  longDescription: string;
+  history: string;
+  mission: string;
+  vision: string;
+  contacts: {
+    address: string;
+    productionCenter: string;
+    email: string;
+    phone: string;
+    whatsapp: string;
+  };
+  socials: {
+    facebook: string;
+    instagram: string;
+    tiktok: string;
+    twitter: string;
+    linkedin: string;
+    website?: string;
+  };
+}
 
 // --- Public Data Fetching ---
 
@@ -99,6 +127,78 @@ export const getCompanyInfo = cache(async () => {
   const results = normalizeResult<CompanyInfo[]>(rows, "CompanyInfo");
   return results[0] || null;
 });
+
+export const getMergedCompanyInfo = cache(
+  async (): Promise<MergedCompanyInfo> => {
+    let dbInfo: CompanyInfo | null = null;
+    try {
+      dbInfo = await getCompanyInfo();
+    } catch (e) {
+      console.error(
+        "Failed to load company info from DB, falling back to static:",
+        e,
+      );
+    }
+
+    const rawSocials =
+      dbInfo?.socialLinks && typeof dbInfo.socialLinks === "object"
+        ? (dbInfo.socialLinks as Record<string, string>)
+        : {};
+
+    const clean = (val: unknown): string | null => {
+      if (typeof val === "string" && val.trim().length > 0) return val.trim();
+      return null;
+    };
+
+    const address = clean(dbInfo?.address) || staticCompanyInfo.contacts.address;
+    const phone = clean(dbInfo?.phone) || staticCompanyInfo.contacts.phone;
+    const email = clean(dbInfo?.email) || staticCompanyInfo.contacts.email;
+    const whatsapp = phone || staticCompanyInfo.contacts.whatsapp;
+
+    const facebook =
+      clean(rawSocials.facebook) || staticCompanyInfo.socials.facebook;
+    const instagram =
+      clean(rawSocials.instagram) || staticCompanyInfo.socials.instagram;
+    const tiktok = clean(rawSocials.tiktok) || staticCompanyInfo.socials.tiktok;
+    const twitter =
+      clean(rawSocials.twitter) ||
+      clean(rawSocials.x) ||
+      staticCompanyInfo.socials.twitter;
+    const linkedin =
+      clean(rawSocials.linkedin) || staticCompanyInfo.socials.linkedin;
+    const website = clean(rawSocials.website) || "";
+
+    return {
+      ...staticCompanyInfo,
+      name: clean(dbInfo?.name) || staticCompanyInfo.name,
+      shortName: clean(dbInfo?.shortName) || staticCompanyInfo.shortName,
+      tagline: clean(dbInfo?.tagline) || staticCompanyInfo.tagline,
+      description: clean(dbInfo?.description) || staticCompanyInfo.description,
+      footerDescription: staticCompanyInfo.footerDescription,
+      longDescription:
+        clean(dbInfo?.longDescription) || staticCompanyInfo.longDescription,
+      history: clean(dbInfo?.history) || staticCompanyInfo.history,
+      mission: clean(dbInfo?.mission) || staticCompanyInfo.mission,
+      vision: clean(dbInfo?.vision) || staticCompanyInfo.vision,
+      contacts: {
+        address,
+        productionCenter: staticCompanyInfo.contacts.productionCenter,
+        email,
+        phone,
+        whatsapp,
+      },
+      socials: {
+        facebook,
+        instagram,
+        tiktok,
+        twitter,
+        linkedin,
+        website,
+      },
+    };
+  },
+);
+
 
 export const getTestimonials = cache(async () => {
   const p = getPool();
