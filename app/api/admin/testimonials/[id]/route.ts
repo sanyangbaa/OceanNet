@@ -1,47 +1,42 @@
 import { NextResponse } from "next/server";
-import { db, getPool } from "@/server/db";
+import { db, ensureTestimonialSchema } from "@/server/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 
-/** Ensure the featured column exists (idempotent – safe to call every request) */
-async function ensureFeaturedColumn() {
-  const p = getPool();
-  if (!p) return;
-  try {
-    const [rows] = await p.query(
-      `SHOW COLUMNS FROM \`Testimonial\` LIKE 'featured'`,
-    );
-    if (Array.isArray(rows) && rows.length === 0) {
-      await p.execute(
-        `ALTER TABLE \`Testimonial\` ADD COLUMN \`featured\` BOOLEAN DEFAULT false`,
-      );
-    }
-  } catch {
-    // ignore – e.g. Postgres which uses IF NOT EXISTS syntax handled elsewhere
-  }
-}
-
 export async function PUT(
   request: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
-    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!session)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { id } = await params;
     const raw = await request.json();
 
-    // Ensure DB column exists before writing
-    await ensureFeaturedColumn();
+    // Ensure DB columns exist before writing
+    await ensureTestimonialSchema();
 
-    // Strip legacy role field – it has been removed from the form
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { role: _role, ...data } = raw;
+    const data: Record<string, unknown> = { ...raw };
 
-    // Explicitly coerce featured to a real boolean so MySQL stores 0/1 correctly
+    if (data.name !== undefined) {
+      data.name = String(data.name).trim();
+    }
+    if (data.content !== undefined) {
+      data.content = String(data.content).trim();
+    }
+    if (data.role !== undefined) {
+      data.role = String(data.role || "").trim();
+    }
     if (data.featured !== undefined) {
       data.featured = Boolean(data.featured);
+    }
+    if (data.rating !== undefined) {
+      data.rating = Math.min(5, Math.max(1, Number(data.rating) || 5));
+    }
+    if (data.order !== undefined) {
+      data.order = Number(data.order) || 0;
     }
 
     const testimonial = await db.testimonial.update({
@@ -49,24 +44,34 @@ export async function PUT(
       data,
     });
 
-    // Bust the homepage ISR cache so featured testimonials appear immediately
+    // Bust the cache so changes appear immediately
     revalidatePath("/");
-    revalidatePath("/testimonials");
+    revalidatePath("/services");
+    revalidatePath("/admin/testimonials");
 
     return NextResponse.json(testimonial);
-  } catch {
-    return NextResponse.json({ error: "Failed to update testimonial" }, { status: 500 });
+  } catch (error) {
+    console.error("Testimonial update error:", error);
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to update testimonial",
+      },
+      { status: 500 },
+    );
   }
 }
 
-
 export async function DELETE(
   request: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const session = await getSession();
-    if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!session)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const { id } = await params;
 
@@ -76,10 +81,16 @@ export async function DELETE(
 
     // Bust the cache on deletion too
     revalidatePath("/");
-    revalidatePath("/testimonials");
+    revalidatePath("/services");
+    revalidatePath("/admin/testimonials");
 
     return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: "Failed to delete testimonial" }, { status: 500 });
+  } catch (error) {
+    console.error("Testimonial delete error:", error);
+    return NextResponse.json(
+      { error: "Failed to delete testimonial" },
+      { status: 500 },
+    );
   }
 }
+

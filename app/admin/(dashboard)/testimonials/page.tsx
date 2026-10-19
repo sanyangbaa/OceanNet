@@ -47,7 +47,12 @@ export default async function AdminTestimonialsPage() {
                     <h3 className="font-bold text-white text-lg leading-tight truncate">
                       {testimonial.name}
                     </h3>
-                    <div className="mt-1 flex flex-wrap items-center gap-2">
+                    {testimonial.role ? (
+                      <p className="text-xs text-gray-400 font-medium truncate mt-0.5">
+                        {testimonial.role}
+                      </p>
+                    ) : null}
+                    <div className="mt-1.5 flex flex-wrap items-center gap-2">
                       <p
                         className={`inline-flex items-center rounded-sm px-2 py-0.5 text-[10px] font-black uppercase tracking-wider ${
                           testimonial.featured
@@ -57,7 +62,6 @@ export default async function AdminTestimonialsPage() {
                       >
                         {testimonial.featured ? "Homepage Featured" : "Services Page"}
                       </p>
-
                     </div>
                   </div>
                 </div>

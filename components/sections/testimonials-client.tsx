@@ -35,10 +35,15 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           {testimonial.content}
         </p>
       </div>
-      <div className="relative ml-8 flex h-11 items-center bg-primary px-4 sm:ml-12 sm:px-5">
-        <h3 className="text-lg font-bold leading-tight text-white">
+      <div className="relative ml-8 flex h-11 items-center justify-between gap-2 bg-primary px-4 sm:ml-12 sm:px-5">
+        <h3 className="text-base sm:text-lg font-bold leading-tight text-white truncate">
           {testimonial.name}
         </h3>
+        {testimonial.role ? (
+          <span className="text-[11px] sm:text-xs font-medium text-white/80 truncate max-w-[50%]">
+            {testimonial.role}
+          </span>
+        ) : null}
       </div>
     </article>
   );

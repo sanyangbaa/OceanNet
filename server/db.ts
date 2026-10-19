@@ -426,13 +426,61 @@ export function normalizeResult<T>(
     res.submittedAt = toDate(res.submittedAt);
     res.updatedAt = toDate(res.updatedAt);
   } else if (type === "Testimonial") {
-    // MySQL returns BOOLEAN columns as TINYINT (0/1) or Buffer — coerce to true boolean
+    // Coerce featured to true boolean for MySQL (0/1/Buffer) and Postgres (boolean)
     if (res.featured !== undefined && res.featured !== null) {
-      res.featured = res.featured === 1 || res.featured === true ||
+      res.featured =
+        res.featured === 1 ||
+        res.featured === true ||
+        res.featured === "1" ||
+        res.featured === "true" ||
         (Buffer.isBuffer(res.featured) && res.featured[0] === 1);
+    } else {
+      res.featured = false;
     }
   }
   return res as T;
+}
+
+let testimonialSchemaEnsured = false;
+export async function ensureTestimonialSchema() {
+  if (testimonialSchemaEnsured) return;
+  const p = getPool();
+  if (!p) return;
+  const url = process.env.DATABASE_URL || "";
+  const isPostgres =
+    url.startsWith("postgres://") || url.startsWith("postgresql://");
+
+  try {
+    if (isPostgres) {
+      await p
+        .execute(
+          `ALTER TABLE "Testimonial" ADD COLUMN IF NOT EXISTS "featured" BOOLEAN DEFAULT false`,
+        )
+        .catch(() => {});
+      await p
+        .execute(`ALTER TABLE "Testimonial" ALTER COLUMN "role" DROP NOT NULL`)
+        .catch(() => {});
+    } else {
+      try {
+        const [rows] = await p.query(
+          `SHOW COLUMNS FROM \`Testimonial\` LIKE 'featured'`,
+        );
+        if (Array.isArray(rows) && rows.length === 0) {
+          await p.execute(
+            `ALTER TABLE \`Testimonial\` ADD COLUMN \`featured\` BOOLEAN DEFAULT false`,
+          );
+        }
+      } catch {}
+      try {
+        await p.execute(
+          `ALTER TABLE \`Testimonial\` MODIFY COLUMN \`role\` TEXT NULL`,
+        );
+      } catch {}
+    }
+    testimonialSchemaEnsured = true;
+  } catch (err) {
+    console.error("ensureTestimonialSchema error:", err);
+  }
 }
 
 
@@ -750,10 +798,16 @@ export async function initDb() {
       "DEFAULT false",
     ).catch(() => {});
 
-    // Allow role to be nullable for existing rows
-    await p
-      .execute(`ALTER TABLE "Testimonial" MODIFY COLUMN "role" TEXT NULL`)
-      .catch(() => {});
+    // Allow role to be nullable for existing rows in both Postgres and MySQL
+    if (isPostgres) {
+      await p
+        .execute(`ALTER TABLE "Testimonial" ALTER COLUMN "role" DROP NOT NULL`)
+        .catch(() => {});
+    } else {
+      await p
+        .execute(`ALTER TABLE "Testimonial" MODIFY COLUMN "role" TEXT NULL`)
+        .catch(() => {});
+    }
 
     await p
       .execute(`UPDATE "TeamMember" SET "role" = ? WHERE "id" = ?`, [
@@ -1367,10 +1421,18 @@ const testimonials = {
   create: async ({ data }: { data: Partial<Testimonial> }) => {
     const p = getPool();
     if (!p) return null;
-    const payload = { id: (data as any).id || generateId(), ...data } as Record<
-      string,
-      unknown
-    >;
+    await ensureTestimonialSchema();
+    const now = new Date();
+    const payload = {
+      id: (data as any).id || generateId(),
+      role: (data as any).role ?? "Client",
+      rating: (data as any).rating ?? 5,
+      featured: Boolean((data as any).featured),
+      order: (data as any).order ?? 0,
+      createdAt: (data as any).createdAt || now,
+      updatedAt: (data as any).updatedAt || now,
+      ...data,
+    } as Record<string, unknown>;
     const keys = Object.keys(payload);
     const fields = keys.map((k) => `"${k}"`).join(", ");
     const placeholders = keys.map(() => "?").join(", ");
@@ -1392,10 +1454,20 @@ const testimonials = {
   }) => {
     const p = getPool();
     if (!p) return null;
-    const keys = Object.keys(data).filter((k) => k !== "id");
+    await ensureTestimonialSchema();
+    const updateData: Record<string, unknown> = {
+      ...data,
+      updatedAt: new Date(),
+    };
+    if (updateData.featured !== undefined) {
+      updateData.featured = Boolean(updateData.featured);
+    }
+    const keys = Object.keys(updateData).filter((k) => k !== "id");
     if (keys.length === 0) return null;
     const fields = keys.map((k) => `"${k}" = ?`).join(", ");
-    const values = keys.map((k) => prepareValue(data[k as keyof typeof data]));
+    const values = keys.map((k) =>
+      prepareValue(updateData[k as keyof typeof updateData]),
+    );
     await p.execute(`UPDATE "Testimonial" SET ${fields} WHERE id = ?`, [
       ...values,
       where.id,

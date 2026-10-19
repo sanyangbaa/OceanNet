@@ -1,25 +1,7 @@
 import { NextResponse } from "next/server";
-import { db, getPool } from "@/server/db";
+import { db, ensureTestimonialSchema } from "@/server/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
-
-/** Ensure the featured column exists (idempotent – safe to call every request) */
-async function ensureFeaturedColumn() {
-  const p = getPool();
-  if (!p) return;
-  try {
-    const [rows] = await p.query(
-      `SHOW COLUMNS FROM \`Testimonial\` LIKE 'featured'`,
-    );
-    if (Array.isArray(rows) && rows.length === 0) {
-      await p.execute(
-        `ALTER TABLE \`Testimonial\` ADD COLUMN \`featured\` BOOLEAN DEFAULT false`,
-      );
-    }
-  } catch {
-    // ignore – Postgres handled elsewhere
-  }
-}
 
 export async function GET() {
   try {
@@ -31,7 +13,8 @@ export async function GET() {
       orderBy: { order: "asc" },
     });
     return NextResponse.json(testimonials);
-  } catch {
+  } catch (error) {
+    console.error("Testimonial GET error:", error);
     return NextResponse.json(
       { error: "Failed to fetch testimonials" },
       { status: 500 },
@@ -47,41 +30,63 @@ export async function POST(request: Request) {
 
     const raw = await request.json();
 
-    // Ensure DB column exists before writing
-    await ensureFeaturedColumn();
+    // Ensure DB columns exist before writing
+    await ensureTestimonialSchema();
 
-    // Strip legacy role field
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { role: _role, ...data } = raw;
+    const name = String(raw.name || "").trim();
+    const content = String(raw.content || "").trim();
 
-    // Explicitly coerce featured to boolean
-    if (data.featured !== undefined) {
-      data.featured = Boolean(data.featured);
+    if (!name || !content) {
+      return NextResponse.json(
+        { error: "Client name and testimonial content are required." },
+        { status: 400 },
+      );
     }
+
+    // Role default to satisfy any DB NOT NULL constraints
+    const role = String(raw.role || "").trim() || "Client";
+    const featured = Boolean(raw.featured);
+    const rating = Math.min(5, Math.max(1, Number(raw.rating) || 5));
 
     // Auto-increment order
     const lastTestimonial = await db.testimonial.findFirst({
       orderBy: { order: "desc" },
     });
-    const order = (lastTestimonial?.order || 0) + 1;
+    const order =
+      raw.order !== undefined && !isNaN(Number(raw.order))
+        ? Number(raw.order)
+        : (lastTestimonial?.order || 0) + 1;
 
     const testimonial = await db.testimonial.create({
       data: {
-        ...data,
-        rating: data.rating || 5,
+        ...raw,
+        name,
+        role,
+        content,
+        rating,
+        featured,
+        image: raw.image || "",
         order,
       },
     });
 
-    // Bust homepage cache so new testimonial appears immediately
+    // Bust cache across all relevant routes
     revalidatePath("/");
-    revalidatePath("/testimonials");
+    revalidatePath("/services");
+    revalidatePath("/admin/testimonials");
 
     return NextResponse.json(testimonial);
-  } catch {
+  } catch (error) {
+    console.error("Testimonial creation error:", error);
     return NextResponse.json(
-      { error: "Failed to create testimonial" },
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to create testimonial",
+      },
       { status: 500 },
     );
   }
 }
+

@@ -22,6 +22,7 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: (initialData?.name as string) || "",
+    role: (initialData?.role as string) || "",
     content: (initialData?.content as string) || "",
     featured: Boolean(initialData?.featured),
     rating: (initialData?.rating as number) || 5,
@@ -83,7 +84,8 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
         router.push("/admin/testimonials");
         router.refresh();
       } else {
-        alert("Failed to save testimonial");
+        const errJson = await res.json().catch(() => null);
+        alert(errJson?.error || "Failed to save testimonial");
       }
     } catch (error) {
       console.error("Save error:", error);
@@ -105,7 +107,7 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                  Client Name
+                  Client Name <span className="text-primary">*</span>
                 </label>
                 <input
                   type="text"
@@ -118,7 +120,25 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
                   placeholder="e.g. John Doe"
                 />
               </div>
-              <label className="flex cursor-pointer items-start gap-3 border border-primary/20 bg-primary/5 p-4 rounded-sm">
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
+                  Role / Organisation (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={formData.role}
+                  onChange={(e) =>
+                    setFormData({ ...formData, role: e.target.value })
+                  }
+                  className="w-full bg-black/40 border border-white/10 px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium text-white placeholder:text-gray-700"
+                  placeholder="e.g. Operations Director, Banjul"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="flex cursor-pointer items-start gap-3 border border-primary/20 bg-primary/5 p-4 rounded-sm hover:border-primary/40 transition-colors">
                 <input
                   type="checkbox"
                   checked={formData.featured}
@@ -133,17 +153,15 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
                     Feature on Homepage
                   </span>
                   <span className="mt-1 block text-[10px] leading-relaxed text-gray-400">
-                    Show this testimonial on the homepage. All testimonials appear on the Services page.
+                    Show this testimonial on the homepage. All client testimonials automatically appear on the Services page.
                   </span>
                 </span>
               </label>
             </div>
 
-
-
             <div className="space-y-2">
               <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Testimonial Content
+                Testimonial Content <span className="text-primary">*</span>
               </label>
               <textarea
                 rows={6}
@@ -152,7 +170,7 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
                 onChange={(e) =>
                   setFormData({ ...formData, content: e.target.value })
                 }
-                className="w-full bg-black/40 border border-white/10 px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none leading-relaxed text-gray-300"
+                className="w-full bg-black/40 border border-white/10 px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none leading-relaxed text-gray-300 placeholder:text-gray-700"
                 placeholder="What did the client say?"
               />
             </div>

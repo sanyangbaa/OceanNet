@@ -1,6 +1,7 @@
 import {
   getPool,
   normalizeResult,
+  ensureTestimonialSchema,
   type Partner,
   type Project,
   type TeamMember,
@@ -203,25 +204,39 @@ export const getMergedCompanyInfo = cache(
 export const getTestimonials = cache(async () => {
   const p = getPool();
   if (!p) return [];
-  const [rows] = await p.query(
-    `SELECT * FROM "Testimonial" ORDER BY "order" ASC`,
-  );
-  return normalizeResult<Testimonial[]>(rows, "Testimonial");
+  try {
+    await ensureTestimonialSchema();
+    const [rows] = await p.query(
+      `SELECT * FROM "Testimonial" ORDER BY "order" ASC`,
+    );
+    return normalizeResult<Testimonial[]>(rows, "Testimonial");
+  } catch (err) {
+    console.error("Error in getTestimonials:", err);
+    return [];
+  }
 });
 
 export const getFeaturedTestimonials = async () => {
   const p = getPool();
   if (!p) return [];
   try {
-    // MySQL stores BOOLEAN as TINYINT(1), so we query for both `1` and `true`
+    await ensureTestimonialSchema();
     const [rows] = await p.query(
-      `SELECT * FROM "Testimonial" WHERE "featured" IN (1, true) ORDER BY "order" ASC`,
+      `SELECT * FROM "Testimonial" ORDER BY "order" ASC`,
     );
     const results = normalizeResult<Testimonial[]>(rows, "Testimonial");
-    // Double-safety: filter in JS in case DB returns unexpected falsy values
-    return results.filter((t) => t.featured === true);
-  } catch {
-    // If column doesn't exist yet, return empty
+    const featured = results.filter((t) => Boolean(t.featured));
+
+    // If testimonials are explicitly marked as featured, return only them
+    if (featured.length > 0) {
+      return featured;
+    }
+
+    // Fallback: If no testimonials are marked featured yet, return up to 6
+    // so the homepage testimonial section displays smoothly.
+    return results.slice(0, 6);
+  } catch (err) {
+    console.error("Error in getFeaturedTestimonials:", err);
     return [];
   }
 };
