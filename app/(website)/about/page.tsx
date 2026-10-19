@@ -1,4 +1,4 @@
-import { getTeamMembers, getMergedCompanyInfo } from "@/lib/data";
+import { getTeamMembers, getMergedCompanyInfo, getTestimonials } from "@/lib/data";
 import { companyInfo as staticCompanyInfo } from "@/data/company";
 import { AboutClient } from "@/components/sections/about-client";
 import { CallToAction } from "@/components/sections/cta";
@@ -18,14 +18,19 @@ export async function generateMetadata() {
 }
 
 export default async function AboutPage() {
-  const [teamMembers, companyInfo] = await Promise.all([
+  const [teamMembers, companyInfo, testimonials] = await Promise.all([
     getTeamMembers(),
     getMergedCompanyInfo(),
+    getTestimonials(),
   ]);
 
   return (
     <div className="pt-10 pb-0">
-      <AboutClient companyInfo={companyInfo} teamMembers={teamMembers} />
+      <AboutClient
+        companyInfo={companyInfo}
+        teamMembers={teamMembers}
+        testimonials={testimonials}
+      />
       <CallToAction />
     </div>
   );
