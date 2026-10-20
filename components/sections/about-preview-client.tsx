@@ -28,15 +28,15 @@ export function AboutPreviewClient({
         {/* Floating Experience Badge with seamless white cutout frame on right and bottom */}
         <div className="absolute top-0 left-0 z-20 transition-transform duration-300 hover:scale-105">
           {/* White cutout background perfectly matching the section's white background */}
-          <div className="bg-white pr-3.5 pb-3.5 sm:pr-4 sm:pb-4 rounded-br-2xl sm:rounded-br-3xl inline-block">
-            <div className="bg-primary text-white w-[130px] h-[140px] sm:w-[155px] sm:h-[165px] rounded-2xl shadow-lg flex flex-col items-center justify-center text-center px-4 py-5 select-none">
+          <div className="bg-white pr-3.5 pb-3 sm:pr-4 sm:pb-4 rounded-br-2xl sm:rounded-br-3xl inline-block">
+            <div className="bg-primary text-white w-[135px] h-[110px] sm:w-[160px] sm:h-[130px] rounded-2xl shadow-lg flex flex-col items-center justify-center text-center px-4 py-4 select-none">
               <span className="text-3xl sm:text-4xl md:text-[42px] font-extrabold text-white leading-none tracking-tight block">
                 6
               </span>
               <span className="text-lg sm:text-xl font-bold text-white mt-1.5 leading-tight block">
                 Years
               </span>
-              <span className="text-xs sm:text-sm font-semibold text-white/95 tracking-wide mt-1 block">
+              <span className="text-lg sm:text-xl font-semibold text-white/95 tracking-wide mt-1 block">
                 Experience
               </span>
             </div>

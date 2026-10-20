@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { getPool, findAdminByUsername } from "@/server/db";
 
 const JWT_SECRET = process.env.JWT_SECRET || "fallback-secret-change-me";
 
@@ -32,17 +33,21 @@ export async function getSession() {
   }
 }
 
-export async function getAdminRole(userId: string) {
-    const { db } = await import("@/server/db");
-    const admin = await db.admin.findUnique({ where: { id: userId } });
-    return admin?.role || "admin";
+export async function getAdminRole(userId: string): Promise<string> {
+  const p = getPool();
+  if (!p) return "admin";
+  const [rows] = await p.query(`SELECT * FROM "Admin" WHERE id = ? LIMIT 1`, [userId]);
+  const admin = (rows as any[])[0];
+  return admin?.role || "admin";
 }
 
 export async function getCurrentAdmin() {
-    const session = await getSession();
-    if (!session) return null;
-    const { db } = await import("@/server/db");
-    return db.admin.findUnique({ where: { id: session.userId } });
+  const session = await getSession();
+  if (!session) return null;
+  const p = getPool();
+  if (!p) return null;
+  const [rows] = await p.query(`SELECT * FROM "Admin" WHERE id = ? LIMIT 1`, [session.userId]);
+  return (rows as any[])[0] || null;
 }
 
 export async function deleteSession() {

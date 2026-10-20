@@ -13,24 +13,34 @@ const JOB_TYPES = [
   "Volunteer",
 ];
 
-export default function JobFormClient({ job }: { job?: any }) {
+function parseListField(val: any): string {
+  if (!val) return "";
+  if (Array.isArray(val)) return val.join("\n");
+  if (typeof val === "string") {
+    try {
+      const parsed = JSON.parse(val);
+      if (Array.isArray(parsed)) return parsed.join("\n");
+    } catch {}
+    return val;
+  }
+  return "";
+}
+
+export default function JobFormClient({
+  job,
+  onSuccess,
+}: {
+  job?: any;
+  onSuccess?: () => void;
+}) {
   const router = useRouter();
   const [form, setForm] = useState({
     title: job?.title || "",
     jobType: job?.jobType || "Full-time",
     description: job?.description || "",
-    responsibilities:
-      job?.responsibilities && Array.isArray(job.responsibilities)
-        ? job.responsibilities.join("\n")
-        : job?.responsibilities || "",
-    qualifications:
-      job?.qualifications && Array.isArray(job.qualifications)
-        ? job.qualifications.join("\n")
-        : job?.qualifications || "",
-    benefits:
-      job?.benefits && Array.isArray(job.benefits)
-        ? job.benefits.join("\n")
-        : job?.benefits || "",
+    responsibilities: parseListField(job?.responsibilities),
+    qualifications: parseListField(job?.qualifications),
+    benefits: parseListField(job?.benefits),
     expiresAt: job?.expiresAt
       ? new Date(job.expiresAt).toISOString().slice(0, 10)
       : "",
@@ -83,12 +93,17 @@ export default function JobFormClient({ job }: { job?: any }) {
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error || "Save failed");
       setMessage("Saved successfully!");
-      if (!job) {
+      router.refresh();
+      if (onSuccess) {
+        setTimeout(() => {
+          onSuccess();
+        }, 400);
+      } else if (!job) {
         router.push("/admin/careers");
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      setMessage("Save failed. Please try again.");
+      setMessage(e instanceof Error ? e.message : "Save failed. Please try again.");
     } finally {
       setSaving(false);
     }

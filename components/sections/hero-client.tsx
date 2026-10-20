@@ -2,17 +2,6 @@
 
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  ArrowRight,
-  ShieldCheck,
-  Zap,
-  Clock,
-  Award,
-  ChevronLeft,
-  ChevronRight,
-  Star,
-  Terminal,
-} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -20,67 +9,33 @@ import { cn } from "@/lib/utils";
 const slides = [
   {
     id: 1,
-    tag: "Accelerate. Transform. Scale. With OceanNet.",
-    titlePrefix: "Accelerating Your.",
-    titleHighlight: "Digital Future.",
+    titlePrefix: "Accelerating Your",
+    titleHighlight: "Digital Future",
     description:
       "OceanNet Technologies designs, integrates and supports digital platforms, enterprise systems and ICT infrastructure that help governments, development organisations and businesses operate more securely, efficiently and intelligently.",
     image: "/images/ont_img.jpg",
-    alt: "OceanNet Tech Team",
-    badge: "Enterprise IT & Cloud Solutions",
+    alt: "OceanNet Tech Team & Enterprise Infrastructure",
+    link: "/services",
   },
   {
     id: 2,
-    tag: "Next-Generation Technology & Innovation.",
     titlePrefix: "Transform Ideas",
-    titleHighlight: "Into Innovation.",
+    titleHighlight: "Into Innovation",
     description:
       "Delivering modern enterprise systems, cloud services, and digital transformation solutions. We combine local expertise with global technology standards.",
     image: "/images/ont_img3.jpg",
     alt: "Modern enterprise systems in action",
-    badge: "Digital Transformation & Systems",
-  },
-  // {
-  //   id: 3,
-  //   tag: "Security, Reliability & Performance.",
-  //   titlePrefix: "Building Smarter",
-  //   titleHighlight: "Digital Solutions.",
-  //   description:
-  //     "We prioritize security, reliability, and innovation in every solution we deliver. Our commitment to excellence helps organizations achieve sustainable digital growth.",
-  //   image: "/images/ont_img2.jpg",
-  //   alt: "OceanNet engineers collaborating",
-  //   badge: "Cybersecurity & Infrastructure",
-  // },
-];
-
-const clientAvatars = [
-  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120",
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120",
-  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120",
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=120",
-  "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=120",
-];
-
-const stats = [
-  {
-    value: "100+",
-    label: "Solutions Delivered",
-    subtext: "Across industries",
+    link: "/services",
   },
   {
-    value: "Reliable",
-    label: "Technology Delivery",
-    subtext: "Built for real-world use",
-  },
-  {
-    value: "50+",
-    label: "Corporate Clients",
-    subtext: "National & Regional",
-  },
-  {
-    value: "6+",
-    label: "Years of Impact",
-    subtext: "Proven excellence",
+    id: 3,
+    titlePrefix: "Building Smarter",
+    titleHighlight: "Digital Solutions",
+    description:
+      "We prioritize security, reliability, and innovation in every solution we deliver. Our commitment to excellence helps organizations achieve sustainable digital growth.",
+    image: "/images/ont_img2.jpg",
+    alt: "OceanNet engineers collaborating",
+    link: "/services",
   },
 ];
 
@@ -92,10 +47,7 @@ export function HeroClient() {
     setCurrent((prev) => (prev + 1) % slides.length);
   }, []);
 
-  const handlePrev = React.useCallback(() => {
-    setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
-  }, []);
-
+  // Auto-play slideshow every 6 seconds unless hovered
   React.useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
@@ -106,151 +58,113 @@ export function HeroClient() {
 
   return (
     <div
-      className="container mx-auto px-4 md:px-6 relative z-10"
+      className="relative w-full min-h-[500px] sm:min-h-[540px] md:min-h-[580px] lg:min-h-[620px] flex items-center overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* 2-Column Hero Grid matching reference layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 items-center">
-        {/* Left Column: Content & Actions */}
-        <div className="lg:col-span-6 flex flex-col justify-center">
+      {/* ── Background Slides (Full Bleed) ── */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`hero-bg-${current}`}
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
+          className="absolute inset-0 z-0"
+        >
+          <Image
+            src={slides[current].image}
+            alt={slides[current].alt}
+            fill
+            sizes="100vw"
+            priority={current === 0}
+            className="object-cover object-center"
+          />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* ── Dark Atmospheric Overlay (ensures high text contrast) ── */}
+      <div className="absolute inset-0 z-1 bg-gradient-to-r from-black/85 via-black/65 to-black/45 pointer-events-none" />
+
+      {/* ── Main Hero Content ── */}
+      <div className="container mx-auto px-5 sm:px-8 md:px-12 lg:px-16 relative z-10 pt-24 sm:pt-28 pb-20 sm:pb-20 md:py-20 lg:py-24">
+        <div className="max-w-4xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={`hero-text-${current}`}
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.5 }}
-              className="flex flex-col"
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             >
-              {/* Main Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight leading-[1.08] mb-5">
+              {/* Bold Condensed Headline with highlighted words in primary color */}
+              <h1 className="font-hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-white leading-[0.98] sm:leading-[1.0] mb-4 drop-shadow-lg">
                 {slides[current].titlePrefix}{" "}
                 <br className="hidden sm:inline" />
-                <span className="text-accent">
+                <span className="text-primary drop-shadow-[0_2px_16px_rgba(0,119,200,0.4)]">
                   {slides[current].titleHighlight}
                 </span>
               </h1>
 
-              {/* Description */}
-              <p className="text-base sm:text-lg text-white/80 leading-relaxed max-w-xl mb-8">
+              {/* Subtitle / Paragraph */}
+              <p className="text-sm sm:text-base md:text-lg text-white/90 leading-relaxed max-w-2xl mb-6 sm:mb-8 font-normal drop-shadow-sm">
                 {slides[current].description}
               </p>
 
-              {/* CTA Button Row */}
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 mb-10">
+              {/* Action Buttons Row */}
+              <div className="flex flex-wrap items-center gap-3.5 sm:gap-5">
+                {/* Relevant primary button with bg-primary and crisp flat rectangular shape */}
                 <Link
-                  href="/services"
-                  className="bg-primary hover:bg-white hover:text-secondary text-white font-bold px-8 py-4 rounded-full text-sm uppercase tracking-wider flex items-center gap-2.5 shadow-xl shadow-primary/30 transition-all duration-300 hover:scale-105 active:scale-95 group"
+                  href={slides[current].link}
+                  className="bg-primary hover:bg-primary/90 text-white font-bold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-3.5 rounded-none uppercase tracking-wider transition-all duration-200 shadow-xl active:scale-98 inline-flex items-center justify-center cursor-pointer"
                 >
-                  <Terminal className="h-4 w-4 text-accent group-hover:text-primary transition-colors" />
-                  <span>Explore Our Services</span>
+                  Explore Our Services
                 </Link>
 
+                {/* Normal secondary button */}
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 text-white/85 hover:text-accent font-semibold text-sm transition-colors py-2 group"
+                  className="border-2 border-white/80 hover:border-white text-white hover:bg-white hover:text-black font-bold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-3.5 rounded-none uppercase tracking-wider transition-all duration-200 shadow-lg active:scale-98 inline-flex items-center justify-center cursor-pointer"
                 >
-                  <span>Talk to Our Team</span>
-                  <ArrowRight className="h-4 w-4 transform group-hover:translate-x-1 transition-transform" />
+                  Talk To Our Team
                 </Link>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
-
-        {/* Right Column: Featured Image Card with Slide Control */}
-        <div className="lg:col-span-6 relative">
-          <div className="relative rounded-3xl overflow-hidden border-2 border-white/15 shadow-2xl bg-secondary/60 aspect-4/3 sm:aspect-5/4 lg:aspect-auto lg:h-[460px] group">
-            {/* Image Slider */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`hero-img-${current}`}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.7 }}
-                className="absolute inset-0"
-              >
-                <Image
-                  src={slides[current].image}
-                  alt={slides[current].alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                  priority={current === 0}
-                />
-                {/* Subtle gradient vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#03045E]/90 via-[#03045E]/20 to-transparent" />
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Floating Top-Right Slide Counter / Indicator */}
-            <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-secondary/80 backdrop-blur-md border border-white/15 px-3 py-1.5 rounded-full">
-              {slides.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrent(idx)}
-                  className={cn(
-                    "h-2 rounded-full transition-all duration-300",
-                    current === idx
-                      ? "w-6 bg-accent"
-                      : "w-2 bg-white/40 hover:bg-white",
-                  )}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Floating Bottom Badge */}
-            {/* <div className="absolute bottom-4 left-4 right-4 z-20 bg-secondary/90 backdrop-blur-md border border-white/15 p-4 rounded-2xl flex items-center justify-between"> */}
-            {/* <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-accent block">
-                  Featured Specialization
-                </span>
-                <h4 className="text-sm sm:text-base font-bold text-white">
-                  {slides[current].badge}
-                </h4>
-              </div> */}
-
-            {/* Prev / Next Arrows */}
-            {/* <div className="flex items-center gap-1.5 shrink-0">
-                <button
-                  onClick={handlePrev}
-                  className="p-2 rounded-full bg-white/10 hover:bg-primary text-white transition-colors"
-                  aria-label="Previous slide"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={handleNext}
-                  className="p-2 rounded-full bg-white/10 hover:bg-primary text-white transition-colors"
-                  aria-label="Next slide"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div> */}
-            {/* </div> */}
-          </div>
-        </div>
       </div>
 
-      {/* Bottom Metrics / Stats Bar Row */}
-      <div className="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-        {stats.map((stat, idx) => (
-          <div
-            key={idx}
-            className="flex flex-col justify-center border-l-2 border-accent/40 pl-4 py-1"
-          >
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-              {stat.value}
-            </div>
-            <div className="text-xs sm:text-sm font-bold text-white/90 mt-0.5">
-              {stat.label}
-            </div>
-            <div className="text-[11px] text-white/60">{stat.subtext}</div>
-          </div>
-        ))}
+      {/* ── 3 Stacked Thumbnails (Mobile: Bottom-Right Corner; Desktop: Vertically Centered on Right) ── */}
+      <div className="absolute right-3.5 bottom-3.5 sm:right-5 sm:bottom-5 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:right-8 lg:right-10 xl:right-12 flex flex-col items-center gap-1.5 md:gap-2 z-20">
+        {slides.map((slide, idx) => {
+          const isActive = current === idx;
+          return (
+            <button
+              key={slide.id}
+              type="button"
+              onClick={() => setCurrent(idx)}
+              className={cn(
+                "relative overflow-hidden transition-all duration-300 ease-out cursor-pointer block border-[1.5px] border-black/90",
+                isActive
+                  ? "w-13 h-9.5 sm:w-16 sm:h-12 md:w-20 md:h-15 shadow-xl opacity-100 brightness-100 z-10"
+                  : "w-9.5 h-7 sm:w-12 sm:h-9 md:w-15 md:h-11 shadow-sm opacity-55 brightness-75 hover:opacity-95 hover:brightness-100 hover:scale-105"
+              )}
+              aria-label={`Go to slide ${idx + 1}`}
+            >
+              <Image
+                src={slide.image}
+                alt={slide.alt}
+                fill
+                sizes="(max-width: 768px) 64px, 80px"
+                className="object-cover"
+              />
+              {/* Subtle dark tint over unactive thumbnails */}
+              {!isActive && (
+                <div className="absolute inset-0 bg-black/25 pointer-events-none transition-opacity duration-300 group-hover:opacity-0" />
+              )}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

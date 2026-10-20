@@ -54,11 +54,18 @@ export async function createJob(data: {
   qualifications?: any;
   benefits?: any;
   expiresAt?: Date | null;
+  archived?: boolean;
 }): Promise<Job | null> {
   const p = getPool();
   if (!p) return null;
   const id = generateId();
-  const sql = `INSERT INTO "Job" (id, title, jobType, description, responsibilities, qualifications, benefits, expiresAt, postedAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), NOW())`;
+  const sql = `INSERT INTO "Job" (id, title, jobType, description, responsibilities, qualifications, benefits, expiresAt, archived, postedAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), NOW())`;
+  
+  let formattedExpiresAt: string | null = null;
+  if (data.expiresAt && !isNaN(data.expiresAt.getTime())) {
+    formattedExpiresAt = data.expiresAt.toISOString().slice(0, 19).replace("T", " ");
+  }
+
   await p.execute(sql, [
     id,
     data.title,
@@ -67,7 +74,8 @@ export async function createJob(data: {
     JSON.stringify(data.responsibilities ?? null),
     JSON.stringify(data.qualifications ?? null),
     JSON.stringify(data.benefits ?? null),
-    data.expiresAt ? data.expiresAt.toISOString() : null,
+    formattedExpiresAt,
+    data.archived ? 1 : 0,
   ]);
   return await getJobById(id);
 }
@@ -211,6 +219,14 @@ export async function updateJob(
   const p = getPool();
   if (!p) return null;
   const sql = `UPDATE "Job" SET title = ?, jobType = ?, description = ?, responsibilities = ?, qualifications = ?, benefits = ?, expiresAt = ?, archived = ?, updatedAt = NOW() WHERE id = ?`;
+  let formattedExpiresAt: string | null = null;
+  if (data.expiresAt) {
+    const d = new Date(data.expiresAt);
+    if (!isNaN(d.getTime())) {
+      formattedExpiresAt = d.toISOString().slice(0, 19).replace("T", " ");
+    }
+  }
+
   await p.execute(sql, [
     data.title ?? null,
     data.jobType ?? "Full-time",
@@ -218,8 +234,8 @@ export async function updateJob(
     JSON.stringify(data.responsibilities ?? null),
     JSON.stringify(data.qualifications ?? null),
     JSON.stringify(data.benefits ?? null),
-    data.expiresAt ? data.expiresAt.toISOString() : null,
-    data.archived ?? false,
+    formattedExpiresAt,
+    data.archived ? 1 : 0,
     id,
   ]);
   return await getJobById(id);

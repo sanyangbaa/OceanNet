@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getJobById, updateJob, deleteJob } from "@/lib/careers";
 import { getSession } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 type IdParams = { id: string } | Promise<{ id: string }>;
 
@@ -22,12 +23,19 @@ export async function PUT(request: Request, context: { params: IdParams }) {
     // Ensure expiresAt is a Date when provided (client sends YYYY-MM-DD string)
     if (data?.expiresAt) {
       try {
-        data.expiresAt = new Date(data.expiresAt);
-      } catch (e) {
-        // leave as-is; updateJob will handle or throw
+        const d = new Date(data.expiresAt);
+        if (!isNaN(d.getTime())) {
+          data.expiresAt = d;
+        } else {
+          data.expiresAt = null;
+        }
+      } catch {
+        data.expiresAt = null;
       }
     }
     const updated = await updateJob(params.id, data);
+    revalidatePath("/admin/careers");
+    revalidatePath("/careers");
     return NextResponse.json(updated);
   } catch (e) {
     console.error("Update job error", e);
@@ -43,9 +51,12 @@ export async function DELETE(request: Request, context: { params: IdParams }) {
 
     const params = await Promise.resolve(context.params);
     await deleteJob(params.id);
+    revalidatePath("/admin/careers");
+    revalidatePath("/careers");
     return NextResponse.json({ success: true });
   } catch (e) {
     console.error("Delete job error", e);
     return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
   }
 }
+
