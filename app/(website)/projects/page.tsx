@@ -37,7 +37,7 @@ export default async function ProjectsPage() {
         subtitle="Our Portfolio"
         title="Projects"
         description="Explore our portfolio of innovative technology projects delivering digital transformation across government, enterprises, and development organizations."
-        backgroundImage="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070"
+        backgroundImage="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070"
         withBackground
       />
 

@@ -119,7 +119,7 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
         subtitle="Get In Touch"
         title="Contact Us"
         description="Connect with our team to discuss innovative technology solutions that support your organization's digital transformation journey."
-        backgroundImage="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?q=80&w=2074"
+        backgroundImage="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070"
         withBackground
       />
 

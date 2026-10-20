@@ -63,7 +63,7 @@ export function AboutClient({
         subtitle="Who We Are"
         title={`About ${companyInfo.shortName || "OceanNet"}`}
         description="Gambian technology partner delivering secure digital solutions, enterprise systems, cloud and ICT infrastructure."
-        backgroundImage="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070"
+        backgroundImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070"
         withBackground
         className="mb-2 md:mb-3 mt-3"
       />

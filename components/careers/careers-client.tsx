@@ -125,7 +125,7 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
         title="Careers"
         description="We are building a multidisciplinary team that works across software, systems integration, cloud, infrastructure and digital transformation."
         withBackground
-        backgroundImage="/images/ont_about.jpg"
+        backgroundImage="https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070"
       />
 
       <div className="container mx-auto px-4 md:px-6 space-y-10 sm:space-y-14">

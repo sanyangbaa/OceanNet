@@ -36,7 +36,7 @@ export default async function ServicesPage() {
         subtitle="What We Offer"
         title="Our Services"
         description="Cutting-edge IT solutions, data science, custom software engineering, and digital transformation services tailored to scale your organization."
-        backgroundImage="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072"
+        backgroundImage="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=2034"
         withBackground
       />
 
