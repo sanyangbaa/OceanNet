@@ -80,6 +80,7 @@ function MobileMenuDrawer({
                       sizes="112px"
                       className="object-contain object-left"
                       priority
+                      loading="eager"
                     />
                   </div>
                 </div>
@@ -236,6 +237,7 @@ export function Navbar({
                   sizes="(max-width: 768px) 144px, 208px"
                   className="object-contain object-left transition-all duration-300 group-hover:scale-105"
                   priority
+                  loading="eager"
                 />
               </div>
             </Link>

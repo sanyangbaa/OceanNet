@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -65,6 +65,29 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
   const galleryList = ensureArray(project.gallery);
   const slides = [...new Set([project.image, ...galleryList].filter(Boolean))];
   const [activeSlide, setActiveSlide] = useState(0);
+  const [isSliderPaused, setIsSliderPaused] = useState(false);
+  const isSliderPausedRef = useRef(false);
+
+  useEffect(() => {
+    isSliderPausedRef.current = isSliderPaused;
+  }, [isSliderPaused]);
+
+  useEffect(() => {
+    if (slides.length < 2) return;
+    const interval = window.setInterval(() => {
+      if (!isSliderPausedRef.current) {
+        setActiveSlide((current) => (current + 1) % slides.length);
+      }
+    }, 6000);
+    return () => window.clearInterval(interval);
+  }, [slides.length]);
+
+  const showPreviousSlide = () => {
+    setActiveSlide((current) => (current - 1 + slides.length) % slides.length);
+  };
+  const showNextSlide = () => {
+    setActiveSlide((current) => (current + 1) % slides.length);
+  };
 
   const keyFeaturesList = ensureArray(project.keyFeatures);
   const highlights =
@@ -93,21 +116,6 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
   const detailParagraphs = (project.description || "")
     .split(/\n\s*\n/)
     .filter(Boolean);
-
-  useEffect(() => {
-    if (slides.length < 2) return;
-    const interval = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % slides.length);
-    }, 6000);
-    return () => window.clearInterval(interval);
-  }, [slides.length]);
-
-  const showPreviousSlide = () => {
-    setActiveSlide((current) => (current - 1 + slides.length) % slides.length);
-  };
-  const showNextSlide = () => {
-    setActiveSlide((current) => (current + 1) % slides.length);
-  };
 
   return (
     <div className="min-h-screen bg-white pt-14">
@@ -156,6 +164,8 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
             <div
               id="project-slider"
               className="group relative aspect-video sm:aspect-[16/10] overflow-hidden bg-slate-100 shadow-sm"
+              onMouseEnter={() => setIsSliderPaused(true)}
+              onMouseLeave={() => setIsSliderPaused(false)}
             >
               <Image
                 key={slides[activeSlide]}

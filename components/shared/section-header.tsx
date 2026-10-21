@@ -44,6 +44,8 @@ export function SectionHeader({
             src={backgroundImage}
             alt=""
             fill
+            priority
+            loading="eager"
             sizes="100vw"
             className="object-cover blur-[2px] scale-110 transition-transform duration-700 group-hover:scale-100"
           />

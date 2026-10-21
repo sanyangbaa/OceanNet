@@ -43,8 +43,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Role default to satisfy any DB NOT NULL constraints
-    const role = String(raw.role || "").trim() || "Client";
+    // Optional role: leave empty if not provided
+    const role = String(raw.role || "").trim();
     const featured = Boolean(raw.featured);
     const rating = Math.min(5, Math.max(1, Number(raw.rating) || 5));
 

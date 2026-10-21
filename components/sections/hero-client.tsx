@@ -77,11 +77,29 @@ export function HeroClient() {
             alt={slides[current].alt}
             fill
             sizes="100vw"
-            priority={current === 0}
+            priority
+            loading="eager"
             className="object-cover object-center"
           />
         </motion.div>
       </AnimatePresence>
+
+      {/* Preload non-active slide images so they appear instantly when switched */}
+      {slides.map((slide, idx) =>
+        idx !== current ? (
+          <Image
+            key={`preload-${idx}`}
+            src={slide.image}
+            alt=""
+            fill
+            sizes="100vw"
+            priority
+            loading="eager"
+            className="absolute inset-0 opacity-0 pointer-events-none"
+            aria-hidden="true"
+          />
+        ) : null
+      )}
 
       {/* ── Dark Atmospheric Overlay (ensures high text contrast) ── */}
       <div className="absolute inset-0 z-1 bg-gradient-to-r from-black/85 via-black/65 to-black/45 pointer-events-none" />

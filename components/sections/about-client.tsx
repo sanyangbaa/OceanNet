@@ -76,7 +76,7 @@ export function AboutClient({
           - Client avatars taken from Testimonials (with placeholders fallback)
       ══════════════════════════════════════════════════════════════════ */}
       <section className="bg-white">
-        <div className="container mx-auto px-4 md:px-6 py-6 sm:py-10 lg:py-12">
+        <div className="container mx-auto px-4 md:px-6 py-6 sm:py-8 lg:py-10">
           <motion.div
             variants={staggerContainer(0.02, 0)}
             initial="hidden"
@@ -98,11 +98,13 @@ export function AboutClient({
                   Where Technology Becomes Impact
                 </h2>
 
+                {/* first Para */}
                 <p className="text-base sm:text-lg text-[#0077c8] font-normal leading-relaxed mb-4">
                   We transform bold ideas into practical solutions that create lasting
                   value and measurable business growth.
                 </p>
 
+                {/* second Para */}
                 <p className="text-sm sm:text-[15px] text-slate-600 leading-relaxed mb-6 max-w-xl">
                   OceanNet Technologies delivers enterprise-grade software, robust cloud
                   infrastructure, and mission-critical systems integration across West Africa.
@@ -110,30 +112,15 @@ export function AboutClient({
                   enhance security, and scale your organization.
                 </p>
 
-                {/* Checkmark List */}
-                <div className="flex flex-col gap-2.5 mb-8">
-                  <div className="flex items-center gap-2.5">
-                    <Check className="h-5 w-5 text-[#0077c8] stroke-[2.5] shrink-0" />
-                    <span className="text-sm sm:text-base font-bold text-[#07142f]">
-                      Secure & Reliable
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="h-5 w-5 text-[#0077c8] stroke-[2.5] shrink-0" />
-                    <span className="text-sm sm:text-base font-bold text-[#07142f]">
-                      Data-Driven Growth
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2.5">
-                    <Check className="h-5 w-5 text-[#0077c8] stroke-[2.5] shrink-0" />
-                    <span className="text-sm sm:text-base font-bold text-[#07142f]">
-                      Long-Term Solutions
-                    </span>
-                  </div>
-                </div>
+                {/* third Para */}
+                <p className="text-sm sm:text-[15px] text-slate-600 leading-relaxed mb-4 max-w-xl">
+                  From government institutions to development agencies and private
+                  enterprises, we bring deep domain knowledge and proven delivery
+                  experience to every engagement.
+                </p>
               </div>
 
-              {/* Restored Social Links Row */}
+              {/* Social Links Row */}
               {companyInfo.socials && (
                 <div className="flex flex-wrap items-center gap-3 pt-2">
                   <span className="text-xs sm:text-sm font-black uppercase tracking-widest text-muted-foreground mr-1">
@@ -213,7 +200,7 @@ export function AboutClient({
               variants={slideIn("right", "tween", 0, 0.25)}
               className="lg:col-span-6 flex flex-col h-full w-full"
             >
-              <div className="relative w-full h-full min-h-[440px] lg:min-h-[500px] rounded-[28px] overflow-hidden shadow-xl border border-slate-100 bg-slate-50">
+              <div className="relative w-full h-full min-h-[340px] sm:min-h-[380px] lg:min-h-[410px] rounded-[28px] overflow-hidden shadow-xl border border-slate-100 bg-slate-50">
                 <Image
                   src="/images/about_team_celebrate.jpg"
                   alt="OceanNet Technologies team celebration"

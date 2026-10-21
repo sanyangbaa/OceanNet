@@ -160,19 +160,36 @@ export function TestimonialForm({ initialData, id }: TestimonialFormProps) {
             </div>
 
             <div className="space-y-2">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
-                Testimonial Content <span className="text-primary">*</span>
-              </label>
+              <div className="flex items-center justify-between">
+                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500 block">
+                  Testimonial Content <span className="text-primary">*</span>
+                </label>
+                <span
+                  className={`text-[10px] font-bold tabular-nums ${
+                    formData.content.length > 280
+                      ? "text-red-400"
+                      : formData.content.length > 240
+                      ? "text-yellow-400"
+                      : "text-gray-500"
+                  }`}
+                >
+                  {formData.content.length} / 300
+                </span>
+              </div>
               <textarea
                 rows={6}
                 required
+                maxLength={300}
                 value={formData.content}
                 onChange={(e) =>
                   setFormData({ ...formData, content: e.target.value })
                 }
                 className="w-full bg-black/40 border border-white/10 px-4 py-3 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium resize-none leading-relaxed text-gray-300 placeholder:text-gray-700"
-                placeholder="What did the client say?"
+                placeholder="What did the client say? (max 300 characters)"
               />
+              <p className="text-[10px] text-gray-600">
+                Keep it concise — max 300 characters for best display.
+              </p>
             </div>
           </div>
         </div>
