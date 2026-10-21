@@ -6,6 +6,7 @@ import { CalendarDays, Rocket } from "lucide-react";
 export function CTAClient() {
   return (
     <section aria-label="Get started with OceanNet" className="w-full">
+      // CTAs
       <div className="grid grid-cols-2 bg-primary">
         <Link
           href="/contact?subject=Project+Inquiry"
