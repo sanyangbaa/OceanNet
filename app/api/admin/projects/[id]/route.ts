@@ -45,7 +45,6 @@ export async function PATCH(
       role: data.role,
       projectRole: data.projectRole !== undefined ? data.projectRole : data.role,
       challenge: data.challenge,
-      projectSize: data.projectSize,
       year: data.year !== undefined ? (data.year ? Number(data.year) : null) : undefined,
       duration: data.duration,
       value: data.value,

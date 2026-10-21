@@ -46,7 +46,7 @@ export function AboutPreviewClient({
         {/* User's Own Image Container — Only bottom-right corner is rounded */}
         <div className="relative w-full h-[280px] sm:h-[340px] md:h-[390px] lg:h-[420px] rounded-none rounded-br-2xl sm:rounded-br-3xl overflow-hidden shadow-xl">
           <Image
-            src="/images/ont_img.jpg"
+            src="/about_preview/Below Hero section.png"
             alt="OceanNet Technologies"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"

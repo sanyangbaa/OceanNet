@@ -316,14 +316,10 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
               <div className="divide-y divide-slate-200">
                 <DetailRow label="Client" value={project.client} />
                 <DetailRow
-                  label="Architect"
-                  value={project.projectRole || project.role || "Lead Architect"}
+                  label="Project Lead / Tech Lead"
+                  value={project.projectRole || project.role || "OceanNet Technologies"}
                 />
-                <DetailRow label="Location" value={project.location} />
-                <DetailRow
-                  label="Size"
-                  value={project.projectSize || "Standard Scope"}
-                />
+                <DetailRow label="Region" value={project.location} />
                 <DetailRow
                   label="Status"
                   value={project.status || "Complete"}

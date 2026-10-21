@@ -38,7 +38,6 @@ export async function POST(request: Request) {
         role: data.role,
         projectRole: data.projectRole || data.role,
         challenge: data.challenge,
-        projectSize: data.projectSize,
         year: data.year ? Number(data.year) : null,
         duration: data.duration,
         value: data.value,

@@ -46,7 +46,6 @@ export interface Project {
   role?: string | null;
   projectRole?: string | null;
   challenge?: string | null;
-  projectSize?: string | null;
   rating?: number | null;
   reviewText?: string | null;
   reviewAuthor?: string | null;

@@ -50,7 +50,6 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
       (initialData?.role as string) ||
       "",
     location: (initialData?.location as string) || "",
-    projectSize: (initialData?.projectSize as string) || "",
     status: (initialData?.status as string) || "Complete",
     year: initialData?.year ? String(initialData.year) : "2024",
     rating: initialData?.rating ? String(initialData.rating) : "5",
@@ -187,7 +186,6 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
         projectRole: formData.projectRole,
         role: formData.projectRole,
         location: formData.location,
-        projectSize: formData.projectSize,
         status: formData.status,
         year: formData.year ? Number(formData.year) : null,
         rating: formData.rating ? Number(formData.rating) : 5,
@@ -615,10 +613,10 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
               />
             </div>
 
-            {/* Architect */}
+            {/* Project Lead / Tech Lead */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
-                Architect / Lead <span className="text-primary">*</span>
+                Project Lead / Tech Lead <span className="text-primary">*</span>
               </label>
               <input
                 type="text"
@@ -628,14 +626,14 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                   setFormData({ ...formData, projectRole: e.target.value })
                 }
                 className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
-                placeholder="e.g. John Doe"
+                placeholder="e.g. OceanNet Technologies"
               />
             </div>
 
-            {/* Location */}
+            {/* Region / Deployment Location */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
-                Location <span className="text-primary">*</span>
+                Region / Deployment Location <span className="text-primary">*</span>
               </label>
               <input
                 type="text"
@@ -645,24 +643,7 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                   setFormData({ ...formData, location: e.target.value })
                 }
                 className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
-                placeholder="e.g. NY, USA"
-              />
-            </div>
-
-            {/* Size */}
-            <div className="space-y-1.5">
-              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block">
-                Size <span className="text-primary">*</span>
-              </label>
-              <input
-                type="text"
-                required
-                value={formData.projectSize}
-                onChange={(e) =>
-                  setFormData({ ...formData, projectSize: e.target.value })
-                }
-                className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
-                placeholder="e.g. 10000 SF"
+                placeholder="e.g. Accra, Ghana / Remote"
               />
             </div>
 
@@ -685,8 +666,14 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                 <option value="In Progress" className="bg-neutral-900 text-white">
                   In Progress
                 </option>
-                <option value="Under Construction" className="bg-neutral-900 text-white">
-                  Under Construction
+                <option value="In Development" className="bg-neutral-900 text-white">
+                  In Development
+                </option>
+                <option value="Live" className="bg-neutral-900 text-white">
+                  Live
+                </option>
+                <option value="Maintenance" className="bg-neutral-900 text-white">
+                  Maintenance
                 </option>
                 <option value="In Planning" className="bg-neutral-900 text-white">
                   In Planning
@@ -726,11 +713,9 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                   setFormData({ ...formData, category: e.target.value })
                 }
                 className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-sm text-xs font-medium text-white focus:outline-none focus:border-primary/50"
-                placeholder="e.g. Commercial"
+                placeholder="e.g. Digital Solutions"
               />
               <datalist id="category-options-list">
-                <option value="Commercial" />
-                <option value="Residential" />
                 <option value="Digital Solutions" />
                 <option value="Systems Integration" />
                 <option value="Digital Health" />
@@ -742,6 +727,7 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                 <option value="GIS Solutions" />
                 <option value="AI & Analytics" />
                 <option value="Managed Services" />
+                <option value="ICT Procurement" />
               </datalist>
             </div>
 
