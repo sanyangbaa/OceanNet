@@ -24,7 +24,7 @@ export async function getAllJobs(filters?: {
   }
   if (filters?.activeOnly) {
     conditions.push(
-      `("archived" = false OR "archived" = 0 OR "archived" IS NULL) AND ("expiresAt" IS NULL OR "expiresAt" >= CURRENT_TIMESTAMP)`,
+      `("archived" = false OR "archived" IS NULL) AND ("expiresAt" IS NULL OR "expiresAt" >= CURRENT_TIMESTAMP)`,
     );
   }
   if (conditions.length) sql += " WHERE " + conditions.join(" AND ");
@@ -95,7 +95,7 @@ export async function createJob(data: {
     JSON.stringify(qualifications),
     JSON.stringify(benefits),
     formattedExpiresAt,
-    data.archived ? 1 : 0,
+    Boolean(data.archived),
   ]);
   return await getJobById(id);
 }
@@ -287,7 +287,7 @@ export async function updateJob(
     JSON.stringify(qualifications ?? []),
     JSON.stringify(benefits ?? []),
     formattedExpiresAt,
-    archived ? 1 : 0,
+    Boolean(archived),
     id,
   ]);
   return await getJobById(id);
