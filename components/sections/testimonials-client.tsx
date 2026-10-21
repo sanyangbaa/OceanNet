@@ -7,12 +7,12 @@ import type { Testimonial } from "@/server/db";
 
 function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
   return (
-    <article className="relative h-full px-4 pb-3 pt-6 sm:px-8">
+    <article className="relative flex h-full flex-col px-4 pb-3 pt-6 sm:px-8">
       <div
         className="absolute bottom-3 left-8 right-0 top-12 bg-primary sm:left-12"
         aria-hidden="true"
       />
-      <div className="relative flow-root h-auto min-h-44 border-2 border-primary bg-white p-4 sm:pl-24.5 sm:pr-6 md:h-44">
+      <div className="relative flex-1 flow-root border-2 border-primary bg-white p-4 min-h-48 sm:pl-24.5 sm:pr-6 md:min-h-44">
         <div className="relative float-left -ml-8 mt-0.5 mr-3.5 mb-2 z-10 h-[4.5rem] w-[4.5rem] overflow-hidden border-2 border-primary bg-white p-1 sm:absolute sm:float-none sm:m-0 sm:-left-5 sm:top-8 sm:h-[4.75rem] sm:w-[4.75rem]">
           <div className="relative h-full w-full overflow-hidden bg-gray-100">
             {testimonial.image ? (
@@ -35,7 +35,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           {testimonial.content}
         </p>
       </div>
-      <div className="relative ml-8 flex h-11 items-center justify-between gap-2 bg-primary px-4 sm:ml-12 sm:px-5">
+      <div className="relative ml-8 flex h-11 shrink-0 items-center justify-between gap-2 bg-primary px-4 sm:ml-12 sm:px-5">
         <h3 className="text-base sm:text-lg font-bold leading-tight text-white truncate">
           {testimonial.name}
         </h3>
@@ -133,7 +133,7 @@ export function TestimonialsClient({
           aria-live="polite"
         >
           {testimonials.map((testimonial) => (
-            <div key={testimonial.id} className="w-full shrink-0">
+            <div key={testimonial.id} className="w-full shrink-0 flex flex-col">
               <TestimonialCard testimonial={testimonial} />
             </div>
           ))}
