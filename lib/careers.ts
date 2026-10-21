@@ -1,4 +1,4 @@
-import { getPool, generateId } from "@/server/db";
+import { getPool, generateId, normalizeResult } from "@/server/db";
 import { sendMail } from "@/lib/mail";
 import type { Job, Application } from "@/server/db";
 
@@ -24,14 +24,13 @@ export async function getAllJobs(filters?: {
   }
   if (filters?.activeOnly) {
     conditions.push(
-      `("archived" = false OR "archived" IS NULL) AND ("expiresAt" IS NULL OR "expiresAt" > CURRENT_TIMESTAMP)`,
+      `("archived" = false OR "archived" = 0 OR "archived" IS NULL) AND ("expiresAt" IS NULL OR "expiresAt" >= CURRENT_TIMESTAMP)`,
     );
   }
   if (conditions.length) sql += " WHERE " + conditions.join(" AND ");
   sql += ` ORDER BY "postedAt" DESC`;
   const [rows] = await p.query(sql, params);
-  // @ts-ignore
-  return rows as Job[];
+  return normalizeResult<Job[]>(rows, "Job");
 }
 
 /** Get a single job by id */
@@ -41,8 +40,8 @@ export async function getJobById(id: string): Promise<Job | null> {
   const [rows] = await p.query(`SELECT * FROM "Job" WHERE id = ? LIMIT 1`, [
     id,
   ]);
-  // @ts-ignore
-  return (rows as Job[])[0] || null;
+  const results = normalizeResult<Job[]>(rows, "Job");
+  return results[0] || null;
 }
 
 /** Create a new job posting */
@@ -53,7 +52,7 @@ export async function createJob(data: {
   responsibilities?: any;
   qualifications?: any;
   benefits?: any;
-  expiresAt?: Date | null;
+  expiresAt?: Date | string | null;
   archived?: boolean;
 }): Promise<Job | null> {
   const p = getPool();
@@ -62,18 +61,39 @@ export async function createJob(data: {
   const sql = `INSERT INTO "Job" (id, title, jobType, description, responsibilities, qualifications, benefits, expiresAt, archived, postedAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), NOW())`;
   
   let formattedExpiresAt: string | null = null;
-  if (data.expiresAt && !isNaN(data.expiresAt.getTime())) {
-    formattedExpiresAt = data.expiresAt.toISOString().slice(0, 19).replace("T", " ");
+  if (data.expiresAt) {
+    const d = data.expiresAt instanceof Date ? data.expiresAt : new Date(data.expiresAt);
+    if (!isNaN(d.getTime())) {
+      formattedExpiresAt = d.toISOString().slice(0, 19).replace("T", " ");
+    }
   }
+
+  const responsibilities = Array.isArray(data.responsibilities)
+    ? data.responsibilities
+    : typeof data.responsibilities === "string"
+      ? data.responsibilities.split("\n").map((s) => s.trim()).filter(Boolean)
+      : [];
+
+  const qualifications = Array.isArray(data.qualifications)
+    ? data.qualifications
+    : typeof data.qualifications === "string"
+      ? data.qualifications.split("\n").map((s) => s.trim()).filter(Boolean)
+      : [];
+
+  const benefits = Array.isArray(data.benefits)
+    ? data.benefits
+    : typeof data.benefits === "string"
+      ? data.benefits.split("\n").map((s) => s.trim()).filter(Boolean)
+      : [];
 
   await p.execute(sql, [
     id,
-    data.title,
+    data.title.trim(),
     data.jobType ?? "Full-time",
     data.description ?? null,
-    JSON.stringify(data.responsibilities ?? null),
-    JSON.stringify(data.qualifications ?? null),
-    JSON.stringify(data.benefits ?? null),
+    JSON.stringify(responsibilities),
+    JSON.stringify(qualifications),
+    JSON.stringify(benefits),
     formattedExpiresAt,
     data.archived ? 1 : 0,
   ]);
@@ -131,8 +151,8 @@ export async function createApplication(data: {
   const [rows] = await p.query(`SELECT * FROM "Application" WHERE id = ?`, [
     id,
   ]);
-  // @ts-ignore
-  return (rows as Application[])[0] || null;
+  const results = normalizeResult<Application[]>(rows, "Application");
+  return results[0] || null;
 }
 
 /** Get applications for a job */
@@ -145,8 +165,7 @@ export async function getApplicationsByJob(
     `SELECT * FROM "Application" WHERE "jobId" = ? ORDER BY "submittedAt" DESC`,
     [jobId],
   );
-  // @ts-ignore
-  return rows as Application[];
+  return normalizeResult<Application[]>(rows, "Application");
 }
 
 /** Get a single application by id */
@@ -159,8 +178,8 @@ export async function getApplicationById(
     `SELECT * FROM "Application" WHERE id = ? LIMIT 1`,
     [id],
   );
-  // @ts-ignore
-  return (rows as Application[])[0] || null;
+  const results = normalizeResult<Application[]>(rows, "Application");
+  return results[0] || null;
 }
 
 /** Get all applications */
@@ -170,8 +189,7 @@ export async function getAllApplications(): Promise<Application[]> {
   const [rows] = await p.query(
     `SELECT * FROM "Application" ORDER BY "submittedAt" DESC`,
   );
-  // @ts-ignore
-  return rows as Application[];
+  return normalizeResult<Application[]>(rows, "Application");
 }
 
 /** Update application status and internal notes */
@@ -212,30 +230,64 @@ export async function updateJob(
     responsibilities?: any;
     qualifications?: any;
     benefits?: any;
-    expiresAt?: Date | null;
+    expiresAt?: Date | string | null;
     archived?: boolean;
   }>,
 ): Promise<Job | null> {
   const p = getPool();
   if (!p) return null;
-  const sql = `UPDATE "Job" SET title = ?, jobType = ?, description = ?, responsibilities = ?, qualifications = ?, benefits = ?, expiresAt = ?, archived = ?, updatedAt = NOW() WHERE id = ?`;
+  const existing = await getJobById(id);
+  if (!existing) return null;
+
+  const title = (data.title !== undefined && data.title !== null) ? data.title.trim() : existing.title;
+  const jobType = data.jobType !== undefined ? data.jobType : (existing.jobType || "Full-time");
+  const description = data.description !== undefined ? data.description : existing.description;
+
+  const responsibilities = data.responsibilities !== undefined
+    ? (Array.isArray(data.responsibilities)
+        ? data.responsibilities
+        : typeof data.responsibilities === "string"
+          ? data.responsibilities.split("\n").map((s) => s.trim()).filter(Boolean)
+          : [])
+    : existing.responsibilities;
+
+  const qualifications = data.qualifications !== undefined
+    ? (Array.isArray(data.qualifications)
+        ? data.qualifications
+        : typeof data.qualifications === "string"
+          ? data.qualifications.split("\n").map((s) => s.trim()).filter(Boolean)
+          : [])
+    : existing.qualifications;
+
+  const benefits = data.benefits !== undefined
+    ? (Array.isArray(data.benefits)
+        ? data.benefits
+        : typeof data.benefits === "string"
+          ? data.benefits.split("\n").map((s) => s.trim()).filter(Boolean)
+          : [])
+    : existing.benefits;
+
+  const archived = data.archived !== undefined ? Boolean(data.archived) : Boolean(existing.archived);
+
   let formattedExpiresAt: string | null = null;
-  if (data.expiresAt) {
-    const d = new Date(data.expiresAt);
+  const expiresAtVal = data.expiresAt !== undefined ? data.expiresAt : existing.expiresAt;
+  if (expiresAtVal) {
+    const d = expiresAtVal instanceof Date ? expiresAtVal : new Date(expiresAtVal);
     if (!isNaN(d.getTime())) {
       formattedExpiresAt = d.toISOString().slice(0, 19).replace("T", " ");
     }
   }
 
+  const sql = `UPDATE "Job" SET title = ?, jobType = ?, description = ?, responsibilities = ?, qualifications = ?, benefits = ?, expiresAt = ?, archived = ?, updatedAt = NOW() WHERE id = ?`;
   await p.execute(sql, [
-    data.title ?? null,
-    data.jobType ?? "Full-time",
-    data.description ?? null,
-    JSON.stringify(data.responsibilities ?? null),
-    JSON.stringify(data.qualifications ?? null),
-    JSON.stringify(data.benefits ?? null),
+    title,
+    jobType,
+    description ?? null,
+    JSON.stringify(responsibilities ?? []),
+    JSON.stringify(qualifications ?? []),
+    JSON.stringify(benefits ?? []),
     formattedExpiresAt,
-    data.archived ? 1 : 0,
+    archived ? 1 : 0,
     id,
   ]);
   return await getJobById(id);
@@ -245,6 +297,7 @@ export async function updateJob(
 export async function deleteJob(id: string): Promise<boolean> {
   const p = getPool();
   if (!p) return false;
+  await p.execute(`DELETE FROM "Application" WHERE "jobId" = ?`, [id]).catch(() => {});
   await p.execute(`DELETE FROM "Job" WHERE id = ?`, [id]);
   return true;
 }

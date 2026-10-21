@@ -4,6 +4,9 @@ import { CareersClient } from "@/components/careers/careers-client";
 import { companyInfo as staticCompanyInfo } from "@/data/company";
 import { CallToAction } from "@/components/sections/cta";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function generateMetadata() {
   return {
     title: staticCompanyInfo.careerMetaTitle || "Careers at OceanNet Technologies | The Gambia",

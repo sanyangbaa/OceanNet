@@ -300,9 +300,8 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
                     viewport={{ once: true, amount: 0.01 }}
                     className="flex flex-col h-full"
                   >
-                    <Tilt
-                      options={{ max: 15, scale: 1.02, speed: 450 }}
-                      className="bg-white rounded-3xl border border-border shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col relative overflow-hidden group h-full justify-between"
+                    <div
+                      className="bg-white rounded-3xl border border-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col relative overflow-hidden group h-full justify-between"
                     >
                       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
@@ -369,7 +368,7 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
                           </Link>
                         </div>
                       </div>
-                    </Tilt>
+                    </div>
                   </motion.div>
                 );
               })}

@@ -12,11 +12,14 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getSession();
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Unauthorized. Please log in to admin first." },
+        { status: 401 },
+      );
     }
 
-    const data = await request.json();
-    if (!data.title || typeof data.title !== "string" || !data.title.trim()) {
+    const data = await request.json().catch(() => null);
+    if (!data || !data.title || typeof data.title !== "string" || !data.title.trim()) {
       return NextResponse.json(
         { error: "Job title is required" },
         { status: 400 },
@@ -35,9 +38,9 @@ export async function POST(request: NextRequest) {
       title: data.title.trim(),
       jobType: data.jobType ?? "Full-time",
       description: data.description ?? null,
-      responsibilities: data.responsibilities ?? null,
-      qualifications: data.qualifications ?? null,
-      benefits: data.benefits ?? null,
+      responsibilities: data.responsibilities ?? [],
+      qualifications: data.qualifications ?? [],
+      benefits: data.benefits ?? [],
       expiresAt,
       archived: Boolean(data.archived),
     });
@@ -49,14 +52,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    revalidatePath("/admin/careers");
-    revalidatePath("/careers");
+    try {
+      revalidatePath("/admin/careers");
+      revalidatePath("/careers");
+    } catch {}
 
     return NextResponse.json(job, { status: 201 });
-  } catch (e) {
+  } catch (e: any) {
     console.error("Create job error:", e);
     return NextResponse.json(
-      { error: "Failed to create job" },
+      { error: e?.message || "Failed to create job" },
       { status: 500 },
     );
   }

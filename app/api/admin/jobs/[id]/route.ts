@@ -16,30 +16,37 @@ export async function PUT(request: Request, context: { params: IdParams }) {
   try {
     const session = await getSession();
     if (!session)
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized. Please log in to admin first." }, { status: 401 });
 
     const params = await Promise.resolve(context.params);
-    const data = await request.json();
-    // Ensure expiresAt is a Date when provided (client sends YYYY-MM-DD string)
-    if (data?.expiresAt) {
-      try {
+    const data = await request.json().catch(() => null);
+    if (!data) {
+      return NextResponse.json({ error: "Invalid request payload" }, { status: 400 });
+    }
+
+    // Ensure expiresAt is a Date when provided
+    if ("expiresAt" in data) {
+      if (data.expiresAt) {
         const d = new Date(data.expiresAt);
-        if (!isNaN(d.getTime())) {
-          data.expiresAt = d;
-        } else {
-          data.expiresAt = null;
-        }
-      } catch {
+        data.expiresAt = !isNaN(d.getTime()) ? d : null;
+      } else {
         data.expiresAt = null;
       }
     }
     const updated = await updateJob(params.id, data);
-    revalidatePath("/admin/careers");
-    revalidatePath("/careers");
+    if (!updated) {
+      return NextResponse.json({ error: "Job not found or update failed" }, { status: 404 });
+    }
+
+    try {
+      revalidatePath("/admin/careers");
+      revalidatePath("/careers");
+    } catch {}
+
     return NextResponse.json(updated);
-  } catch (e) {
+  } catch (e: any) {
     console.error("Update job error", e);
-    return NextResponse.json({ error: "Failed to update" }, { status: 500 });
+    return NextResponse.json({ error: e?.message || "Failed to update" }, { status: 500 });
   }
 }
 
@@ -47,16 +54,20 @@ export async function DELETE(request: Request, context: { params: IdParams }) {
   try {
     const session = await getSession();
     if (!session)
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized. Please log in to admin first." }, { status: 401 });
 
     const params = await Promise.resolve(context.params);
     await deleteJob(params.id);
-    revalidatePath("/admin/careers");
-    revalidatePath("/careers");
+
+    try {
+      revalidatePath("/admin/careers");
+      revalidatePath("/careers");
+    } catch {}
+
     return NextResponse.json({ success: true });
-  } catch (e) {
+  } catch (e: any) {
     console.error("Delete job error", e);
-    return NextResponse.json({ error: "Failed to delete" }, { status: 500 });
+    return NextResponse.json({ error: e?.message || "Failed to delete" }, { status: 500 });
   }
 }
 

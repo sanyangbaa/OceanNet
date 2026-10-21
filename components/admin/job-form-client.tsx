@@ -41,9 +41,11 @@ export default function JobFormClient({
     responsibilities: parseListField(job?.responsibilities),
     qualifications: parseListField(job?.qualifications),
     benefits: parseListField(job?.benefits),
-    expiresAt: job?.expiresAt
-      ? new Date(job.expiresAt).toISOString().slice(0, 10)
-      : "",
+    expiresAt: (() => {
+      if (!job?.expiresAt) return "";
+      const d = new Date(job.expiresAt);
+      return !isNaN(d.getTime()) ? d.toISOString().slice(0, 10) : "";
+    })(),
     archived: job?.archived ? true : false,
   });
   const [saving, setSaving] = useState(false);
@@ -64,23 +66,29 @@ export default function JobFormClient({
     setMessage(null);
     try {
       const payload = {
-        title: form.title,
-        jobType: form.jobType,
-        description: form.description,
+        title: form.title.trim(),
+        jobType: form.jobType || "Full-time",
+        description: form.description || null,
         responsibilities: form.responsibilities
-          .split("\n")
-          .map((s: string) => s.trim())
-          .filter(Boolean),
+          ? form.responsibilities
+              .split("\n")
+              .map((s: string) => s.trim())
+              .filter(Boolean)
+          : [],
         qualifications: form.qualifications
-          .split("\n")
-          .map((s: string) => s.trim())
-          .filter(Boolean),
+          ? form.qualifications
+              .split("\n")
+              .map((s: string) => s.trim())
+              .filter(Boolean)
+          : [],
         benefits: form.benefits
-          .split("\n")
-          .map((s: string) => s.trim())
-          .filter(Boolean),
-        expiresAt: form.expiresAt || null,
-        archived: form.archived || false,
+          ? form.benefits
+              .split("\n")
+              .map((s: string) => s.trim())
+              .filter(Boolean)
+          : [],
+        expiresAt: form.expiresAt ? form.expiresAt : null,
+        archived: Boolean(form.archived),
       };
 
       const url = job ? `/api/admin/jobs/${job.id}` : `/api/admin/jobs`;
@@ -90,16 +98,20 @@ export default function JobFormClient({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error || "Save failed");
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(json?.error || `Failed to save (${res.status})`);
+      }
       setMessage("Saved successfully!");
-      router.refresh();
       if (onSuccess) {
         setTimeout(() => {
           onSuccess();
-        }, 400);
-      } else if (!job) {
-        router.push("/admin/careers");
+          window.location.reload();
+        }, 500);
+      } else {
+        setTimeout(() => {
+          window.location.href = "/admin/careers";
+        }, 500);
       }
     } catch (e: any) {
       console.error(e);

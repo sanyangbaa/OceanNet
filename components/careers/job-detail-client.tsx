@@ -20,11 +20,23 @@ export function JobDetailClient({
 }: JobDetailClientProps) {
   const renderSection = (title: string, content: any) => {
     if (!content) return null;
-    const items = Array.isArray(content)
-      ? content
-      : typeof content === "string" && content.startsWith("[")
-        ? JSON.parse(content)
-        : [];
+    let items: string[] = [];
+    if (Array.isArray(content)) {
+      items = content;
+    } else if (typeof content === "string") {
+      try {
+        const parsed = JSON.parse(content);
+        if (Array.isArray(parsed)) {
+          items = parsed;
+        } else if (content.includes("\n")) {
+          items = content.split("\n").map((s) => s.trim()).filter(Boolean);
+        }
+      } catch {
+        if (content.includes("\n")) {
+          items = content.split("\n").map((s) => s.trim()).filter(Boolean);
+        }
+      }
+    }
 
     return (
       <section className="border-t border-white/10 pt-8 mt-8">

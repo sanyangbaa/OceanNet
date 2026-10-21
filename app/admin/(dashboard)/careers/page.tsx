@@ -4,6 +4,9 @@ import DeleteButton from "@/components/admin/delete-button-client";
 import CareerTabsClient from "@/components/admin/career-tabs-client";
 import { Briefcase, Plus, Calendar, Archive } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export default async function AdminCareersPage() {
   const jobs = await getAllJobs();
 

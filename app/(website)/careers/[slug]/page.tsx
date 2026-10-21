@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { JobDetailClient } from "@/components/careers/job-detail-client";
 import { CallToAction } from "@/components/sections/cta";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function generateMetadata({
   params,
 }: {
