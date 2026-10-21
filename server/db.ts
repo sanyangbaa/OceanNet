@@ -582,6 +582,14 @@ export async function initDb() {
       await renameCol("CompanyInfo", "longdescription", "longDescription");
       await renameCol("CompanyInfo", "sociallinks", "socialLinks");
       await renameCol("CompanyInfo", "updatedat", "updatedAt");
+      await renameCol("Job", "jobtype", "jobType");
+      await renameCol("Job", "postedat", "postedAt");
+      await renameCol("Job", "expiresat", "expiresAt");
+      await renameCol("Job", "createdat", "createdAt");
+      await renameCol("Job", "updatedat", "updatedAt");
+      await renameCol("Talent", "areaofinterest", "areaOfInterest");
+      await renameCol("Talent", "resumeurl", "resumeUrl");
+      await renameCol("Talent", "createdat", "createdAt");
     }
 
     // Admin Table

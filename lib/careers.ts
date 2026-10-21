@@ -37,7 +37,7 @@ export async function getAllJobs(filters?: {
 export async function getJobById(id: string): Promise<Job | null> {
   const p = getPool();
   if (!p) return null;
-  const [rows] = await p.query(`SELECT * FROM "Job" WHERE id = ? LIMIT 1`, [
+  const [rows] = await p.query(`SELECT * FROM "Job" WHERE "id" = ? LIMIT 1`, [
     id,
   ]);
   const results = normalizeResult<Job[]>(rows, "Job");
@@ -58,7 +58,7 @@ export async function createJob(data: {
   const p = getPool();
   if (!p) return null;
   const id = generateId();
-  const sql = `INSERT INTO "Job" (id, title, jobType, description, responsibilities, qualifications, benefits, expiresAt, archived, postedAt, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), NOW())`;
+  const sql = `INSERT INTO "Job" ("id", "title", "jobType", "description", "responsibilities", "qualifications", "benefits", "expiresAt", "archived", "postedAt", "createdAt", "updatedAt") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), NOW())`;
   
   let formattedExpiresAt: string | null = null;
   if (data.expiresAt) {
@@ -112,7 +112,7 @@ export async function createApplication(data: {
   const p = getPool();
   if (!p) return null;
   const id = generateId();
-  const sql = `INSERT INTO "Application" (id, "jobId", name, email, phone, resumeUrl, coverLetter, status, internalNotes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const sql = `INSERT INTO "Application" ("id", "jobId", "name", "email", "phone", "resumeUrl", "coverLetter", "status", "internalNotes", "submittedAt") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())`;
   await p.execute(sql, [
     id,
     data.jobId,
@@ -148,7 +148,7 @@ export async function createApplication(data: {
     console.error("Failed to send confirmation to applicant", e);
   }
 
-  const [rows] = await p.query(`SELECT * FROM "Application" WHERE id = ?`, [
+  const [rows] = await p.query(`SELECT * FROM "Application" WHERE "id" = ?`, [
     id,
   ]);
   const results = normalizeResult<Application[]>(rows, "Application");
@@ -175,7 +175,7 @@ export async function getApplicationById(
   const p = getPool();
   if (!p) return null;
   const [rows] = await p.query(
-    `SELECT * FROM "Application" WHERE id = ? LIMIT 1`,
+    `SELECT * FROM "Application" WHERE "id" = ? LIMIT 1`,
     [id],
   );
   const results = normalizeResult<Application[]>(rows, "Application");
@@ -200,7 +200,7 @@ export async function updateApplication(
   const p = getPool();
   if (!p) return null;
   await p.execute(
-    `UPDATE "Application" SET status = ?, internalNotes = ?, updatedAt = NOW() WHERE id = ?`,
+    `UPDATE "Application" SET "status" = ?, "internalNotes" = ?, "updatedAt" = NOW() WHERE "id" = ?`,
     [data.status ?? null, data.internalNotes ?? null, id],
   );
   const updated = await getApplicationById(id);
@@ -278,7 +278,7 @@ export async function updateJob(
     }
   }
 
-  const sql = `UPDATE "Job" SET title = ?, jobType = ?, description = ?, responsibilities = ?, qualifications = ?, benefits = ?, expiresAt = ?, archived = ?, updatedAt = NOW() WHERE id = ?`;
+  const sql = `UPDATE "Job" SET "title" = ?, "jobType" = ?, "description" = ?, "responsibilities" = ?, "qualifications" = ?, "benefits" = ?, "expiresAt" = ?, "archived" = ?, "updatedAt" = NOW() WHERE "id" = ?`;
   await p.execute(sql, [
     title,
     jobType,
@@ -298,7 +298,7 @@ export async function deleteJob(id: string): Promise<boolean> {
   const p = getPool();
   if (!p) return false;
   await p.execute(`DELETE FROM "Application" WHERE "jobId" = ?`, [id]).catch(() => {});
-  await p.execute(`DELETE FROM "Job" WHERE id = ?`, [id]);
+  await p.execute(`DELETE FROM "Job" WHERE "id" = ?`, [id]);
   return true;
 }
 
@@ -314,7 +314,7 @@ export async function getRecruitmentAnalytics() {
   const totalApplicants = Number((totalRows as any[])[0]?.count || 0);
 
   const [perPosRows] = await p.query(
-    `SELECT j.id, j.title, COUNT(a.id) as count FROM "Job" j LEFT JOIN "Application" a ON a."jobId" = j.id GROUP BY j.id, j.title ORDER BY count DESC`,
+    `SELECT j."id", j."title", COUNT(a."id") as count FROM "Job" j LEFT JOIN "Application" a ON a."jobId" = j."id" GROUP BY j."id", j."title" ORDER BY count DESC`,
   );
   // @ts-ignore
   const applicantsPerPosition = (perPosRows as any[]).map((r) => ({
@@ -343,7 +343,7 @@ export async function createTalent(data: {
   if (!p) return null;
   const id = generateId();
   await p.execute(
-    `INSERT INTO "Talent" (id, name, email, areaOfInterest, resumeUrl) VALUES (?, ?, ?, ?, ?)`,
+    `INSERT INTO "Talent" ("id", "name", "email", "areaOfInterest", "resumeUrl", "createdAt") VALUES (?, ?, ?, ?, ?, NOW())`,
     [
       id,
       data.name,
@@ -359,7 +359,7 @@ export async function createTalent(data: {
   } catch (e) {
     console.error("Failed to notify admin of talent submission", e);
   }
-  const [rows] = await p.query(`SELECT * FROM "Talent" WHERE id = ?`, [id]);
-  // @ts-ignore
-  return (rows as any[])[0] || null;
+  const [rows] = await p.query(`SELECT * FROM "Talent" WHERE "id" = ?`, [id]);
+  const results = normalizeResult<any[]>(rows, "Talent" as any);
+  return results[0] || null;
 }
