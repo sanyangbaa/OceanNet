@@ -123,6 +123,7 @@ export function ProjectMediaGallery({
                     src={item.thumbnail}
                     alt={`${title} image ${idx + 1}`}
                     fill
+                    unoptimized={/^https?:\/\//i.test(item.thumbnail)}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                   />
@@ -210,6 +211,7 @@ export function ProjectMediaGallery({
                   src={activeMedia.thumbnail}
                   alt={activeMedia.title}
                   fill
+                  unoptimized={/^https?:\/\//i.test(activeMedia.thumbnail)}
                   sizes="100vw"
                   className="object-cover"
                 />

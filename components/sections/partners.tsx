@@ -77,6 +77,7 @@ export function Partners() {
                         src={partner.image}
                         alt={partner.name}
                         fill
+                        unoptimized={/^https?:\/\//i.test(partner.image)}
                         sizes="(max-width: 768px) 96px, 128px"
                         className="object-contain"
                         loading="lazy"

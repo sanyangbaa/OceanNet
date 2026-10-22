@@ -202,6 +202,7 @@ export function TeamForm({ initialData, id }: TeamFormProps) {
                     src={formData.image}
                     alt="Preview"
                     fill
+                    unoptimized={/^https?:\/\//i.test(formData.image)}
                     className="object-cover"
                   />
                 ) : (

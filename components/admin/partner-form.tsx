@@ -213,6 +213,7 @@ export function PartnerForm({ initialData, id }: PartnerFormProps) {
                     src={formData.image}
                     alt={formData.name || "Partner logo"}
                     fill
+                    unoptimized={/^https?:\/\//i.test(formData.image)}
                     className="object-contain p-4"
                   />
                 </div>

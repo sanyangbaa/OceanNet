@@ -427,6 +427,7 @@ export function AboutClient({
                       src={member.image}
                       alt={member.name}
                       fill
+                      unoptimized={/^https?:\/\//i.test(member.image)}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 25vw, 20vw"
                       className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     />
