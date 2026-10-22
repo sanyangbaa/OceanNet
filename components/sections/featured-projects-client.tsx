@@ -39,10 +39,10 @@ export function FeaturedProjectsClient({
         {projects.map((project, index) => (
           <motion.div
             key={project.id}
-            variants={fadeIn("", "tween", index * 0.03, 0.3)}
+            variants={fadeIn("", "tween", Math.min(index * 0.02, 0.1), 0.25)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.05 }}
+            viewport={{ once: true, margin: "150px 0px" }}
             className="shrink-0 w-[94%] md:w-full snap-start flex flex-col"
           >
             <Link

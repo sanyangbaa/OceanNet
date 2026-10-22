@@ -57,7 +57,7 @@ export function SectionHeader({
         variants={textVariant(0)}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.01 }}
+        viewport={{ once: true, margin: "150px 0px" }}
         className={cn(
           "relative z-20 mx-auto w-full max-w-4xl px-0 sm:px-4 md:px-6 flex flex-col",
           align === "center" ? "text-center items-center" : "text-left items-start",

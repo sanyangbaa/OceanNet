@@ -42,6 +42,11 @@ const slides = [
 export function HeroClient() {
   const [current, setCurrent] = React.useState(0);
   const [isPaused, setIsPaused] = React.useState(false);
+  const isFirstRender = React.useRef(true);
+
+  React.useEffect(() => {
+    isFirstRender.current = false;
+  }, []);
 
   const handleNext = React.useCallback(() => {
     setCurrent((prev) => (prev + 1) % slides.length);
@@ -66,10 +71,10 @@ export function HeroClient() {
       <AnimatePresence mode="wait">
         <motion.div
           key={`hero-bg-${current}`}
-          initial={{ opacity: 0, scale: 1.04 }}
+          initial={isFirstRender.current ? false : { opacity: 0, scale: 1.04 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.9, ease: "easeInOut" }}
+          transition={{ duration: 0.7, ease: "easeInOut" }}
           className="absolute inset-0 z-0"
         >
           <Image
@@ -84,7 +89,7 @@ export function HeroClient() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Preload non-active slide images so they appear instantly when switched */}
+      {/* Preload non-active slide images in background without blocking initial paint */}
       {slides.map((slide, idx) =>
         idx !== current ? (
           <Image
@@ -93,8 +98,7 @@ export function HeroClient() {
             alt=""
             fill
             sizes="100vw"
-            priority
-            loading="eager"
+            loading="lazy"
             className="absolute inset-0 opacity-0 pointer-events-none"
             aria-hidden="true"
           />
@@ -110,10 +114,10 @@ export function HeroClient() {
           <AnimatePresence mode="wait">
             <motion.div
               key={`hero-text-${current}`}
-              initial={{ opacity: 0, y: 16 }}
+              initial={isFirstRender.current ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               {/* Bold Condensed Headline with highlighted words in primary color */}
               <h1 className="font-hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-white leading-[0.98] sm:leading-[1.0] mb-4 drop-shadow-lg">

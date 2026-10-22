@@ -7,8 +7,8 @@ import { WhyChooseUs } from "@/components/sections/why-choose-us";
 import { Partners } from "@/components/sections/partners";
 import { Testimonials } from "@/components/sections/testimonials";
 import { CallToAction } from "@/components/sections/cta";
+import { getMergedCompanyInfo } from "@/lib/data";
 import {
-  AboutPreviewSkeleton,
   SectionCardsSkeleton,
   TestimonialsSkeleton,
 } from "@/components/shared/section-skeleton";
@@ -21,16 +21,17 @@ import {
  */
 export const revalidate = 60;
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Reuses the request-cached company info already fetched by WebsiteLayout
+  const companyInfo = await getMergedCompanyInfo();
+
   return (
     <>
       {/* Hero is static/client — renders immediately */}
       <Hero />
 
-      {/* AboutPreview hits DB for phone number — stream it in */}
-      <Suspense fallback={<AboutPreviewSkeleton />}>
-        <AboutPreview />
-      </Suspense>
+      {/* AboutPreview receives cached phone — renders instantly without skeleton flash */}
+      <AboutPreview phone={companyInfo.contacts.phone} />
 
       {/* ServicesOverview reads static data — no Suspense needed */}
       <div id="services">

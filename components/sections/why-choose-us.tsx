@@ -147,7 +147,7 @@ export function WhyChooseUs() {
           variants={textVariant(0)}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.01 }}
+          viewport={{ once: true, margin: "150px 0px" }}
           className="mb-8 text-center sm:mb-10 md:mb-12 max-w-3xl mx-auto"
         >
           <div className="mb-2 flex items-center justify-center gap-2">
@@ -167,10 +167,10 @@ export function WhyChooseUs() {
           {whyChooseItems.map((item, index) => (
             <motion.div
               key={item.id}
-              variants={fadeIn("up", "tween", index * 0.03, 0.3)}
+              variants={fadeIn("up", "tween", Math.min(index * 0.02, 0.1), 0.25)}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.05 }}
+              viewport={{ once: true, margin: "150px 0px" }}
               className="flex flex-col items-center justify-start group"
             >
               {/* Icon */}

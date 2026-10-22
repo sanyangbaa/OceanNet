@@ -216,7 +216,7 @@ export const getTestimonials = cache(async () => {
   }
 });
 
-export const getFeaturedTestimonials = async () => {
+export const getFeaturedTestimonials = cache(async () => {
   const p = getPool();
   if (!p) return [];
   try {
@@ -239,7 +239,7 @@ export const getFeaturedTestimonials = async () => {
     console.error("Error in getFeaturedTestimonials:", err);
     return [];
   }
-};
+});
 
 
 

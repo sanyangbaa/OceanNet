@@ -28,10 +28,10 @@ export function ServicesOverviewClient({ services }: { services: Service[] }) {
         {services.map((service, index) => (
           <motion.div
             key={service.id}
-            variants={fadeIn("up", "tween", index * 0.03, 0.3)}
+            variants={fadeIn("up", "tween", Math.min(index * 0.02, 0.1), 0.25)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.05 }}
+            viewport={{ once: true, margin: "150px 0px" }}
             className="shrink-0 w-[88%] md:w-auto snap-center flex flex-col"
           >
             <SteppedServiceCard service={service} />

@@ -220,7 +220,7 @@
 
 /* ─── Architectural / Hero Display Typography matching reference ─── */
 .font-hero-title {
-  font-family: 'Oswald', 'Barlow Condensed', Impact, 'Arial Narrow', sans-serif;
+  font-family: var(--font-oswald), var(--font-barlow-condensed), 'Oswald', 'Barlow Condensed', Impact, 'Arial Narrow', sans-serif;
   letter-spacing: -0.015em;
   font-stretch: condensed;
 }

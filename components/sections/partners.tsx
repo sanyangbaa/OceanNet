@@ -18,7 +18,7 @@ export function Partners() {
   useEffect(() => {
     const loadPartners = async () => {
       try {
-        const res = await fetch("/api/partners", { cache: "no-store" });
+        const res = await fetch("/api/partners");
         if (res.ok) {
           const data = await res.json();
           setPartners(Array.isArray(data) ? data : []);
@@ -79,7 +79,7 @@ export function Partners() {
                         fill
                         sizes="(max-width: 768px) 96px, 128px"
                         className="object-contain"
-                        priority
+                        loading="lazy"
                       />
                     ) : (
                       <div className="flex h-full items-center justify-center text-xs font-black uppercase tracking-[0.3em] text-gray-400">

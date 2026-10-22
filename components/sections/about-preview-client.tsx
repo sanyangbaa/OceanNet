@@ -14,15 +14,15 @@ export function AboutPreviewClient({
 } = {}) {
   return (
     <motion.div
-      variants={staggerContainer(0.03, 0)}
+      variants={staggerContainer(0.02, 0)}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.05 }}
+      viewport={{ once: true, margin: "150px 0px" }}
       className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 xl:gap-16 items-center w-full"
     >
       {/* ── LEFT COLUMN: User's Own Image with Inspiration-Matched Top-Left Badge ── */}
       <motion.div
-        variants={slideIn("left", "tween", 0, 0.3)}
+        variants={slideIn("left", "tween", 0, 0.25)}
         className="relative w-full pt-8 pl-8 sm:pt-10 sm:pl-10"
       >
         {/* Floating Experience Badge with seamless white cutout frame on right and bottom */}
@@ -51,7 +51,6 @@ export function AboutPreviewClient({
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover object-center"
-            priority
           />
         </div>
       </motion.div>

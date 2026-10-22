@@ -1,10 +1,24 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Barlow_Condensed, Oswald } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const barlowCondensed = Barlow_Condensed({
+  weight: ["700", "800", "900"],
+  subsets: ["latin"],
+  variable: "--font-barlow-condensed",
+  display: "swap",
+});
+
+const oswald = Oswald({
+  weight: ["600", "700"],
+  subsets: ["latin"],
+  variable: "--font-oswald",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -80,14 +94,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${barlowCondensed.variable} ${oswald.variable} h-full antialiased`}
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Oswald:wght@600;700;800&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

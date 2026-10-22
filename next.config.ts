@@ -57,7 +57,6 @@ const nextConfig: NextConfig = {
   },
   // Enable modern image formats and keep existing remote patterns
   images: {
-    unoptimized: true,
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
