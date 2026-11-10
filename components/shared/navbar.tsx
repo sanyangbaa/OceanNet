@@ -254,9 +254,9 @@ export function Navbar({
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "text-sm font-medium uppercase tracking-wider transition-colors relative py-1",
+                      "text-[14px] font-semibold leading-[1.40] uppercase tracking-wider transition-colors relative py-1",
                       isActive
-                        ? "text-primary font-bold"
+                        ? "text-primary"
                         : "text-neutral-700 hover:text-black",
                     )}
                   >

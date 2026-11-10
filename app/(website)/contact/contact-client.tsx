@@ -139,11 +139,11 @@ export function ContactClient({ companyInfo }: ContactClientProps) {
             <div>
               <motion.h3
                 variants={textVariant(0)}
-                className="text-3xl font-black uppercase mb-4 tracking-tight text-secondary"
+                className="text-[25px] sm:text-[28px] lg:text-[32px] font-bold text-secondary mb-4 tracking-tight leading-[1.25]"
               >
                 Let’s Build Together
               </motion.h3>
-              <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
+              <p className="text-[16px] text-slate-600 leading-[1.70] font-normal">
                 Whether you are planning a new digital platform, modernising
                 infrastructure, integrating systems or looking for ongoing ICT
                 support, tell us what you need and our team will respond.

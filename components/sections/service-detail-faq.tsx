@@ -36,9 +36,9 @@ export function ServiceDetailFaq({ serviceTitle }: ServiceDetailFaqProps) {
     <section aria-labelledby="service-faq-heading" className="mt-8">
       <h2
         id="service-faq-heading"
-        className="mb-4 text-xl md:text-2xl font-bold tracking-tight text-[#07142f]"
+        className="mb-4 text-[21px] sm:text-[23px] lg:text-[25px] font-bold tracking-tight text-secondary leading-[1.30]"
       >
-        Frequently asked questions
+        Frequently Asked Questions
       </h2>
       <div className="border border-slate-200 divide-y divide-slate-200 overflow-hidden">
         {questions.map((item, index) => {
@@ -70,7 +70,7 @@ export function ServiceDetailFaq({ serviceTitle }: ServiceDetailFaqProps) {
                 }`}
               >
                 <div className="overflow-hidden bg-white">
-                  <p className="px-4 py-4 text-xs md:text-sm leading-relaxed text-slate-600 border-t border-slate-100">
+                  <p className="px-4 py-4 text-[15px] md:text-[16px] leading-[1.70] font-normal text-slate-600 border-t border-slate-100">
                     {item.answer}
                   </p>
                 </div>

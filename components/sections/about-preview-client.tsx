@@ -46,7 +46,7 @@ export function AboutPreviewClient({
         {/* User's Own Image Container — Only bottom-right corner is rounded */}
         <div className="relative w-full h-[280px] sm:h-[340px] md:h-[390px] lg:h-[420px] rounded-none rounded-br-2xl sm:rounded-br-3xl overflow-hidden shadow-xl">
           <Image
-            src="/about_preview/Below Hero section.png"
+            src="/about_preview/about_us-preview.jpeg"
             alt="OceanNet Technologies"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -60,9 +60,9 @@ export function AboutPreviewClient({
         variants={slideIn("right", "tween", 0, 0.3)}
         className="flex flex-col justify-center space-y-5 sm:space-y-6 w-full"
       >
-        {/* Main Headline */}
+        {/* Main Headline (Section Heading H2: 32 / 28 / 25, weight 700, line-height 1.25) */}
         <motion.div variants={textVariant(0)}>
-          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-secondary tracking-tight leading-[1.18]">
+          <h2 className="text-[25px] sm:text-[28px] lg:text-[32px] font-bold text-secondary tracking-tight leading-[1.25]">
             Local Expertise. Global Technology. Lasting Impact.
           </h2>
         </motion.div>
@@ -70,7 +70,7 @@ export function AboutPreviewClient({
         {/* Lead Subtitle (in Primary Blue) */}
         <motion.p
           variants={textVariant(0)}
-          className="text-primary text-base sm:text-lg font-medium leading-relaxed"
+          className="text-primary text-[16px] font-medium leading-[1.60]"
         >
           We combine local expertise, modern technologies and strategic partnerships to deliver reliable digital solutions for governments, development organisations and businesses.
         </motion.p>
@@ -141,7 +141,7 @@ export function AboutPreviewClient({
                 />
               </svg>
             </div>
-            <h4 className="font-extrabold text-secondary text-base sm:text-lg leading-snug">
+            <h4 className="font-bold text-secondary text-[18px] sm:text-[19px] lg:text-[20px] leading-[1.35]">
               Tailored
               <br />
               Digital Solutions
@@ -188,7 +188,7 @@ export function AboutPreviewClient({
                 />
               </svg>
             </div>
-            <h4 className="font-extrabold text-secondary text-base sm:text-lg leading-snug">
+            <h4 className="font-bold text-secondary text-[18px] sm:text-[19px] lg:text-[20px] leading-[1.35]">
               Dedicated
               <br />
               Technical Support
@@ -196,10 +196,10 @@ export function AboutPreviewClient({
           </div>
         </motion.div>
 
-        {/* Body Description Text */}
+        {/* Body Description Text (16px, line-height 1.70) */}
         <motion.p
           variants={textVariant(0)}
-          className="text-slate-600 text-sm sm:text-base leading-relaxed"
+          className="text-slate-600 text-[16px] font-normal leading-[1.70]"
         >
           Empowering organizations with secure, scalable, and future-ready technology solutions.
         </motion.p>

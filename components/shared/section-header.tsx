@@ -66,18 +66,18 @@ export function SectionHeader({
         {withBackground ? (
           <>
             {subtitle && (
-              <span className="text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-1.5 text-accent">
+              <span className="text-[12px] font-bold uppercase tracking-wider mb-2 text-accent">
                 {subtitle}
               </span>
             )}
-            <h2 className="w-full text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tight text-white">
+            <h1 className="w-full text-[30px] sm:text-[36px] lg:text-[42px] font-extrabold uppercase tracking-tight text-white leading-[1.20]">
               {title}
               <span className="text-accent">.</span>
-            </h2>
+            </h1>
             {description && (
               <p
                 className={cn(
-                  "mt-3 w-full max-w-none md:max-w-2xl text-sm sm:text-base leading-relaxed text-white/85",
+                  "mt-3 w-full max-w-none md:max-w-2xl text-[15px] sm:text-[16px] leading-[1.70] text-white/85",
                   align === "center" ? "mx-auto" : "",
                 )}
               >
@@ -96,12 +96,17 @@ export function SectionHeader({
             {subtitle && (
               <div
                 className={cn(
-                  "mb-2 flex items-center gap-2",
+                  "mb-2.5 flex items-center gap-2",
                   align === "center" ? "justify-center" : "justify-start",
                 )}
               >
                 <span className="h-px w-8 bg-primary" />
-                <span className="text-xs font-bold uppercase tracking-wide text-primary">
+                <span
+                  className={cn(
+                    "text-[12px] font-bold uppercase tracking-wider",
+                    isDarkOrBg ? "text-accent" : "text-primary",
+                  )}
+                >
                   {subtitle}
                 </span>
                 <span className="h-px w-8 bg-primary" />
@@ -109,7 +114,7 @@ export function SectionHeader({
             )}
             <h2
               className={cn(
-                "text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl",
+                "text-[25px] sm:text-[28px] lg:text-[32px] font-bold tracking-tight leading-[1.25]",
                 isDarkOrBg ? "text-white" : "text-secondary",
               )}
             >
@@ -118,7 +123,7 @@ export function SectionHeader({
             {description && (
               <p
                 className={cn(
-                  "mt-3 text-sm sm:text-base md:text-lg leading-relaxed",
+                  "mt-3 text-[16px] leading-[1.70] font-normal",
                   align === "center" ? "max-w-2xl mx-auto" : "max-w-2xl",
                   isDarkOrBg ? "text-slate-300" : "text-slate-600",
                 )}

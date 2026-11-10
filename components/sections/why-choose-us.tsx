@@ -142,7 +142,7 @@ export function WhyChooseUs() {
       />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        {/* Section Header (matching Testimonial style) */}
+        {/* Section Header (matching Master Section Heading style: 32 / 28 / 25, weight 700, line-height 1.25) */}
         <motion.div
           variants={textVariant(0)}
           initial="hidden"
@@ -150,14 +150,14 @@ export function WhyChooseUs() {
           viewport={{ once: true, margin: "150px 0px" }}
           className="mb-8 text-center sm:mb-10 md:mb-12 max-w-3xl mx-auto"
         >
-          <div className="mb-2 flex items-center justify-center gap-2">
+          <div className="mb-2.5 flex items-center justify-center gap-2">
             <span className="h-px w-8 bg-primary" />
-            <span className="text-xs font-bold uppercase tracking-wide text-primary">
+            <span className="text-[12px] font-bold uppercase tracking-wider text-primary">
               Why Choose Us
             </span>
             <span className="h-px w-8 bg-primary" />
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
+          <h2 className="text-[25px] sm:text-[28px] lg:text-[32px] font-bold tracking-tight text-white leading-[1.25]">
             Why Organisations Choose OceanNet
           </h2>
         </motion.div>
@@ -178,13 +178,13 @@ export function WhyChooseUs() {
                 {item.icon}
               </div>
 
-              {/* Title */}
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-2 tracking-tight group-hover:text-primary transition-colors">
+              {/* Title (Subsection H4: 20 / 19 / 18, weight 700, line-height 1.35) */}
+              <h3 className="text-[18px] sm:text-[19px] lg:text-[20px] font-bold text-white mb-2 leading-[1.35] tracking-tight group-hover:text-primary transition-colors">
                 {item.title}
               </h3>
 
-              {/* Description developed for OceanNet's goals */}
-              <p className="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xs mx-auto">
+              {/* Description (Service/project desc: 15 / 15 / 14, line-height 1.60) */}
+              <p className="text-slate-300 text-[14px] md:text-[15px] font-normal leading-[1.60] max-w-xs mx-auto">
                 {item.description}
               </p>
             </motion.div>

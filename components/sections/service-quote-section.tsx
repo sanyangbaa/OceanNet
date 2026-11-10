@@ -74,16 +74,16 @@ export function ServiceQuoteSection({ phone }: { phone?: string } = {}) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Left Column: Information & Phone Button */}
           <div className="flex flex-col justify-center">
-            <span className="text-primary font-bold text-base md:text-lg tracking-wide mb-2">
+            <span className="text-[12px] font-bold uppercase tracking-wider text-primary block mb-2">
               Get A Quote
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-secondary leading-tight tracking-tight mb-6">
+            <h2 className="text-[25px] sm:text-[28px] lg:text-[32px] font-bold text-secondary leading-[1.25] tracking-tight mb-6">
               Need Our Expert Help?
               <br />
               We&apos;re Here!
             </h2>
 
-            <div className="space-y-4 text-slate-500 text-sm leading-relaxed mb-8">
+            <div className="space-y-4 text-slate-600 text-[16px] leading-[1.70] font-normal mb-8">
               <p>
                 From legacy modernization to custom enterprise software, secure cloud migration, and 24/7 managed support — OceanNet delivers high-impact digital solutions tailored to your needs.
               </p>
@@ -111,7 +111,7 @@ export function ServiceQuoteSection({ phone }: { phone?: string } = {}) {
 
           {/* Right Column: Quote Form matching the inspiration */}
           <div className="bg-white">
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-secondary tracking-tight mb-6">
+            <h3 className="text-[21px] sm:text-[23px] lg:text-[25px] font-bold text-secondary tracking-tight leading-[1.30] mb-6">
               Get A Free Quote
             </h3>
 

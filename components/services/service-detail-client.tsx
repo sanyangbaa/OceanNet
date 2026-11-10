@@ -92,10 +92,10 @@ export function ServiceDetailClient({
 
             {/* Service Title and Paragraphs */}
             <div className="mt-8">
-              <h2 className="mb-4 text-2xl md:text-3xl font-extrabold tracking-tight text-[#07142f]">
+              <h2 className="mb-4 text-[25px] sm:text-[28px] lg:text-[32px] font-bold tracking-tight text-secondary leading-[1.25]">
                 {service.title}
               </h2>
-              <div className="space-y-4 text-xs sm:text-sm leading-[1.75] text-slate-600">
+              <div className="space-y-4 text-[16px] leading-[1.70] font-normal text-slate-600">
                 {detailParagraphs.map((paragraph, index) => (
                   <p key={`${service.id}-detail-${index}`}>{paragraph}</p>
                 ))}

@@ -190,7 +190,7 @@ export function SteppedServiceCard({ service }: SteppedServiceCardProps) {
               <span className="flex items-center justify-center w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border border-slate-400 group-hover/btn:border-primary group-hover/btn:text-primary transition-colors shrink-0">
                 <ArrowRight className="w-2 h-2 sm:w-2.5 sm:h-2.5" />
               </span>
-              <span className="font-serif italic text-xs font-medium tracking-normal whitespace-nowrap leading-none">
+              <span className="text-[12px] font-semibold tracking-normal whitespace-nowrap leading-none">
                 Read More
               </span>
             </Link>
@@ -212,13 +212,13 @@ export function SteppedServiceCard({ service }: SteppedServiceCardProps) {
           />
         </div>
 
-        {/* Title */}
-        <h3 className="text-[1.05rem] md:text-[1.12rem] font-bold text-slate-900 mt-3.5 mb-2 leading-snug tracking-tight group-hover:text-primary transition-colors">
+        {/* Title (Service / project card title: 18 / 17 / 17, weight 700, line-height 1.40) */}
+        <h3 className="text-[17px] md:text-[18px] font-bold text-secondary mt-3.5 mb-2 leading-[1.40] tracking-tight group-hover:text-primary transition-colors">
           <Link href={`/services/${slug}`}>{service.title}</Link>
         </h3>
 
-        {/* Description */}
-        <p className="text-xs sm:text-[13px] text-slate-500 leading-relaxed line-clamp-3">
+        {/* Description (Service / project description: 15 / 15 / 14, line-height 1.60) */}
+        <p className="text-[14px] md:text-[15px] text-slate-600 leading-[1.60] line-clamp-3">
           {service.description}
         </p>
       </div>

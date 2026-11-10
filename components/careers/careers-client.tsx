@@ -138,13 +138,13 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
             viewport={{ once: true, amount: 0.01 }}
             className="text-center max-w-2xl mx-auto space-y-3"
           >
-            <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary block">
+            <span className="text-[12px] font-bold uppercase tracking-wider text-primary block">
               Why Join Us
             </span>
-            <h2 className="text-3xl font-black text-secondary uppercase tracking-tight">
+            <h2 className="text-[25px] sm:text-[28px] lg:text-[32px] font-bold text-secondary tracking-tight leading-[1.25]">
               Build Meaningful Technology With Us
             </h2>
-            <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
+            <p className="text-[16px] text-slate-600 leading-[1.70] font-normal">
               Our projects provide opportunities to solve real operational
               problems and contribute to technology initiatives serving
               businesses, public institutions and development programmes.
@@ -243,13 +243,13 @@ export function CareersClient({ activeJobs = [] }: CareersClientProps) {
             viewport={{ once: true, amount: 0.01 }}
             className="text-center max-w-2xl mx-auto space-y-2"
           >
-            <span className="text-xs font-bold uppercase tracking-[0.25em] text-primary block">
+            <span className="text-[12px] font-bold uppercase tracking-wider text-primary block">
               Opportunities
             </span>
-            <h2 className="text-3xl font-black text-secondary uppercase tracking-tight">
+            <h2 className="text-[25px] sm:text-[28px] lg:text-[32px] font-bold text-secondary tracking-tight leading-[1.25]">
               Open Positions
             </h2>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-[16px] text-slate-600 leading-[1.70] font-normal">
               Current openings across our engineering, consulting, and
               operational teams.
             </p>

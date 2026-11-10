@@ -21,15 +21,15 @@ export async function Testimonials({
     <section id="testimonials" className="overflow-hidden bg-white py-8 sm:py-12 md:py-14">
       <div className="container mx-auto px-4 md:px-6">
         <div className="mb-6 text-center sm:mb-8">
-          <div className="mb-2 flex items-center justify-center gap-2">
+          <div className="mb-2.5 flex items-center justify-center gap-2">
             <span className="h-px w-8 bg-primary" />
-            <span className="text-xs font-bold uppercase tracking-wide text-primary">
+            <span className="text-[12px] font-bold uppercase tracking-wider text-primary">
               Testimonial
             </span>
             <span className="h-px w-8 bg-primary" />
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-secondary sm:text-4xl md:text-5xl">
-            Our Clients Say!!!
+          <h2 className="text-[25px] sm:text-[28px] lg:text-[32px] font-bold tracking-tight text-secondary leading-[1.25]">
+            Our Clients Say
           </h2>
         </div>
         <TestimonialsClient testimonials={testimonials} />

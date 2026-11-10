@@ -1,23 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Barlow_Condensed, Oswald } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const barlowCondensed = Barlow_Condensed({
-  weight: ["700", "800", "900"],
-  subsets: ["latin"],
-  variable: "--font-barlow-condensed",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const oswald = Oswald({
-  weight: ["600", "700"],
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-heading",
   subsets: ["latin"],
-  variable: "--font-oswald",
+  weight: ["500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -96,7 +91,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${barlowCondensed.variable} ${oswald.variable} h-full antialiased`}
+      className={`${inter.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <head>
         <script

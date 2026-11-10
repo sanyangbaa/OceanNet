@@ -7,6 +7,7 @@ import { slideIn, fadeIn, staggerContainer } from "@/lib/motion";
 import { SectionHeader } from "@/components/shared/section-header";
 import { MobileCarouselControls } from "@/components/shared/mobile-carousel-controls";
 import { useMobileCarousel } from "@/components/shared/use-mobile-carousel";
+import { capitalizeWords } from "@/lib/utils";
 import type { Testimonial } from "@/server/db";
 
 interface Member {
@@ -90,22 +91,22 @@ export function AboutClient({
               className="lg:col-span-6 flex flex-col justify-between py-1"
             >
               <div>
-                <span className="text-sm sm:text-base font-semibold text-[#0077c8] block mb-2 tracking-wide">
+                <span className="text-[12px] font-bold uppercase tracking-wider text-primary block mb-2">
                   About Us
                 </span>
 
-                <h2 className="text-2xl sm:text-3xl lg:text-[2.15rem] font-bold text-[#07142f] tracking-tight leading-tight mb-3 sm:whitespace-nowrap">
+                <h2 className="text-[25px] sm:text-[28px] lg:text-[32px] font-bold text-secondary tracking-tight leading-[1.25] mb-3">
                   Where Technology Becomes Impact
                 </h2>
 
                 {/* first Para */}
-                <p className="text-base sm:text-lg text-[#0077c8] font-normal leading-relaxed mb-4">
+                <p className="text-[16px] text-primary font-medium leading-[1.60] mb-4">
                   We transform bold ideas into practical solutions that create lasting
                   value and measurable business growth.
                 </p>
 
                 {/* second Para */}
-                <p className="text-sm sm:text-[15px] text-slate-600 leading-relaxed mb-6 max-w-xl">
+                <p className="text-[16px] text-slate-600 leading-[1.70] mb-4 max-w-xl">
                   OceanNet Technologies delivers enterprise-grade software, robust cloud
                   infrastructure, and mission-critical systems integration across West Africa.
                   We build resilient digital platforms engineered to streamline operations,
@@ -113,7 +114,7 @@ export function AboutClient({
                 </p>
 
                 {/* third Para */}
-                <p className="text-sm sm:text-[15px] text-slate-600 leading-relaxed mb-4 max-w-xl">
+                <p className="text-[16px] text-slate-600 leading-[1.70] mb-4 max-w-xl">
                   From government institutions to development agencies and private
                   enterprises, we bring deep domain knowledge and proven delivery
                   experience to every engagement.
@@ -310,12 +311,12 @@ export function AboutClient({
                     <div className="w-7 h-7 rounded-full border-2 border-[#0077c8] flex items-center justify-center text-[#0077c8] shrink-0">
                       <span className="w-2.5 h-2.5 rounded-full bg-[#0077c8]" />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-black text-[#07142f] tracking-tight">
+                    <h3 className="text-[21px] sm:text-[23px] lg:text-[25px] font-bold text-secondary tracking-tight leading-[1.30]">
                       Our Mission
                     </h3>
                   </div>
 
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                  <p className="text-[16px] text-slate-600 leading-[1.70]">
                     {companyInfo.mission ||
                       "To help organisations use technology effectively to improve services, strengthen operations, enhance digital security and create sustainable technology capability."}
                   </p>
@@ -348,12 +349,12 @@ export function AboutClient({
                     <div className="w-7 h-7 rounded-full border-2 border-[#0077c8] flex items-center justify-center text-[#0077c8] shrink-0">
                       <span className="w-2.5 h-2.5 rounded-full bg-[#0077c8]" />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-black text-[#07142f] tracking-tight">
+                    <h3 className="text-[21px] sm:text-[23px] lg:text-[25px] font-bold text-secondary tracking-tight leading-[1.30]">
                       Our Vision
                     </h3>
                   </div>
 
-                  <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+                  <p className="text-[16px] text-slate-600 leading-[1.70]">
                     {companyInfo.vision ||
                       "To become a trusted West African technology partner recognised for dependable delivery, technical excellence and practical digital transformation."}
                   </p>
@@ -433,13 +434,13 @@ export function AboutClient({
                     />
                   </div>
 
-                  {/* Centered Name & Role */}
+                  {/* Centered Name & Role (Card title: 18 / 17 / 17, weight 700; Capitalized name and position) */}
                   <div className="pt-3.5 pb-2.5 px-2 text-center bg-white">
-                    <h4 className="text-[1.125rem] md:text-[1.2rem] font-serif font-bold text-secondary leading-snug tracking-tight">
-                      {formatName(member.name)}
+                    <h4 className="text-[17px] md:text-[18px] font-bold text-secondary leading-[1.40] tracking-tight">
+                      {capitalizeWords(member.name)}
                     </h4>
-                    <p className="mt-1 text-xs md:text-sm text-muted-foreground font-normal line-clamp-1">
-                      {member.role}
+                    <p className="mt-1 text-[13px] text-slate-500 font-normal line-clamp-1">
+                      {capitalizeWords(member.role)}
                     </p>
                   </div>
                 </div>

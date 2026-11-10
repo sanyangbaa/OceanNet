@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { companyInfo } from "@/data/company";
 import type { Project } from "@/server/db";
+import { capitalizeWords } from "@/lib/utils";
 
 interface ProjectDetailClientProps {
   project: Project;
@@ -218,15 +219,15 @@ export function ProjectDetailClient({ project }: ProjectDetailClientProps) {
 
             {/* Project Title and Description */}
             <div className="mt-8">
-              <h2 className="mb-4 text-2xl md:text-3xl font-extrabold tracking-tight text-[#07142f]">
-                {project.title}
+              <h2 className="mb-4 text-[25px] sm:text-[28px] lg:text-[32px] font-bold tracking-tight text-secondary leading-[1.25]">
+                {capitalizeWords(project.title)}
               </h2>
               {project.shortDescription && (
-                <p className="mb-4 text-xs sm:text-sm font-semibold leading-relaxed text-slate-700">
+                <p className="mb-4 text-[16px] font-medium leading-[1.60] text-primary">
                   {project.shortDescription}
                 </p>
               )}
-              <div className="space-y-4 text-xs sm:text-sm leading-[1.75] text-slate-600">
+              <div className="space-y-4 text-[16px] leading-[1.70] font-normal text-slate-600">
                 {detailParagraphs.length > 0 ? (
                   detailParagraphs.map((paragraph, index) => (
                     <p key={`desc-${index}`}>{paragraph}</p>

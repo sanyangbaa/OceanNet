@@ -67,10 +67,10 @@ export function WhyOceanNet() {
                   aria-hidden="true"
                   className="mb-5 h-7 w-7 text-primary"
                 />
-                <h3 className="text-lg font-bold leading-snug text-secondary">
+                <h3 className="text-[18px] sm:text-[19px] lg:text-[20px] font-bold leading-[1.35] text-secondary">
                   {reason.title}
                 </h3>
-                <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                <p className="mt-3 text-[16px] leading-[1.70] font-normal text-slate-600">
                   {reason.description}
                 </p>
               </motion.article>

@@ -34,8 +34,10 @@ export default function InternshipSection() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-2xl font-bold text-secondary">Internships</h3>
-        <p className="text-sm text-muted-foreground">
+        <h3 className="text-[21px] sm:text-[23px] lg:text-[25px] font-bold text-secondary leading-[1.30]">
+          Internships
+        </h3>
+        <p className="text-[13px] text-slate-500 font-normal leading-[1.50]">
           Short-term programs for early-career talent
         </p>
       </div>
@@ -57,11 +59,11 @@ export default function InternshipSection() {
                 priority={false}
               />
             </div>
-            <h4 className="mt-4 text-lg font-bold text-secondary">{i.title}</h4>
-            <p className="text-sm text-muted-foreground mt-1">
+            <h4 className="mt-4 text-[17px] md:text-[18px] font-bold text-secondary leading-[1.40]">{i.title}</h4>
+            <p className="text-[13px] text-slate-500 font-normal leading-[1.50] mt-1">
               {i.location} • {i.duration}
             </p>
-            <p className="text-sm text-muted-foreground mt-3 flex-1">{i.description}</p>
+            <p className="text-[14px] md:text-[15px] text-slate-600 leading-[1.60] mt-3 flex-1">{i.description}</p>
 
             <div className="mt-4 flex items-center justify-between">
               <span className="text-xs bg-primary/10 text-primary px-2.5 py-1 rounded-full font-semibold">

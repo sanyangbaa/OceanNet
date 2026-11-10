@@ -31,18 +31,18 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
             )}
           </div>
         </div>
-        <p className="text-sm leading-6 text-slate-600 md:line-clamp-5">
+        <p className="text-[16px] leading-[1.70] font-normal text-slate-600 md:line-clamp-5">
           {testimonial.content}
         </p>
       </div>
       <div className="relative ml-8 flex h-11 shrink-0 items-center justify-between gap-2 bg-primary px-4 sm:ml-12 sm:px-5">
-        <h3 className="text-base sm:text-lg font-bold leading-tight text-white truncate">
+        <h3 className="text-[17px] md:text-[18px] font-bold leading-[1.40] text-white truncate">
           {testimonial.name}
         </h3>
         {testimonial.role &&
         testimonial.role.trim() &&
         testimonial.role.trim().toLowerCase() !== "oceannet" ? (
-          <span className="text-[11px] sm:text-xs font-medium text-white/80 truncate max-w-[50%]">
+          <span className="text-[13px] font-normal text-white/80 truncate max-w-[50%]">
             {testimonial.role}
           </span>
         ) : null}

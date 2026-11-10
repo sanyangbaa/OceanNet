@@ -65,7 +65,7 @@ export function Footer({
                 </div>
               </div>
             </Link>
-            <p className="max-w-xs text-sm leading-relaxed text-slate-300">
+            <p className="max-w-xs text-[14px] leading-[1.60] text-slate-300 font-normal">
               {companyInfo.footerDescription}
             </p>
 
@@ -155,7 +155,7 @@ export function Footer({
           {/* Quick Links */}
           {footerLinks.slice().reverse().map((section) => (
             <div key={section.title} className="flex flex-col gap-6">
-              <h4 className="flex items-center gap-3 text-base font-extrabold uppercase tracking-wide text-primary">
+              <h4 className="flex items-center gap-3 text-[16px] font-bold uppercase tracking-wider text-primary leading-[1.40]">
                 {section.title}
                 <span className="h-px w-10 bg-primary/80" aria-hidden="true" />
               </h4>
@@ -164,7 +164,7 @@ export function Footer({
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="group flex items-center gap-2 text-sm leading-snug text-slate-300 transition-colors duration-200 hover:text-primary"
+                      className="group flex items-center gap-2 text-[14px] font-medium leading-[1.60] text-slate-300 transition-colors duration-200 hover:text-primary"
                     >
                       <span
                         className="text-primary transition-transform duration-200 ease-out group-hover:translate-x-1"
@@ -184,18 +184,18 @@ export function Footer({
 
           {/* Contact Info */}
           <div className="flex flex-col gap-6">
-            <h4 className="flex items-center gap-3 text-base font-extrabold uppercase tracking-wide text-primary">
+            <h4 className="flex items-center gap-3 text-[16px] font-bold uppercase tracking-wider text-primary leading-[1.40]">
               Office &amp; Contact
               <span className="h-px w-10 bg-primary/80" aria-hidden="true" />
             </h4>
             <div className="flex flex-col gap-3">
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <p className="text-sm leading-relaxed text-slate-300">
+                <p className="text-[14px] leading-[1.60] text-slate-300 font-normal">
                   {companyInfo.contacts.address}
                 </p>
               </div>
-              <div className="flex items-center gap-3 text-sm text-slate-300">
+              <div className="flex items-center gap-3 text-[14px] text-slate-300 font-medium">
                 <Phone className="h-4 w-4 shrink-0 text-primary" />
                 <a
                   href={`tel:${companyInfo.contacts.phone.replace(/[^\d+]/g, "")}`}
@@ -204,7 +204,7 @@ export function Footer({
                   {companyInfo.contacts.phone}
                 </a>
               </div>
-              <div className="flex items-center gap-3 text-sm text-slate-300">
+              <div className="flex items-center gap-3 text-[14px] text-slate-300 font-medium">
                 <Mail className="h-4 w-4 shrink-0 text-primary" />
                 <a
                   href={`mailto:${companyInfo.contacts.email}`}
@@ -217,7 +217,7 @@ export function Footer({
           </div>
         </FooterSections>
 
-        <div className="mb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-b border-white/10 pb-4 text-sm text-slate-300 sm:gap-x-5">
+        <div className="mb-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 border-b border-white/10 pb-4 text-[14px] font-medium text-slate-300 sm:gap-x-5">
           <Link href="/terms" className="transition-colors hover:text-primary">
             Terms of Use
           </Link>
@@ -239,7 +239,7 @@ export function Footer({
         </div>
 
         {/* Copyright and design attribution */}
-        <div className="flex flex-col items-center justify-between gap-2 text-center text-sm font-medium text-slate-300 sm:flex-row sm:text-left">
+        <div className="flex flex-col items-center justify-between gap-2 text-center text-[13px] font-normal leading-[1.50] text-slate-400 sm:flex-row sm:text-left">
           <p>
             © {new Date().getFullYear()} {companyInfo.name}. All Rights Reserved.
           </p>

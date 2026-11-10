@@ -15,16 +15,16 @@ export default function PrivacyPage() {
       <article className="bg-background">
       <div className="container mx-auto max-w-4xl px-4 py-16 md:px-6 md:py-24">
         <header className="mb-12 border-b border-border pb-8">
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.25em] text-primary">
+          <p className="mb-3 text-[12px] font-bold uppercase tracking-wider text-primary">
             Legal
           </p>
-          <h1 className="text-4xl font-black uppercase tracking-tight text-secondary md:text-5xl">
+          <h1 className="text-[25px] sm:text-[28px] lg:text-[32px] font-bold uppercase tracking-tight text-secondary leading-[1.25]">
             Privacy Policy
           </h1>
-          <p className="mt-4 text-muted-foreground">Last updated: {updated}</p>
+          <p className="mt-4 text-[13px] font-normal leading-[1.50] text-slate-500">Last updated: {updated}</p>
         </header>
 
-        <div className="space-y-10 text-base leading-8 text-muted-foreground [&_h2]:text-2xl [&_h2]:font-black [&_h2]:uppercase [&_h2]:tracking-tight [&_h2]:text-secondary [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-secondary [&_li]:ml-5 [&_li]:list-disc">
+        <div className="space-y-10 text-[16px] leading-[1.75] font-normal text-slate-600 [&_h2]:text-[19px] sm:[&_h2]:text-[20px] lg:[&_h2]:text-[22px] [&_h2]:font-bold [&_h2]:leading-[1.35] [&_h2]:tracking-tight [&_h2]:text-secondary [&_h3]:text-[17px] [&_h3]:font-bold [&_h3]:text-secondary [&_li]:ml-5 [&_li]:list-disc">
           <p>
             OceanNet Technologies (“OceanNet”, “we”, “us”, or “our”) operates
             this website. We are a technology company based in The Gambia. For

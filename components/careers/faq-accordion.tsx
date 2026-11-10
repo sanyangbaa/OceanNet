@@ -64,7 +64,7 @@ export default function FAQAccordion({ items }: { items?: FAQItem[] }) {
                   <HelpCircle className="h-4 w-4" />
                 </div>
                 <span
-                  className={`font-bold text-sm md:text-base transition-colors duration-300 ${
+                  className={`font-bold text-[15px] md:text-[16px] leading-[1.40] transition-colors duration-300 ${
                     isOpen ? "text-primary" : "text-secondary group-hover:text-primary"
                   }`}
                 >
@@ -84,7 +84,7 @@ export default function FAQAccordion({ items }: { items?: FAQItem[] }) {
                 isOpen ? "max-h-[500px]" : "max-h-0"
               }`}
             >
-              <div className="px-5 md:px-6 pb-5 md:pb-6 pt-1 pl-16 text-muted-foreground text-sm leading-relaxed">
+              <div className="px-5 md:px-6 pb-5 md:pb-6 pt-1 pl-16 text-slate-600 text-[15px] md:text-[16px] font-normal leading-[1.70]">
                 {it.a}
               </div>
             </div>

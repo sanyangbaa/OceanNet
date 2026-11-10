@@ -119,8 +119,8 @@ export function HeroClient() {
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             >
-              {/* Bold Condensed Headline with highlighted words in primary color */}
-              <h1 className="font-hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase tracking-tight text-white leading-[0.98] sm:leading-[1.0] mb-4 drop-shadow-lg">
+              {/* Headline adhering to Master Text Styles (52 / 42 / 34, weight 800, line-height 1.15) */}
+              <h1 className="font-heading text-[34px] sm:text-[42px] lg:text-[52px] font-extrabold uppercase tracking-tight text-white leading-[1.15] mb-4 drop-shadow-lg">
                 {slides[current].titlePrefix}{" "}
                 <br className="hidden sm:inline" />
                 <span className="text-primary drop-shadow-[0_2px_16px_rgba(0,119,200,0.4)]">
@@ -128,25 +128,25 @@ export function HeroClient() {
                 </span>
               </h1>
 
-              {/* Subtitle / Paragraph */}
-              <p className="text-sm sm:text-base md:text-lg text-white/90 leading-relaxed max-w-2xl mb-6 sm:mb-8 font-normal drop-shadow-sm">
+              {/* Subtitle / Paragraph adhering to master styles (16px, line-height 1.70) */}
+              <p className="text-[16px] text-white/90 leading-[1.70] max-w-2xl mb-6 sm:mb-8 font-normal drop-shadow-sm">
                 {slides[current].description}
               </p>
 
               {/* Action Buttons Row */}
               <div className="flex flex-wrap items-center gap-3.5 sm:gap-5">
-                {/* Relevant primary button with bg-primary and crisp flat rectangular shape */}
+                {/* Primary button (14px, weight 600, line-height 1.40) */}
                 <Link
                   href={slides[current].link}
-                  className="bg-primary hover:bg-primary/90 text-white font-bold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-3.5 rounded-none uppercase tracking-wider transition-all duration-200 shadow-xl active:scale-98 inline-flex items-center justify-center cursor-pointer"
+                  className="bg-primary hover:bg-primary/90 text-white font-semibold text-[14px] leading-[1.40] px-6 sm:px-8 py-3 sm:py-3.5 rounded-none uppercase tracking-wider transition-all duration-200 shadow-xl active:scale-98 inline-flex items-center justify-center cursor-pointer"
                 >
                   Explore Our Services
                 </Link>
 
-                {/* Normal secondary button */}
+                {/* Secondary button (14px, weight 600, line-height 1.40) */}
                 <Link
                   href="/contact"
-                  className="border-2 border-white/80 hover:border-white text-white hover:bg-white hover:text-black font-bold text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-3.5 rounded-none uppercase tracking-wider transition-all duration-200 shadow-lg active:scale-98 inline-flex items-center justify-center cursor-pointer"
+                  className="border-2 border-white/80 hover:border-white text-white hover:bg-white hover:text-black font-semibold text-[14px] leading-[1.40] px-6 sm:px-8 py-3 sm:py-3.5 rounded-none uppercase tracking-wider transition-all duration-200 shadow-lg active:scale-98 inline-flex items-center justify-center cursor-pointer"
                 >
                   Talk To Our Team
                 </Link>
