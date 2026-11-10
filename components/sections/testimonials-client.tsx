@@ -31,7 +31,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
             )}
           </div>
         </div>
-        <p className="text-[16px] leading-[1.70] font-normal text-slate-600 md:line-clamp-5">
+        <p className="text-[16px] leading-[1.70] font-normal text-slate-600">
           {testimonial.content}
         </p>
       </div>
