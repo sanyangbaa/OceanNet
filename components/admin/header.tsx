@@ -227,7 +227,7 @@ export function Header() {
                         {searchResults.projects.map((p) => (
                           <Link
                             key={p.id}
-                            href={`/admin/projects?id=${p.id}`}
+                            href={`/admin/projects/${p.id}`}
                             onClick={() => setSearchResults(null)}
                             className="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl transition-all group"
                           >

@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Eye, Link2 } from "lucide-react";
 import { fadeIn } from "@/lib/motion";
-import { capitalizeWords } from "@/lib/utils";
 import { MobileCarouselControls } from "@/components/shared/mobile-carousel-controls";
 import { useMobileCarousel } from "@/components/shared/use-mobile-carousel";
 
@@ -82,7 +81,7 @@ export function FeaturedProjectsClient({
               {/* Title area — secondary bg (Card title: 18 / 17 / 17, weight 700, line-height 1.40) */}
               <div className="bg-secondary px-4 py-3">
                 <h3 className="text-[17px] md:text-[18px] font-bold text-white tracking-tight leading-[1.40] line-clamp-1">
-                  {capitalizeWords(project.title)}
+                  {project.title}
                 </h3>
               </div>
             </Link>

@@ -319,6 +319,9 @@ export function ProjectForm({ initialData, id }: ProjectFormProps) {
                 onChange={(e) =>
                   setFormData({ ...formData, title: e.target.value })
                 }
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
                 className="w-full bg-black/40 border border-white/10 px-4 py-2.5 rounded-sm text-sm focus:outline-none focus:border-primary/50 transition-all font-medium text-white"
                 placeholder="e.g. Solar Power Ltd Project"
               />

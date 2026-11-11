@@ -90,7 +90,7 @@ export default async function AdminProjectsPage() {
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-bold text-white uppercase text-sm truncate">
+                    <h3 className="font-bold text-white text-sm truncate">
                       {project.title}
                     </h3>
                     <p className="text-[10px] text-gray-500 uppercase tracking-tighter truncate mb-2">
@@ -194,7 +194,7 @@ export default async function AdminProjectsPage() {
                             )}
                           </div>
                           <div className="min-w-0 max-w-[24rem]">
-                            <p className="font-bold text-white uppercase text-sm line-clamp-2">
+                            <p className="font-bold text-white text-sm line-clamp-2">
                               {project.title}
                             </p>
                             <p className="text-[10px] text-gray-500 uppercase tracking-tighter truncate">

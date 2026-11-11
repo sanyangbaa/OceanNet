@@ -56,7 +56,7 @@ const organizationJsonLd = {
   address: {
     "@type": "PostalAddress",
     streetAddress:
-      "2nd Floor, Jula Finance Complex, Opposite The Gambia Tourism and Hospitality Institute",
+      "2nd Floor, Jula Finance Complex, Opposite ChildFund",
     addressLocality: "Kanifing",
     addressRegion: "Kanifing Municipality",
     addressCountry: "GM",

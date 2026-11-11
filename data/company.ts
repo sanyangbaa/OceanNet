@@ -16,7 +16,7 @@ export const companyInfo = {
     "To become a trusted West African technology partner recognised for dependable delivery, technical excellence and practical digital transformation.",
   contacts: {
     address:
-      "2nd Floor, Jula Finance Complex, Opposite The Gambia Tourism and Hospitality Institute, Kanifing South, Kanifing Municipality, The Gambia.",
+      "2nd Floor, Jula Finance Complex, Opposite ChildFund, Kanifing South, Kanifing Municipality, The Gambia",
     productionCenter: "Kanifing Municipality, The Gambia.",
     email: "info@oceannettechnologies.com",
     phone: "+220 87 278 5585",
