@@ -16,7 +16,7 @@ export function ServiceQuoteSection({ phone }: { phone?: string } = {}) {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const phoneDisplay = phone || companyInfo.contacts.phone || "+220 87 278 5585";
+  const phoneDisplay = phone || companyInfo.contacts.phone || "+220 278 5585";
   const phoneClean = phoneDisplay.replace(/\s+/g, "");
 
   const servicesList = [

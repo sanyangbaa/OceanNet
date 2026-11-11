@@ -198,7 +198,9 @@ export function Footer({
               <div className="flex items-center gap-3 text-[14px] text-slate-300 font-medium">
                 <Phone className="h-4 w-4 shrink-0 text-primary" />
                 <a
-                  href={`tel:${companyInfo.contacts.phone.replace(/[^\d+]/g, "")}`}
+                  href={`https://wa.me/${companyInfo.contacts.phone.replace(/[^\d]/g, "")}`}
+                  target="_blank"
+                  rel="noreferrer"
                   className="transition-colors hover:text-primary"
                 >
                   {companyInfo.contacts.phone}

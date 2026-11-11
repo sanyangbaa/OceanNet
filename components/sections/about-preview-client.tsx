@@ -220,16 +220,23 @@ export function AboutPreviewClient({
 
           {/* Contact / Call Row */}
           <div className="flex items-center gap-3.5 sm:gap-4">
-            <div className="relative w-11 h-11 rounded-full overflow-hidden shrink-0 border border-white shadow-sm ring-1 ring-gray-200">
+            <a
+              href={`https://wa.me/${phone.replace(/[^\d]/g, "")}`}
+              target="_blank"
+              rel="noreferrer"
+              className="relative w-11 h-11 rounded-full overflow-hidden shrink-0 border border-white shadow-sm ring-1 ring-gray-200 hover:ring-primary transition-all cursor-pointer"
+            >
               <Image
                 src="/images/paali.jpg"
                 alt="Paali"
                 fill
                 className="object-cover"
               />
-            </div>
+            </a>
             <a
-              href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+              href={`https://wa.me/${phone.replace(/[^\d]/g, "")}`}
+              target="_blank"
+              rel="noreferrer"
               className="text-base sm:text-lg lg:text-xl font-bold text-secondary hover:text-primary transition-colors tracking-tight whitespace-nowrap"
             >
               Call Us: {phone}
